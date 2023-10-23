@@ -1,5 +1,5 @@
-import SearchBar from "../../components/searchBar";
-import SearchResult from "../../components/searchResults";
+import SearchBar from '../../components/searchBar';
+import SearchResult from '../../components/searchResults';
 
 const Home = () => {
   return (
@@ -7,7 +7,7 @@ const Home = () => {
       <SearchBar />
       <SearchResult />
     </>
-  )
-}
+  );
+};
 
 export default Home;
