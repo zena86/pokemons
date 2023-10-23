@@ -6,16 +6,16 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'prettier',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    'ecmaFeatures': {
-      'jsx': true
+    ecmaFeatures: {
+      jsx: true,
     },
-    'ecmaVersion': 'latest',
-	'sourceType': 'module'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   plugins: ['react-refresh', '@typescript-eslint', 'react', 'react-hooks'],
   rules: {
@@ -23,7 +23,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    "@typescript-eslint/no-explicit-any": "error",
+    '@typescript-eslint/no-explicit-any': 'error',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'comma-dangle': ['error', 'only-multiline'],
@@ -37,12 +37,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
-    'react': {
-      'pragma': 'React',
-      'version': 'detect'
-    }
-  }
-}
+    react: {
+      pragma: 'React',
+      version: 'detect',
+    },
+  },
+};
