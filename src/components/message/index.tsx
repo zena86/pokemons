@@ -3,7 +3,9 @@ import { IErrorMessageProps } from './types';
 
 class Message extends Component<IErrorMessageProps> {
   render() {
-    return <p>{this.props.errorMessage}</p>;
+    const { errorMessage } = this.props;
+
+    return <p>{errorMessage}</p>;
   }
 }
 

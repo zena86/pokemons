@@ -18,19 +18,19 @@ class Home extends Component {
 
   handleOnSearch = async (text: string) => {
     this.setState({ ...this.state, isLoading: true });
-    const pokemonsAllResponse = await getPokemons('100000', '0');
+    const { errorMessage, pokemons } = await getPokemons('100000', '0');
 
-    if (pokemonsAllResponse.errorMessage) {
+    if (errorMessage) {
       this.setState({
         ...this.state,
         isLoading: false,
-        errorMessage: pokemonsAllResponse.errorMessage,
+        errorMessage: errorMessage,
       });
       return;
     }
 
-    if (pokemonsAllResponse.pokemons) {
-      const filteredList = filter(pokemonsAllResponse.pokemons, text);
+    if (pokemons) {
+      const filteredList = filter(pokemons, text);
       this.setState({
         ...this.state,
         isLoading: false,
@@ -42,13 +42,13 @@ class Home extends Component {
   async componentDidMount() {
     this.setState({ ...this.state, isLoading: true });
 
-    const pokemonsResponse = await getPokemons('20', '0');
+    const { errorMessage, pokemons } = await getPokemons('20', '0');
 
-    if (pokemonsResponse.errorMessage) {
+    if (errorMessage) {
       this.setState({
         ...this.state,
         isLoading: false,
-        errorMessage: pokemonsResponse.errorMessage,
+        errorMessage: errorMessage,
       });
       return;
     }
@@ -57,29 +57,25 @@ class Home extends Component {
       {
         ...this.state,
         isLoading: false,
-        allPokemons: pokemonsResponse.pokemons,
-        filteredPokemons: pokemonsResponse.pokemons,
+        allPokemons: pokemons,
+        filteredPokemons: pokemons,
       },
       () => {
         const term = localStorage.getItem('term');
-        if (term) {
-          this.handleOnSearch(term);
-        }
+        if (term) this.handleOnSearch(term);
       }
     );
   }
 
   render() {
+    const { filteredPokemons, isLoading, errorMessage } = this.state;
+
     return (
       <>
         <SearchBar onFormSubmit={this.handleOnSearch} />
-        {this.state.isLoading && <Loading />}
-        {this.state.errorMessage && (
-          <Message errorMessage={this.state.errorMessage} />
-        )}
-        {!this.state.isLoading && !this.state.errorMessage && (
-          <SearchResult pokemons={this.state.filteredPokemons} />
-        )}
+        {isLoading && <Loading />}
+        {errorMessage && <Message errorMessage={errorMessage} />}
+        <SearchResult pokemons={filteredPokemons} />
       </>
     );
   }

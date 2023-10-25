@@ -9,23 +9,31 @@ class PokemonCard extends Component<IPokemonCardProps> {
     errorMessage: '',
     pokemon: null,
   };
-  async componentDidMount() {
-    const pokemonResponse = await getPokemon(this.props.url);
 
-    if (pokemonResponse.errorMessage) {
-      this.setState({ errorMessage: pokemonResponse.errorMessage });
+  async componentDidMount() {
+    const { errorMessage, pokemon } = await getPokemon(this.props.url);
+
+    if (errorMessage) {
+      this.setState({
+        ...this.state,
+        errorMessage: errorMessage,
+      });
       return;
     }
 
     this.setState({
-      pokemon: pokemonResponse.pokemon,
+      ...this.state,
+      pokemon: pokemon,
     });
   }
+
   render() {
-    return this.state.errorMessage ? (
-      <Message errorMessage={this.state.errorMessage} />
-    ) : this.state.pokemon ? (
-      <PokemonDescription pokemon={this.state.pokemon} />
+    const { errorMessage, pokemon } = this.state;
+
+    return errorMessage ? (
+      <Message errorMessage={errorMessage} />
+    ) : pokemon ? (
+      <PokemonDescription pokemon={pokemon} />
     ) : (
       ''
     );

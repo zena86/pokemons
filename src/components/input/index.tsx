@@ -8,7 +8,9 @@ class Input extends Component<IInputProps> {
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     this.setState({ term: e.target.value });
-    this.props.onInputChange(e.target.value);
+
+    const { onInputChange } = this.props;
+    onInputChange(e.target.value);
   };
 
   componentDidMount() {
@@ -19,10 +21,12 @@ class Input extends Component<IInputProps> {
   }
 
   render() {
+    const { term } = this.state;
+
     return (
       <input
         type="text"
-        value={this.state.term.trim()}
+        value={term.trim()}
         onChange={this.handleInputChange}
         placeholder="Search..."
       />

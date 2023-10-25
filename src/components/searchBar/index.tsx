@@ -12,8 +12,9 @@ class SearchBar extends Component<ISearchBarProps> {
 
   onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    localStorage.setItem('term', this.state.term);
-    this.props.onFormSubmit(this.state.term);
+    const { term } = this.state;
+    localStorage.setItem('term', term);
+    this.props.onFormSubmit(term);
   };
 
   render() {

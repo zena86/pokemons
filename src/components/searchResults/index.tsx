@@ -5,13 +5,15 @@ import Message from '../message';
 
 class SearchResult extends Component<ISearchResultProps> {
   render() {
+    const { pokemons } = this.props;
+
     return (
       <>
-        {this.props.pokemons.length === 0 ? (
+        {pokemons.length === 0 ? (
           <Message errorMessage="No pokemons found" />
         ) : (
           <ul>
-            {this.props.pokemons.map((pokemon: IPokemon) => {
+            {pokemons.map((pokemon: IPokemon) => {
               return <PokemonCard key={pokemon.name} url={pokemon.url} />;
             })}
           </ul>

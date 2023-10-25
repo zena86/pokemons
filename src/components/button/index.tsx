@@ -3,7 +3,8 @@ import { IButtonProps } from './types';
 
 class Button extends Component<IButtonProps> {
   render() {
-    return <button type={this.props.type}>{this.props.title}</button>;
+    const { type, title } = this.props;
+    return <button type={type}>{title}</button>;
   }
 }
 
