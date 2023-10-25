@@ -6,6 +6,7 @@ import { IHomeState } from './types';
 import Loading from '../../components/loading';
 import Message from '../../components/message';
 import { filter } from '../../utils/filter';
+import { ITEM_ON_PAGE, MAX_ITEMS, NUM_OF_PAGE } from '../../constants';
 
 class Home extends Component {
   state: IHomeState = {
@@ -18,7 +19,10 @@ class Home extends Component {
 
   handleOnSearch = async (text: string) => {
     this.setState({ ...this.state, isLoading: true });
-    const { errorMessage, pokemons } = await getPokemons('100000', '0');
+    const { errorMessage, pokemons } = await getPokemons(
+      MAX_ITEMS,
+      NUM_OF_PAGE
+    );
 
     if (errorMessage) {
       this.setState({
@@ -34,7 +38,7 @@ class Home extends Component {
       this.setState({
         ...this.state,
         isLoading: false,
-        filteredPokemons: filteredList.slice(0, 20),
+        filteredPokemons: filteredList.slice(+NUM_OF_PAGE, +ITEM_ON_PAGE),
       });
     }
   };
@@ -42,7 +46,10 @@ class Home extends Component {
   async componentDidMount() {
     this.setState({ ...this.state, isLoading: true });
 
-    const { errorMessage, pokemons } = await getPokemons('20', '0');
+    const { errorMessage, pokemons } = await getPokemons(
+      ITEM_ON_PAGE,
+      NUM_OF_PAGE
+    );
 
     if (errorMessage) {
       this.setState({

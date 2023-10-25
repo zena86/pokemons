@@ -8,8 +8,8 @@ export const getPokemons = async (
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
-    const pokemonList = await response.json();
-    return { pokemons: pokemonList.results };
+    const { results } = await response.json();
+    return { pokemons: results };
   } catch (error) {
     return { errorMessage: `Oops! ${error}` };
   }

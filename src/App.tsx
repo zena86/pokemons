@@ -7,19 +7,18 @@ class App extends Component {
     throwError: false,
   };
 
+  handleClick = () => {
+    this.setState({ throwError: true });
+  };
+
   render() {
     if (this.state.throwError) {
       throw new Error('Oops, something went wrong!');
     }
+
     return (
       <>
-        <button
-          onClick={() => {
-            this.setState({ throwError: true });
-          }}
-        >
-          Error Test
-        </button>
+        <button onClick={this.handleClick}>Error Test</button>
         <Home />
       </>
     );
