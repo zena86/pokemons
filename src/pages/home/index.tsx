@@ -1,78 +1,85 @@
 import { Component } from 'react';
 import SearchBar from '../../components/searchBar';
 import SearchResult from '../../components/searchResults';
-
-const items = [
-  {
-    name: 'Leonard Rogers',
-    email: 'egestas@justonecante.org',
-  },
-  {
-    name: 'Walker Pace',
-    email: 'erat.eget.tincidunt@idsapienCras.org',
-  },
-  {
-    name: 'Lance Mcintyre',
-    email: 'Nam.ligula@quamvel.net',
-  },
-  {
-    name: 'Rudyard Conway',
-    email: 'sit@nunc.org',
-  },
-  {
-    name: 'Chadwick Oneal',
-    email: 'laoreet@dictum.edu',
-  },
-  {
-    name: 'Isaiah Kent',
-    email: 'diam.dictum@lobortisquam.co.uk',
-  },
-  {
-    name: 'Griffith Perkins',
-    email: 'congue@acfermentumvel.ca',
-  },
-  {
-    name: 'Lawrence Wheeler',
-    email: 'ac.libero@Duisac.org',
-  },
-  {
-    name: 'Preston Walker',
-    email: 'egestas.rhoncus@eudui.co.uk',
-  },
-  {
-    name: 'Simon Brewer',
-    email: 'nunc.sed@Fuscediamnunc.co.uk',
-  },
-];
+import { getPokemons } from '../../services/pokemon.service';
+import { IHomeState } from './types';
+import Loading from '../../components/loading';
+import Message from '../../components/message';
+import { filter } from '../../utils/filter';
 
 class Home extends Component {
-  state = {
-    pokemons: items,
+  state: IHomeState = {
+    allPokemons: [],
     filteredPokemons: [],
     term: '',
+    isLoading: false,
+    errorMessage: '',
   };
 
-  filterList = (text: string) => {
-    const filteredList = items.filter((item) => {
-      return item.name.toLowerCase().search(text.toLowerCase()) !== -1;
-    });
-    this.setState({ ...this.state, filteredPokemons: filteredList });
-  };
+  handleOnSearch = async (text: string) => {
+    this.setState({ ...this.state, isLoading: true });
+    const pokemonsAllResponse = await getPokemons('100000', '0');
 
-  componentDidMount() {
-    const term = localStorage.getItem('term');
-    if (term) {
-      this.filterList(term);
-    } else {
-      this.setState({ ...this.state, filteredPokemons: items });
+    if (pokemonsAllResponse.errorMessage) {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        errorMessage: pokemonsAllResponse.errorMessage,
+      });
+      return;
     }
+
+    if (pokemonsAllResponse.pokemons) {
+      const filteredList = filter(pokemonsAllResponse.pokemons, text);
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        filteredPokemons: filteredList.slice(0, 20),
+      });
+    }
+  };
+
+  async componentDidMount() {
+    this.setState({ ...this.state, isLoading: true });
+
+    const pokemonsResponse = await getPokemons('20', '0');
+
+    if (pokemonsResponse.errorMessage) {
+      this.setState({
+        ...this.state,
+        isLoading: false,
+        errorMessage: pokemonsResponse.errorMessage,
+      });
+      return;
+    }
+
+    this.setState(
+      {
+        ...this.state,
+        isLoading: false,
+        allPokemons: pokemonsResponse.pokemons,
+        filteredPokemons: pokemonsResponse.pokemons,
+      },
+      () => {
+        const term = localStorage.getItem('term');
+        if (term) {
+          this.handleOnSearch(term);
+        }
+      }
+    );
   }
 
   render() {
     return (
       <>
-        <SearchBar onFormSubmit={this.filterList} />
-        <SearchResult pokemons={this.state.filteredPokemons} />
+        <SearchBar onFormSubmit={this.handleOnSearch} />
+        {this.state.isLoading && <Loading />}
+        {this.state.errorMessage && (
+          <Message errorMessage={this.state.errorMessage} />
+        )}
+        {!this.state.isLoading && !this.state.errorMessage && (
+          <SearchResult pokemons={this.state.filteredPokemons} />
+        )}
       </>
     );
   }

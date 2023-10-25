@@ -1,6 +1,6 @@
 export interface IPokemon {
   name: string;
-  email: string;
+  url: string;
 }
 
 export interface ISearchResultProps {

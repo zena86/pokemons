@@ -22,7 +22,7 @@ class Input extends Component<IInputProps> {
     return (
       <input
         type="text"
-        value={this.state.term}
+        value={this.state.term.trim()}
         onChange={this.handleInputChange}
         placeholder="Search..."
       />
