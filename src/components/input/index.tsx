@@ -30,7 +30,7 @@ class Input extends Component<IInputProps> {
         type="text"
         value={term.trim()}
         onChange={this.handleInputChange}
-        placeholder="Search..."
+        placeholder="Pokemon's name"
       />
     );
   }
