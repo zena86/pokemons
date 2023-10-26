@@ -8,4 +8,5 @@ export interface IPokemonCardProps {
 export interface IPokemonState {
   pokemon?: IPokemonDescription | null;
   errorMessage?: string;
+  isLoading: boolean;
 }

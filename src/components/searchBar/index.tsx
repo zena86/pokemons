@@ -2,6 +2,7 @@ import { Component, FormEvent } from 'react';
 import { ISearchBarProps } from './types';
 import Input from '../input';
 import Button from '../button';
+import style from './style.module.scss';
 
 class SearchBar extends Component<ISearchBarProps> {
   state = { term: '' };
@@ -19,12 +20,10 @@ class SearchBar extends Component<ISearchBarProps> {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onFormSubmit}>
-          <Input onInputChange={this.handleInputChange} />
-          <Button type="submit" title="Search" />
-        </form>
-      </div>
+      <form onSubmit={this.onFormSubmit} className={style.search}>
+        <Input onInputChange={this.handleInputChange} />
+        <Button type="submit" title="Search" />
+      </form>
     );
   }
 }

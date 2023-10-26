@@ -82,7 +82,9 @@ class Home extends Component {
         <SearchBar onFormSubmit={this.handleOnSearch} />
         {isLoading && <Loading />}
         {errorMessage && <Message errorMessage={errorMessage} />}
-        <SearchResult pokemons={filteredPokemons} />
+        {!isLoading && !errorMessage && (
+          <SearchResult pokemons={filteredPokemons} />
+        )}
       </>
     );
   }

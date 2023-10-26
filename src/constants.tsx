@@ -1,4 +1,4 @@
-export const ITEM_ON_PAGE = '20';
+export const ITEM_ON_PAGE = '12';
 
 export const NUM_OF_PAGE = '0';
 

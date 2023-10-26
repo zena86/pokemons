@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import './App.css';
 import Home from './pages/home';
+import ErrorButton from './components/errorButton';
 
 class App extends Component {
   state = {
@@ -17,10 +17,12 @@ class App extends Component {
     }
 
     return (
-      <>
-        <button onClick={this.handleClick}>Error Test</button>
-        <Home />
-      </>
+      <div className="container">
+        <div className="wrapper">
+          <ErrorButton onClick={this.handleClick} title="Error" />
+          <Home />
+        </div>
+      </div>
     );
   }
 }

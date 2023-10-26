@@ -1,5 +1,6 @@
 import { ChangeEvent, Component } from 'react';
 import { IInputProps } from './types';
+import style from './style.module.scss';
 
 class Input extends Component<IInputProps> {
   state = {
@@ -25,6 +26,7 @@ class Input extends Component<IInputProps> {
 
     return (
       <input
+        className={style.input}
         type="text"
         value={term.trim()}
         onChange={this.handleInputChange}
