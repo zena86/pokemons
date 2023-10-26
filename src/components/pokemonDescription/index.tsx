@@ -16,7 +16,7 @@ class PokemonDescription extends Component<IPokemonDescriptionProps> {
           <p>
             <strong>height:</strong> {height}
           </p>
-          <p>
+          <div>
             <strong>abilities:</strong>
             <ul>
               {abilities.map((item, index) => {
@@ -25,7 +25,7 @@ class PokemonDescription extends Component<IPokemonDescriptionProps> {
                 );
               })}
             </ul>
-          </p>
+          </div>
         </div>
         <button className={style['card-button']}>More info</button>
       </li>
