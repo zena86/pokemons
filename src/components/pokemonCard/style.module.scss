@@ -1,10 +1,12 @@
+@import '../../colors';
+
 .card {
   width: 190px;
   border-radius: 20px;
   background: rgba(245, 245, 245, 0.7);
   position: relative;
   padding: 1.8rem;
-  border: 2px solid #c3c6ce;
+  border: 2px solid $borderColor;
   transition: 0.5s ease-out;
   overflow: visible;
   cursor: pointer;
@@ -17,7 +19,7 @@
 }
 
 .card-details {
-  color: black;
+  color: $textColor;
   gap: .5em;
   display: grid;
   place-content: center;
@@ -28,7 +30,7 @@
   width: 60%;
   border-radius: 1rem;
   border: none;
-  background-color: #7d2ae8;
+  background-color: $accentColor;
   color: #fff;
   font-size: 1rem;
   padding: .5rem 1rem;
@@ -39,10 +41,6 @@
   transition: 0.3s ease-out;
 }
 
-.text-body {
-  color: rgb(134, 134, 134);
-}
-
 .text-title {
   font-size: 1.5em;
   font-weight: bold;
@@ -50,7 +48,7 @@
 }
 
 .card:hover {
-  border-color: #7d2ae8;
+  border-color: $accentColor;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
 }
 

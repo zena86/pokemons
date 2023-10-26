@@ -1,8 +1,10 @@
+@import '../../colors';
+
 .input {
   width: 100%;
   padding: 12px;
   border-radius: 6px;
-  border: 2px solid lightgrey;
+  border: 2px solid $borderColor;
   outline: none;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   box-shadow: 0px 0px 20px -18px;
@@ -12,17 +14,17 @@
   @media (max-width: 768px) {
     font-size: 16px;
   }
-}
 
-.input:hover {
-  border: 2px solid gray;
-  box-shadow: 0px 0px 20px -17px;
-}
+  &:hover {
+    border: 2px solid $borderActiveColor;
+    box-shadow: 0px 0px 20px -17px;
+  }
 
-.input:active {
-  transform: scale(0.95);
-}
+  &:active {
+    transform: scale(0.95);
+  }
 
-.input:focus {
-  border: 2px solid #7d2ae8;
+  &:focus {
+    border: 2px solid $accentColor;
+  }
 }

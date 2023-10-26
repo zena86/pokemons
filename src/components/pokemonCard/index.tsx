@@ -19,11 +19,9 @@ class PokemonCard extends Component<IPokemonDescriptionProps> {
           <div>
             <strong>abilities:</strong>
             <ul>
-              {abilities.map((item, index) => {
-                return (
-                  <li key={item.toString() + index}>{item.ability.name}</li>
-                );
-              })}
+              {abilities.map((item) => (
+                <li key={`${name}${item.ability.name}`}>{item.ability.name}</li>
+              ))}
             </ul>
           </div>
         </div>
