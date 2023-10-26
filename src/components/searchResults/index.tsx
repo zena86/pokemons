@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { IPokemon, ISearchResultProps } from './types';
-import PokemonCard from '../pokemonCard';
+import PokemonResult from '../pokemonResult';
 import Message from '../message';
 import style from './style.module.scss';
 
@@ -15,7 +15,7 @@ class SearchResult extends Component<ISearchResultProps> {
         ) : (
           <ul className={style.list}>
             {pokemons.map((pokemon: IPokemon) => {
-              return <PokemonCard key={pokemon.name} url={pokemon.url} />;
+              return <PokemonResult key={pokemon.name} url={pokemon.url} />;
             })}
           </ul>
         )}

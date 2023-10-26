@@ -1,4 +1,4 @@
-import { IPokemonDescription } from '../components/pokemonDescription/types';
+import { IPokemonDescription } from '../components/pokemonCard/types';
 import { IPokemon } from '../components/searchResults/types';
 
 export interface IPokemonsResponse {

@@ -3,7 +3,7 @@ import SearchBar from '../../components/searchBar';
 import SearchResult from '../../components/searchResults';
 import { getPokemons } from '../../services/pokemon.service';
 import { IHomeState } from './types';
-import Loading from '../../components/loading';
+import Loader from '../../components/loader';
 import Message from '../../components/message';
 import { filter } from '../../utils/filter';
 import { ITEM_ON_PAGE, MAX_ITEMS, NUM_OF_PAGE } from '../../constants';
@@ -80,7 +80,7 @@ class Home extends Component {
     return (
       <>
         <SearchBar onFormSubmit={this.handleOnSearch} />
-        {isLoading && <Loading />}
+        {isLoading && <Loader />}
         {errorMessage && <Message errorMessage={errorMessage} />}
         {!isLoading && !errorMessage && (
           <SearchResult pokemons={filteredPokemons} />

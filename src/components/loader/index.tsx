@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import style from './style.module.scss';
 
-class Loading extends Component {
+class Loader extends Component {
   render() {
     return (
       <div aria-label="Loading..." role="status" className={style.loader}>
@@ -13,4 +13,4 @@ class Loading extends Component {
   }
 }
 
-export default Loading;
+export default Loader;
