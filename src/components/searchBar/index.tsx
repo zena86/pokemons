@@ -18,6 +18,11 @@ class SearchBar extends Component<ISearchBarProps> {
     this.props.onFormSubmit(term);
   };
 
+  componentDidMount(): void {
+    const term = localStorage.getItem('term');
+    if (term) this.setState({ term: term });
+  }
+
   render() {
     return (
       <form onSubmit={this.onFormSubmit} className={style.search}>
