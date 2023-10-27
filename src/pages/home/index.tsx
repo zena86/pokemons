@@ -47,7 +47,7 @@ class Home extends Component<IHomeProps, IHomeState> {
     }
   };
 
-  handleOnSearch = async (term: string) => {
+  handleFormSubmit = async (term: string) => {
     await this.fetchingPokemons(term);
   };
 
@@ -60,7 +60,7 @@ class Home extends Component<IHomeProps, IHomeState> {
 
     return (
       <>
-        <SearchBar onFormSubmit={this.handleOnSearch} term={term} />
+        <SearchBar onFormSubmit={this.handleFormSubmit} term={term} />
         {isLoading && <Loader />}
         {errorMessage && <Message errorMessage={errorMessage} />}
         {!isLoading && !errorMessage && filteredPokemons && (

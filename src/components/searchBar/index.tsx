@@ -11,17 +11,17 @@ class SearchBar extends Component<ISearchBarProps> {
     this.setState({ term: term });
   };
 
-  onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { onFormSubmit } = this.props;
     const { term } = this.state;
-    localStorage.setItem('term', term);
-    onFormSubmit(term);
+    const trimmedTerm = term.trim();
+    localStorage.setItem('term', trimmedTerm);
+    this.props.onFormSubmit(trimmedTerm);
   };
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit} className={style.search}>
+      <form onSubmit={this.handleSubmit} className={style.search}>
         <Input onInputChange={this.handleInputChange} term={this.state.term} />
         <Button type="submit" title="Search" />
       </form>
