@@ -1,27 +1,31 @@
 import { Component } from 'react';
 import SearchBar from '../../components/searchBar';
 import SearchResult from '../../components/searchResults';
-import { getPokemons } from '../../services/pokemon.service';
-import { IHomeState } from './types';
+import { getPokemonsPerPage } from '../../services/pokemon.service';
+import { IHomeProps, IHomeState } from './types';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
-import { filter } from '../../utils/filter';
-import { ITEM_ON_PAGE, MAX_ITEMS, NUM_OF_PAGE } from '../../constants';
+import { ITEM_ON_PAGE } from '../../constants';
 
-class Home extends Component {
-  state: IHomeState = {
-    allPokemons: [],
-    filteredPokemons: [],
-    term: '',
-    isLoading: false,
-    errorMessage: '',
-  };
+class Home extends Component<IHomeProps, IHomeState> {
+  constructor(props: IHomeProps) {
+    super(props);
+    const termLs = localStorage.getItem('term') ?? '';
+    this.state = {
+      filteredPokemons: [],
+      isLoading: false,
+      errorMessage: '',
+      term: termLs,
+    };
+  }
 
-  handleOnSearch = async (text: string) => {
-    this.setState({ ...this.state, isLoading: true });
-    const { errorMessage, pokemons } = await getPokemons(
-      MAX_ITEMS,
-      NUM_OF_PAGE
+  fetchingPokemons = async (search = '') => {
+    this.setState({ ...this.state, isLoading: true, term: search });
+
+    const { errorMessage, pokemons } = await getPokemonsPerPage(
+      ITEM_ON_PAGE,
+      0,
+      search
     );
 
     if (errorMessage) {
@@ -34,55 +38,32 @@ class Home extends Component {
     }
 
     if (pokemons) {
-      const filteredList = filter(pokemons, text);
       this.setState({
         ...this.state,
         isLoading: false,
-        filteredPokemons: filteredList.slice(+NUM_OF_PAGE, +ITEM_ON_PAGE),
+        filteredPokemons: pokemons,
+        term: search,
       });
     }
   };
 
+  handleOnSearch = async (term: string) => {
+    await this.fetchingPokemons(term);
+  };
+
   async componentDidMount() {
-    this.setState({ ...this.state, isLoading: true });
-
-    const { errorMessage, pokemons } = await getPokemons(
-      ITEM_ON_PAGE,
-      NUM_OF_PAGE
-    );
-
-    if (errorMessage) {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        errorMessage: errorMessage,
-      });
-      return;
-    }
-
-    this.setState(
-      {
-        ...this.state,
-        isLoading: false,
-        allPokemons: pokemons,
-        filteredPokemons: pokemons,
-      },
-      () => {
-        const term = localStorage.getItem('term');
-        if (term) this.handleOnSearch(term);
-      }
-    );
+    await this.fetchingPokemons(this.state.term);
   }
 
   render() {
-    const { filteredPokemons, isLoading, errorMessage } = this.state;
+    const { filteredPokemons, isLoading, errorMessage, term } = this.state;
 
     return (
       <>
-        <SearchBar onFormSubmit={this.handleOnSearch} />
+        <SearchBar onFormSubmit={this.handleOnSearch} term={term} />
         {isLoading && <Loader />}
         {errorMessage && <Message errorMessage={errorMessage} />}
-        {!isLoading && !errorMessage && (
+        {!isLoading && !errorMessage && filteredPokemons && (
           <SearchResult pokemons={filteredPokemons} />
         )}
       </>

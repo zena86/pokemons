@@ -1,20 +1,5 @@
 import { IPokemonResponse, IPokemonsResponse } from './types';
 
-export const getPokemons = async (
-  limit: string,
-  offset: string
-): Promise<IPokemonsResponse> => {
-  try {
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-    );
-    const { results } = await response.json();
-    return { pokemons: results };
-  } catch (error) {
-    return { errorMessage: `Oops! ${error}` };
-  }
-};
-
 export const getPokemon = async (url: string): Promise<IPokemonResponse> => {
   try {
     const response = await fetch(url);
@@ -22,5 +7,21 @@ export const getPokemon = async (url: string): Promise<IPokemonResponse> => {
     return { pokemon: pokemon };
   } catch (error) {
     return { errorMessage: `Oops! ${error}. URL ${url}` };
+  }
+};
+
+export const getPokemonsPerPage = async (
+  limit?: number,
+  offset?: number,
+  search?: string
+): Promise<IPokemonsResponse> => {
+  try {
+    const response = await fetch(
+      `https://pokemons.jk-mostovaya.workers.dev?search=${search}&offset=${offset}&limit=${limit}`
+    );
+    const result = await response.json();
+    return { pokemons: result };
+  } catch (error) {
+    return { errorMessage: `Oops! ${error}` };
   }
 };

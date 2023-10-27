@@ -5,7 +5,7 @@ import Button from '../button';
 import style from './style.module.scss';
 
 class SearchBar extends Component<ISearchBarProps> {
-  state = { term: '' };
+  state = { term: this.props.term };
 
   handleInputChange = (term: string): void => {
     this.setState({ term: term });
@@ -13,20 +13,16 @@ class SearchBar extends Component<ISearchBarProps> {
 
   onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    const { onFormSubmit } = this.props;
     const { term } = this.state;
     localStorage.setItem('term', term);
-    this.props.onFormSubmit(term);
+    onFormSubmit(term);
   };
-
-  componentDidMount(): void {
-    const term = localStorage.getItem('term');
-    if (term) this.setState({ term: term });
-  }
 
   render() {
     return (
       <form onSubmit={this.onFormSubmit} className={style.search}>
-        <Input onInputChange={this.handleInputChange} />
+        <Input onInputChange={this.handleInputChange} term={this.state.term} />
         <Button type="submit" title="Search" />
       </form>
     );

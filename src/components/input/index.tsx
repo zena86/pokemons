@@ -4,31 +4,20 @@ import style from './style.module.scss';
 
 class Input extends Component<IInputProps> {
   state = {
-    term: '',
+    term: this.props.term,
   };
 
   handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     this.setState({ term: e.target.value });
-
-    const { onInputChange } = this.props;
-    onInputChange(e.target.value);
+    this.props.onInputChange(e.target.value);
   };
 
-  componentDidMount() {
-    const termLs = localStorage.getItem('term');
-    if (termLs) {
-      this.setState({ term: termLs });
-    }
-  }
-
   render() {
-    const { term } = this.state;
-
     return (
       <input
         className={style.input}
         type="text"
-        value={term.trim()}
+        value={this.state.term}
         onChange={this.handleInputChange}
         placeholder="Pokemon's name"
       />
