@@ -20,7 +20,7 @@
 
 .card-details {
   color: $textColor;
-  gap: .5em;
+  gap: 0.5em;
   display: grid;
   place-content: center;
 }
@@ -33,7 +33,7 @@
   background-color: $accentColor;
   color: #fff;
   font-size: 1rem;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   position: absolute;
   left: 50%;
   bottom: 0;
