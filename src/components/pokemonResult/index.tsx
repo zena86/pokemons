@@ -13,27 +13,16 @@ class PokemonResult extends Component<PokemonCardProps> {
   };
 
   async componentDidMount() {
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    });
+    this.setState({ isLoading: true });
 
     const { errorMessage, pokemon } = await getPokemon(this.props.url);
 
     if (errorMessage) {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        errorMessage: errorMessage,
-      });
+      this.setState({ isLoading: false, errorMessage: errorMessage });
       return;
     }
 
-    this.setState({
-      ...this.state,
-      isLoading: false,
-      pokemon: pokemon,
-    });
+    this.setState({ isLoading: false, pokemon: pokemon });
   }
 
   render() {
