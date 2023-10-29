@@ -8,19 +8,15 @@ import Message from '../../components/message';
 import { ITEM_ON_PAGE } from '../../constants';
 
 class Home extends Component<IHomeProps, IHomeState> {
-  constructor(props: IHomeProps) {
-    super(props);
-    const termLs = localStorage.getItem('term') ?? '';
-    this.state = {
-      filteredPokemons: [],
-      isLoading: false,
-      errorMessage: '',
-      term: termLs,
-    };
-  }
+  state = {
+    filteredPokemons: [],
+    isLoading: false,
+    errorMessage: '',
+    term: localStorage.getItem('term') ?? '',
+  };
 
   fetchingPokemons = async (search = '') => {
-    this.setState({ ...this.state, isLoading: true, term: search });
+    this.setState({ isLoading: true });
 
     const { errorMessage, pokemons } = await getPokemonsPerPage(
       ITEM_ON_PAGE,
@@ -29,21 +25,12 @@ class Home extends Component<IHomeProps, IHomeState> {
     );
 
     if (errorMessage) {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        errorMessage: errorMessage,
-      });
+      this.setState({ isLoading: false, errorMessage: errorMessage });
       return;
     }
 
     if (pokemons) {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-        filteredPokemons: pokemons,
-        term: search,
-      });
+      this.setState({ isLoading: false, filteredPokemons: pokemons });
     }
   };
 
@@ -51,8 +38,17 @@ class Home extends Component<IHomeProps, IHomeState> {
     await this.fetchingPokemons(term);
   };
 
-  async componentDidMount() {
-    await this.fetchingPokemons(this.state.term);
+  componentDidMount() {
+    this.fetchingPokemons(this.state.term);
+  }
+
+  componentDidUpdate(
+    _: Readonly<IHomeProps>,
+    prevState: Readonly<IHomeState>
+  ): void {
+    if (prevState.term !== this.state.term) {
+      this.fetchingPokemons(this.state.term);
+    }
   }
 
   render() {
