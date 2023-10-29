@@ -2,12 +2,12 @@ import { Component } from 'react';
 import SearchBar from '../../components/searchBar';
 import SearchResult from '../../components/searchResults';
 import { getPokemonsPerPage } from '../../services/pokemon.service';
-import { IHomeProps, IHomeState } from './types';
+import { HomeProps, HomeState } from './types';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
 import { ITEM_ON_PAGE } from '../../constants';
 
-class Home extends Component<IHomeProps, IHomeState> {
+class Home extends Component<HomeProps, HomeState> {
   state = {
     filteredPokemons: [],
     isLoading: false,
@@ -43,8 +43,8 @@ class Home extends Component<IHomeProps, IHomeState> {
   }
 
   componentDidUpdate(
-    _: Readonly<IHomeProps>,
-    prevState: Readonly<IHomeState>
+    _: Readonly<HomeProps>,
+    prevState: Readonly<HomeState>
   ): void {
     if (prevState.term !== this.state.term) {
       this.fetchingPokemons(this.state.term);

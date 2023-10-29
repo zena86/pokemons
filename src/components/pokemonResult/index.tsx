@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import { getPokemon } from '../../services/pokemon.service';
 import Message from '../message';
-import { IPokemonCardProps, IPokemonState } from './types';
+import { PokemonCardProps, PokemonState } from './types';
 import PokemonCard from '../pokemonCard';
 import Loader from '../loader';
 
-class PokemonResult extends Component<IPokemonCardProps> {
-  state: IPokemonState = {
+class PokemonResult extends Component<PokemonCardProps> {
+  state: PokemonState = {
     errorMessage: '',
     pokemon: null,
     isLoading: false,

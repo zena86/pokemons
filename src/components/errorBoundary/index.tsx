@@ -1,13 +1,10 @@
 import { Component, ErrorInfo } from 'react';
-import { IErrorBoundaryProps, IErrorBoundaryState } from './types';
+import { ErrorBoundaryProps, ErrorBoundaryState } from './types';
 import Message from '../message';
 import style from './style.module.scss';
 
-class ErrorBoundary extends Component<
-  IErrorBoundaryProps,
-  IErrorBoundaryState
-> {
-  constructor(props: IErrorBoundaryProps) {
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
@@ -20,7 +17,7 @@ class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className={style.xxx}>
+        <div className={style.error}>
           <div className="wrapper">
             <Message errorMessage="Something went wrong"></Message>
           </div>

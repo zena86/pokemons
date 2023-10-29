@@ -1,4 +1,4 @@
-export interface IAbility {
+export interface Ability {
   ability: {
     name: string;
     url: string;
@@ -7,12 +7,12 @@ export interface IAbility {
   slot: number;
 }
 
-export interface IForm {
+export interface Form {
   name: string;
   url: string;
 }
 
-export interface IVersionGroupDetails {
+export interface VersionGroupDetails {
   level_learned_at: number;
   move_learn_method: {
     name: string;
@@ -24,15 +24,15 @@ export interface IVersionGroupDetails {
   };
 }
 
-export interface IMove {
+export interface Move {
   move: {
     name: string;
     url: string;
   };
-  version_group_details: IVersionGroupDetails[];
+  version_group_details: VersionGroupDetails[];
 }
 
-export interface IStat {
+export interface Stat {
   base_stat: number;
   effort: number;
   stat: {
@@ -41,7 +41,7 @@ export interface IStat {
   };
 }
 
-export interface IType {
+export interface Type {
   slot: number;
   type: {
     name: string;
@@ -49,17 +49,17 @@ export interface IType {
   };
 }
 
-export interface IPokemonDescription {
-  abilities: IAbility[];
+export interface PokemonDescription {
+  abilities: Ability[];
   base_experience: unknown;
-  forms: IForm[];
+  forms: Form[];
   game_indices: unknown[];
   height: number;
   held_items: unknown[];
   id: number;
   is_default: boolean;
   location_area_encounters: string;
-  moves: IMove[];
+  moves: Move[];
   name: string;
   order: number;
   past_types: unknown[];
@@ -68,11 +68,11 @@ export interface IPokemonDescription {
     url: string;
   };
   sprites: unknown;
-  stats: IStat[];
-  types: IType[];
+  stats: Stat[];
+  types: Type[];
   weight: number;
 }
 
-export interface IPokemonDescriptionProps {
-  pokemon: IPokemonDescription;
+export interface PokemonDescriptionProps {
+  pokemon: PokemonDescription;
 }

@@ -1,10 +1,10 @@
-import { IPokemon } from '../../components/searchResults/types';
+import { Pokemon } from '../../components/searchResults/types';
 
-export interface IHomeState {
-  filteredPokemons: IPokemon[];
+export interface HomeState {
+  filteredPokemons: Pokemon[];
   term: string;
   isLoading: boolean;
   errorMessage: string;
 }
 
-export interface IHomeProps {}
+export interface HomeProps {}

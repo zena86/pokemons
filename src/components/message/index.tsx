@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { IErrorMessageProps } from './types';
+import { ErrorMessageProps } from './types';
 import style from './style.module.scss';
 
-class Message extends Component<IErrorMessageProps> {
+class Message extends Component<ErrorMessageProps> {
   render() {
     const { errorMessage } = this.props;
 

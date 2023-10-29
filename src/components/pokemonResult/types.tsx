@@ -1,12 +1,12 @@
-import { IPokemonDescription } from '../pokemonCard/types';
+import { PokemonDescription } from '../pokemonCard/types';
 
-export interface IPokemonCardProps {
+export interface PokemonCardProps {
   key: string;
   url: string;
 }
 
-export interface IPokemonState {
-  pokemon?: IPokemonDescription | null;
+export interface PokemonState {
+  pokemon?: PokemonDescription | null;
   errorMessage?: string;
   isLoading: boolean;
 }

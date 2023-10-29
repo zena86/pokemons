@@ -1,8 +1,8 @@
 import { ChangeEvent, Component } from 'react';
-import { IInputProps } from './types';
+import { InputProps } from './types';
 import style from './style.module.scss';
 
-class Input extends Component<IInputProps> {
+class Input extends Component<InputProps> {
   state = {
     term: this.props.term,
   };

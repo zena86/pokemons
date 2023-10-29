@@ -1,10 +1,10 @@
 import { Component } from 'react';
-import { IPokemon, ISearchResultProps } from './types';
+import { Pokemon, SearchResultProps } from './types';
 import PokemonResult from '../pokemonResult';
 import Message from '../message';
 import style from './style.module.scss';
 
-class SearchResult extends Component<ISearchResultProps> {
+class SearchResult extends Component<SearchResultProps> {
   render() {
     const { pokemons } = this.props;
 
@@ -14,7 +14,7 @@ class SearchResult extends Component<ISearchResultProps> {
           <Message errorMessage="No pokemons found" />
         ) : (
           <ul className={style.list}>
-            {pokemons.map((pokemon: IPokemon) => {
+            {pokemons.map((pokemon: Pokemon) => {
               return <PokemonResult key={pokemon.name} url={pokemon.url} />;
             })}
           </ul>

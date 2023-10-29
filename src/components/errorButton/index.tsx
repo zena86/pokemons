@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { IErrorButtonProps } from './types';
+import { ErrorButtonProps } from './types';
 import style from './style.module.scss';
 
-class ErrorButton extends Component<IErrorButtonProps> {
+class ErrorButton extends Component<ErrorButtonProps> {
   render() {
     const { type = 'button', title, onClick } = this.props;
 

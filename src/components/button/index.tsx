@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { IButtonProps } from './types';
+import { ButtonProps } from './types';
 import style from './style.module.scss';
 
-class Button extends Component<IButtonProps> {
+class Button extends Component<ButtonProps> {
   render() {
     const { type, title } = this.props;
     return (

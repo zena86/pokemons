@@ -1,12 +1,12 @@
-import { IPokemonDescription } from '../components/pokemonCard/types';
-import { IPokemon } from '../components/searchResults/types';
+import { PokemonDescription } from '../components/pokemonCard/types';
+import { Pokemon } from '../components/searchResults/types';
 
-export interface IPokemonsResponse {
-  pokemons?: IPokemon[];
+export interface PokemonsResponse {
+  pokemons?: Pokemon[];
   errorMessage?: string;
 }
 
-export interface IPokemonResponse {
-  pokemon?: IPokemonDescription;
+export interface PokemonResponse {
+  pokemon?: PokemonDescription;
   errorMessage?: string;
 }

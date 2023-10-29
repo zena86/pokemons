@@ -1,8 +1,8 @@
-export interface IPokemon {
+export interface Pokemon {
   name: string;
   url: string;
 }
 
-export interface ISearchResultProps {
-  pokemons: IPokemon[];
+export interface SearchResultProps {
+  pokemons: Pokemon[];
 }

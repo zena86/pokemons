@@ -1,6 +1,6 @@
-import { IPokemonResponse, IPokemonsResponse } from './types';
+import { PokemonResponse, PokemonsResponse } from './types';
 
-export const getPokemon = async (url: string): Promise<IPokemonResponse> => {
+export const getPokemon = async (url: string): Promise<PokemonResponse> => {
   try {
     const response = await fetch(url);
     const pokemon = await response.json();
@@ -14,7 +14,7 @@ export const getPokemonsPerPage = async (
   limit?: number,
   offset?: number,
   search?: string
-): Promise<IPokemonsResponse> => {
+): Promise<PokemonsResponse> => {
   try {
     const response = await fetch(
       `https://pokemons.jk-mostovaya.workers.dev?search=${search}&offset=${offset}&limit=${limit}`

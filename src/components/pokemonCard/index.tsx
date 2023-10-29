@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { IPokemonDescriptionProps } from './types';
+import { PokemonDescriptionProps } from './types';
 import style from './style.module.scss';
 
-class PokemonCard extends Component<IPokemonDescriptionProps> {
+class PokemonCard extends Component<PokemonDescriptionProps> {
   render() {
     const { name, weight, height, abilities } = this.props.pokemon;
 
