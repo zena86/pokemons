@@ -5,7 +5,7 @@ import { getPokemonsPerPage } from '../../services/pokemon.service';
 import { HomeProps, HomeState } from './types';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
-import { ITEM_ON_PAGE } from '../../constants';
+import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 
 class Home extends Component<HomeProps, HomeState> {
   state = {
@@ -19,8 +19,8 @@ class Home extends Component<HomeProps, HomeState> {
     this.setState({ isLoading: true });
 
     const { errorMessage, pokemons } = await getPokemonsPerPage(
-      ITEM_ON_PAGE,
-      0,
+      ITEMS_ON_PAGE,
+      NUM_OF_START_PAGE,
       search
     );
 
