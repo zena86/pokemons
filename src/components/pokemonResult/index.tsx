@@ -7,7 +7,7 @@ import Loader from '../loader';
 
 class PokemonResult extends Component<PokemonCardProps> {
   state: PokemonState = {
-    errorMessage: '',
+    errorMessage: null,
     pokemon: null,
     isLoading: false,
   };

@@ -7,6 +7,6 @@ export interface PokemonCardProps {
 
 export interface PokemonState {
   pokemon?: PokemonDescription | null;
-  errorMessage?: string;
+  errorMessage?: string | null;
   isLoading: boolean;
 }

@@ -11,7 +11,7 @@ class Home extends Component<HomeProps, HomeState> {
   state = {
     filteredPokemons: [],
     isLoading: false,
-    errorMessage: '',
+    errorMessage: null,
     term: localStorage.getItem('term') ?? '',
   };
 
