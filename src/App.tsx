@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Home from './pages/home';
+import Home from './pages/home/index';
 import ErrorButton from './components/errorButton';
 
 class App extends Component {
