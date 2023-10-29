@@ -1,10 +1,10 @@
 import { Component } from 'react';
-import { Pokemon, SearchResultProps } from './types';
-import PokemonResult from '../pokemonResult';
+import { Pokemon, SearchListProps } from './types';
 import Message from '../message';
 import style from './style.module.scss';
+import PokemonItem from '../pokemonItem';
 
-class SearchResult extends Component<SearchResultProps> {
+class SearchList extends Component<SearchListProps> {
   render() {
     const { pokemons } = this.props;
 
@@ -15,7 +15,7 @@ class SearchResult extends Component<SearchResultProps> {
         ) : (
           <ul className={style.list}>
             {pokemons.map((pokemon: Pokemon) => {
-              return <PokemonResult key={pokemon.name} url={pokemon.url} />;
+              return <PokemonItem key={pokemon.name} url={pokemon.url} />;
             })}
           </ul>
         )}
@@ -24,4 +24,4 @@ class SearchResult extends Component<SearchResultProps> {
   }
 }
 
-export default SearchResult;
+export default SearchList;

@@ -3,6 +3,6 @@ export interface Pokemon {
   url: string;
 }
 
-export interface SearchResultProps {
+export interface SearchListProps {
   pokemons: Pokemon[];
 }

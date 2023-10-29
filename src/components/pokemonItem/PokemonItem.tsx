@@ -5,7 +5,7 @@ import { PokemonCardProps, PokemonState } from './types';
 import PokemonCard from '../pokemonCard';
 import Loader from '../loader';
 
-class PokemonResult extends Component<PokemonCardProps> {
+class PokemonItem extends Component<PokemonCardProps> {
   state: PokemonState = {
     errorMessage: null,
     pokemon: null,
@@ -39,4 +39,4 @@ class PokemonResult extends Component<PokemonCardProps> {
     );
   }
 }
-export default PokemonResult;
+export default PokemonItem;

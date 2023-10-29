@@ -1,4 +1,4 @@
-import { Pokemon } from '../../components/searchResults/types';
+import { Pokemon } from '../../components/searchList/types';
 
 export interface HomeState {
   filteredPokemons: Pokemon[];

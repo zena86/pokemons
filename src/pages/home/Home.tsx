@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import SearchBar from '../../components/searchBar';
-import SearchResult from '../../components/searchResults';
+import SearchList from '../../components/searchList';
 import { getPokemonsPerPage } from '../../services/pokemon.service';
 import { HomeProps, HomeState } from './types';
 import Loader from '../../components/loader';
@@ -60,7 +60,7 @@ class Home extends Component<HomeProps, HomeState> {
         {isLoading && <Loader />}
         {errorMessage && <Message errorMessage={errorMessage} />}
         {!isLoading && !errorMessage && filteredPokemons && (
-          <SearchResult pokemons={filteredPokemons} />
+          <SearchList pokemons={filteredPokemons} />
         )}
       </>
     );

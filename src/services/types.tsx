@@ -1,5 +1,5 @@
 import { PokemonDescription } from '../components/pokemonCard/types';
-import { Pokemon } from '../components/searchResults/types';
+import { Pokemon } from '../components/searchList/types';
 
 export interface PokemonsResponse {
   pokemons?: Pokemon[];
