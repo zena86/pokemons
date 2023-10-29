@@ -4,18 +4,20 @@ import ErrorButton from './components/errorButton';
 
 class App extends Component {
   state = {
-    throwError: false,
+    hasError: false,
   };
 
+  componentDidUpdate(): void {
+    if (this.state.hasError) {
+      throw new Error('Unexpected error');
+    }
+  }
+
   handleClick = () => {
-    this.setState({ throwError: true });
+    this.setState({ hasError: true });
   };
 
   render() {
-    if (this.state.throwError) {
-      throw new Error('Oops, something went wrong!');
-    }
-
     return (
       <div className="container">
         <div className="wrapper">
