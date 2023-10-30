@@ -1,22 +1,20 @@
-import { Component } from 'react';
 import SearchBar from '../../components/searchBar';
 import SearchList from '../../components/searchList';
 import { getPokemonsPerPage } from '../../services/pokemon.service';
-import { HomeProps, HomeState } from './types';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
+import { useEffect, useState } from 'react';
+import { Pokemon } from '../../components/searchList/types';
 
-class Home extends Component<HomeProps, HomeState> {
-  state = {
-    filteredPokemons: [],
-    isLoading: false,
-    errorMessage: null,
-    term: localStorage.getItem('term') ?? '',
-  };
+const Home = () => {
+  const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [term] = useState(localStorage.getItem('term') ?? '');
 
-  fetchingPokemons = async (search = '') => {
-    this.setState({ isLoading: true });
+  const fetchingPokemons = async (search = '') => {
+    setIsLoading(true);
 
     const { errorMessage, pokemons } = await getPokemonsPerPage(
       ITEMS_ON_PAGE,
@@ -25,46 +23,35 @@ class Home extends Component<HomeProps, HomeState> {
     );
 
     if (errorMessage) {
-      this.setState({ isLoading: false, errorMessage: errorMessage });
+      setIsLoading(false);
+      setErrorMsg(errorMessage);
       return;
     }
 
     if (pokemons) {
-      this.setState({ isLoading: false, filteredPokemons: pokemons });
+      setIsLoading(false);
+      setFilteredPokemons(pokemons);
     }
   };
 
-  handleFormSubmit = async (term: string) => {
-    await this.fetchingPokemons(term);
+  const handleFormSubmit = async (term: string) => {
+    await fetchingPokemons(term);
   };
 
-  componentDidMount() {
-    this.fetchingPokemons(this.state.term);
-  }
+  useEffect(() => {
+    fetchingPokemons(term);
+  }, [term]);
 
-  componentDidUpdate(
-    _: Readonly<HomeProps>,
-    prevState: Readonly<HomeState>
-  ): void {
-    if (prevState.term !== this.state.term) {
-      this.fetchingPokemons(this.state.term);
-    }
-  }
-
-  render() {
-    const { filteredPokemons, isLoading, errorMessage, term } = this.state;
-
-    return (
-      <>
-        <SearchBar onFormSubmit={this.handleFormSubmit} term={term} />
-        {isLoading && <Loader />}
-        {errorMessage && <Message errorMessage={errorMessage} />}
-        {!isLoading && !errorMessage && filteredPokemons && (
-          <SearchList pokemons={filteredPokemons} />
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <SearchBar onFormSubmit={handleFormSubmit} term={term} />
+      {isLoading && <Loader />}
+      {errorMsg && <Message errorMessage={errorMsg} />}
+      {!isLoading && !errorMsg && filteredPokemons && (
+        <SearchList pokemons={filteredPokemons} />
+      )}
+    </>
+  );
+};
 
 export default Home;

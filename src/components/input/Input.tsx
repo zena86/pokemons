@@ -1,28 +1,24 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { InputProps } from './types';
 import style from './style.module.scss';
 
-class Input extends Component<InputProps> {
-  state = {
-    term: this.props.term,
+const Input = ({ term, onInputChange }: InputProps) => {
+  const [search, setSearch] = useState(term);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearch(e.target.value);
+    onInputChange(e.target.value);
   };
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ term: e.target.value });
-    this.props.onInputChange(e.target.value);
-  };
-
-  render() {
-    return (
-      <input
-        className={style.input}
-        type="text"
-        value={this.state.term}
-        onChange={this.handleInputChange}
-        placeholder="Pokemon's name"
-      />
-    );
-  }
-}
+  return (
+    <input
+      className={style.input}
+      type="text"
+      value={search}
+      onChange={handleInputChange}
+      placeholder="Pokemon's name"
+    />
+  );
+};
 
 export default Input;

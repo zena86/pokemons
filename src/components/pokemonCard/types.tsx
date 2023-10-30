@@ -73,6 +73,6 @@ export interface PokemonDescription {
   weight: number;
 }
 
-export interface PokemonDescriptionProps {
+export interface PokemonCardProps {
   pokemon: PokemonDescription;
 }

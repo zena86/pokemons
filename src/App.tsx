@@ -1,32 +1,28 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import Home from './pages/home/index';
 import ErrorButton from './components/errorButton';
 
-class App extends Component {
-  state = {
-    hasError: false,
-  };
+const App = () => {
+  const [hasError, setHasError] = useState(false);
 
-  componentDidUpdate(): void {
-    if (this.state.hasError) {
+  useEffect(() => {
+    if (hasError) {
       throw new Error('Unexpected error');
     }
-  }
+  }, [hasError]);
 
-  handleClick = () => {
-    this.setState({ hasError: true });
+  const handleClick = () => {
+    setHasError(true);
   };
 
-  render() {
-    return (
-      <div className="container">
-        <div className="wrapper">
-          <ErrorButton onClick={this.handleClick} title="Error" />
-          <Home />
-        </div>
+  return (
+    <div className="container">
+      <div className="wrapper">
+        <ErrorButton onClick={handleClick} title="Error" />
+        <Home />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;
