@@ -6,6 +6,7 @@ import Message from '../../components/message';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useEffect, useState } from 'react';
 import { Pokemon } from '../../components/searchList/types';
+import ErrorButton from '../../components/errorButton/ErrorButton';
 
 const Home = () => {
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
@@ -43,14 +44,17 @@ const Home = () => {
   }, [term]);
 
   return (
-    <>
-      <SearchBar onFormSubmit={handleFormSubmit} term={term} />
-      {isLoading && <Loader />}
-      {errorMsg && <Message errorMessage={errorMsg} />}
-      {!isLoading && !errorMsg && filteredPokemons && (
-        <SearchList pokemons={filteredPokemons} />
-      )}
-    </>
+    <div className="container">
+      <div className="wrapper">
+        <ErrorButton />
+        <SearchBar onFormSubmit={handleFormSubmit} term={term} />
+        {isLoading && <Loader />}
+        {errorMsg && <Message errorMessage={errorMsg} />}
+        {!isLoading && !errorMsg && filteredPokemons && (
+          <SearchList pokemons={filteredPokemons} />
+        )}
+      </div>
+    </div>
   );
 };
 
