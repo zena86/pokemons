@@ -17,10 +17,10 @@ export const getPokemonsPerPage = async (
 ): Promise<PokemonsResponse> => {
   try {
     const response = await fetch(
-      `https://pokemons.jk-mostovaya.workers.dev?search=${search}&offset=${offset}&limit=${limit}`
+      `https://pokemons-2.jk-mostovaya.workers.dev/?search=${search}&offset=${offset}&limit=${limit}`
     );
     const result = await response.json();
-    return { pokemons: result };
+    return { result: result };
   } catch (error) {
     return { errorMessage: `Oops! ${error}` };
   }
