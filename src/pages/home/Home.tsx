@@ -6,16 +6,19 @@ import Message from '../../components/message';
 import { ITEMS_ON_PAGE } from '../../constants';
 import { useEffect, useState } from 'react';
 import { Pokemon } from '../../components/searchList/types';
-import ErrorButton from '../../components/errorButton/';
 import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/';
 import { getNumberOfPages } from '../../utils/numberOfPages';
+import SettingsPanel from '../../components/settingsPanel/';
+import { Payload } from '../../components/settingsPanel/types';
 
 const Home = () => {
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [term] = useState(localStorage.getItem('term') ?? '');
+  const [term, setTerm] = useState(localStorage.getItem('term') ?? '');
+
+  const [itemsOnPage, setItemsOnPage] = useState(ITEMS_ON_PAGE);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
@@ -27,9 +30,8 @@ const Home = () => {
     setIsLoading(true);
 
     const { errorMessage, result } = await getPokemonsPerPage(
-      ITEMS_ON_PAGE,
-      (currentPage - 1) * ITEMS_ON_PAGE,
-      //NUM_OF_START_PAGE,
+      itemsOnPage,
+      (currentPage - 1) * itemsOnPage,
       search
     );
 
@@ -46,20 +48,28 @@ const Home = () => {
     }
   };
 
-  const handleFormSubmit = async (term: string) => {
-    await fetchingPokemons(term);
+  const handleFormSubmit = (inputTerm: string) => {
+    if (term !== inputTerm) {
+      setCurrentPage(1);
+    }
+    setTerm(inputTerm);
     setSearchParams('?frontpage=1');
+  };
+
+  const handleSettingsChange = ({ selectedOption }: Payload) => {
+    setItemsOnPage(selectedOption.value);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
     fetchingPokemons(term);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [term, currentPage]);
+  }, [term, currentPage, itemsOnPage]);
 
   return (
     <div className="container">
       <div className="wrapper">
-        <ErrorButton />
+        <SettingsPanel onItemsChange={handleSettingsChange} />
         <SearchBar onFormSubmit={handleFormSubmit} term={term} />
         {isLoading && <Loader />}
         {errorMsg && <Message errorMessage={errorMsg} />}
@@ -68,7 +78,7 @@ const Home = () => {
         )}
         {count > ITEMS_ON_PAGE && (
           <Pagination
-            nPages={getNumberOfPages(count, ITEMS_ON_PAGE)}
+            nPages={getNumberOfPages(count, itemsOnPage)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />

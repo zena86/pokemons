@@ -64,9 +64,8 @@ const Pagination = ({
         <li className={styles['page-item']}>
           <Link
             to={`?frontpage=${currentPage <= 1 ? 1 : currentPage - 1}`}
-            className="page-link"
+            className={`${currentPage <= 1 && styles.disabled}`}
             onClick={goToPrevPage}
-            // disabled={currentPage <= 1}
           >
             <FaArrowLeft />
           </Link>
@@ -132,9 +131,8 @@ const Pagination = ({
             to={`?frontpage=${
               currentPage >= nPages ? nPages : currentPage + 1
             }`}
-            className="page-link"
+            className={`${currentPage >= nPages && styles.disabled}`}
             onClick={goToNextPage}
-            // disabled={currentPage === nPages}
           >
             <FaArrowRight />
           </Link>

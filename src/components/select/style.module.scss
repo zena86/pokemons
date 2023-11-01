@@ -1,0 +1,69 @@
+@import '../../colors';
+
+.select {
+	position: relative;
+	width: 150px;
+}
+
+.toggle {
+	height: 45px;
+	width: 100%;
+	text-align: left;
+	text-align: center;
+	cursor: pointer;
+	background-color: $accentColor;
+	color: white;
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 1px;
+	border: none;
+	border-radius: 6px;
+	transition: all 0.3s ease-out;
+
+	&:hover {
+		background: darken($accentColor, 10%);
+		box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+	}
+}
+
+.options {
+	visibility: hidden;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+.select--expanded .options {
+	visibility: visible;
+}
+
+.option {
+	width: 100%;
+	border: 0;
+	text-align: left;
+	background: rgba(255, 255, 255, 0.7);
+	padding: 8px 10px;
+	margin-top: 4px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+	color: $textColor;
+	border: 2px solid white;
+	transition: all 0.3s ease-out;
+	position: relative;
+	z-index: 20;
+
+	&:hover {
+		border: 2px solid $accentColor;
+		box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+		color: $accentColor;
+	}
+
+	&:disabled {
+		cursor: default;
+		color: lightgray;
+		border: 2px solid white;
+		box-shadow: none;
+	}
+}
