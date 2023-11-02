@@ -10,6 +10,18 @@ export const getPokemon = async (url: string): Promise<PokemonResponse> => {
   }
 };
 
+export const getPokemonByName = async (
+  name: string
+): Promise<PokemonResponse> => {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const pokemon = await response.json();
+    return { pokemon: pokemon };
+  } catch (error) {
+    return { errorMessage: `Oops! ${error}. Name ${name}` };
+  }
+};
+
 export const getPokemonsPerPage = async (
   limit?: number,
   offset?: number,

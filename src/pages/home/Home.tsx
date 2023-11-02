@@ -3,14 +3,15 @@ import SearchList from '../../components/searchList';
 import { getPokemonsPerPage } from '../../services/pokemon.service';
 import Loader from '../../components/loader';
 import Message from '../../components/message';
-import { ITEMS_ON_PAGE } from '../../constants';
+import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useEffect, useState } from 'react';
 import { Pokemon } from '../../components/searchList/types';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/pagination/';
 import { getNumberOfPages } from '../../utils/numberOfPages';
 import SettingsPanel from '../../components/settingsPanel/';
 import { Payload } from '../../components/settingsPanel/types';
+import styles from './style.module.scss';
 
 const Home = () => {
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
@@ -50,7 +51,7 @@ const Home = () => {
 
   const handleFormSubmit = (inputTerm: string) => {
     if (term !== inputTerm) {
-      setCurrentPage(1);
+      setCurrentPage(NUM_OF_START_PAGE);
     }
     setTerm(inputTerm);
     setSearchParams('?frontpage=1');
@@ -58,7 +59,7 @@ const Home = () => {
 
   const handleSettingsChange = ({ selectedOption }: Payload) => {
     setItemsOnPage(selectedOption.value);
-    setCurrentPage(1);
+    setCurrentPage(NUM_OF_START_PAGE);
   };
 
   useEffect(() => {
@@ -82,6 +83,11 @@ const Home = () => {
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
+        )}
+        {searchParams.get('details') && (
+          <div className={styles.details}>
+            <Outlet />
+          </div>
         )}
       </div>
     </div>

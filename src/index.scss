@@ -6,8 +6,12 @@
 
 body {
   background-image: url('bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   font-family: 'Comic Neue';
   font-size: 18px;
+  min-height: 100vh;
 }
 
 li {

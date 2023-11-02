@@ -5,8 +5,10 @@ import PokemonCard from '../pokemonCard';
 import Loader from '../loader';
 import { PokemonDescription } from '../pokemonCard/types';
 import { PokemonWrapperProps } from './types';
+import { NavLink, useSearchParams } from 'react-router-dom';
 
 const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
+  const [searchParams] = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [pokemonDescr, setPokemonDescr] = useState<PokemonDescription | null>(
     null
@@ -44,7 +46,14 @@ const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
       {isLoading && <Loader />}
       {error && <Message errorMessage={error} />}
       {!isLoading && !error && pokemonDescr && (
-        <PokemonCard pokemon={pokemonDescr} />
+        <NavLink
+          to={`?frontpage=${searchParams.get('frontpage') || 1}&details=${
+            pokemonDescr.name
+          }`}
+          preventScrollReset
+        >
+          <PokemonCard pokemon={pokemonDescr} />
+        </NavLink>
       )}
     </>
   );
