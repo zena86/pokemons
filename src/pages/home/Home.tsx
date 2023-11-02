@@ -76,7 +76,7 @@ const Home = () => {
         {!isLoading && !errorMsg && filteredPokemons && (
           <SearchList pokemons={filteredPokemons} />
         )}
-        {count > ITEMS_ON_PAGE && (
+        {count > itemsOnPage && !isLoading && !errorMsg && (
           <Pagination
             nPages={getNumberOfPages(count, itemsOnPage)}
             currentPage={currentPage}

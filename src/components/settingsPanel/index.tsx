@@ -1,1 +1,1 @@
-export { default } from './settingsPanel';
+export { default } from './SettingsPanel';

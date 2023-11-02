@@ -6,8 +6,8 @@ import { SettingsPanelProps } from './types';
 
 const data = [
   { label: '12 per page', value: 12 },
-  { label: '24 per page', value: 24 },
-  { label: '48 per page', value: 48 },
+  { label: '18 per page', value: 18 },
+  { label: '30 per page', value: 30 },
 ];
 
 const SettingsPanel = ({ onItemsChange }: SettingsPanelProps) => {
