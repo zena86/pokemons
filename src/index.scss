@@ -19,9 +19,10 @@ li {
 }
 
 .container {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px;
+  padding: 30px;
+  min-height: 100vh;
 
   @media (max-width: 533px) {
     padding: 10px;

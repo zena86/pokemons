@@ -1,7 +1,12 @@
+.body {
+  display: flex;
+}
+
 .details {
-  background-color: yellow;
-  height: 100%;
+  background-color: rgba(254, 239, 128, 0.9);
+  box-shadow: -25px 0 20px -20px rgba(0, 0, 0, 0.45);
   padding: 40px;
+  min-width: 50%;
 }
 
 .close {

@@ -5,5 +5,5 @@ export interface Option {
 
 export interface SelectProps {
   options: Option[];
-  onChange: (selectedOption: Option, prevOption: Option) => void;
+  onChange: (selectedOption: Option, prevOption: Option | undefined) => void;
 }

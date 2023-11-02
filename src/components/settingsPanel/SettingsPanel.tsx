@@ -5,9 +5,9 @@ import style from './style.module.scss';
 import { SettingsPanelProps } from './types';
 
 const data = [
+  { label: '6 per page', value: 6 },
   { label: '12 per page', value: 12 },
   { label: '18 per page', value: 18 },
-  { label: '30 per page', value: 30 },
 ];
 
 const SettingsPanel = ({ onItemsChange }: SettingsPanelProps) => {

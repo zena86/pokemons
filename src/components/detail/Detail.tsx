@@ -2,6 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import Message from '../message';
 import Loader from '../loader';
 import useGetPokemonByName from '../../hooks/useGetPokemonByName';
+import { GrClose } from '@react-icons/all-files/gr/GrClose';
 import styles from './style.module.scss';
 
 function Detail() {
@@ -17,9 +18,9 @@ function Detail() {
       {isLoading && <Loader />}
       {errorMessage && <Message errorMessage={errorMessage} />}
       {!isLoading && !errorMessage && searchParams.get('details') !== null && (
-        <div className={styles.details}>
+        <div>
           <button className={styles.close} onClick={handleClick} name="close">
-            x
+            <GrClose />
           </button>
           <h2>{pokemon?.name}</h2>
           <h4>weight: {pokemon?.weight}</h4>

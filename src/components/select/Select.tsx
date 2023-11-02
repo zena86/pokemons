@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { SelectProps } from './types';
 import styles from './style.module.scss';
+import { ITEMS_ON_PAGE } from '../../constants';
 
 const Select = ({ options, onChange }: SelectProps) => {
-  const [current, setCurrent] = useState(options[0]);
+  const initPage = options.find((item) => item.value === ITEMS_ON_PAGE);
+  const [current, setCurrent] = useState(initPage);
   const [expanded, setExpanded] = useState(false);
 
   if (options.length === 0) {
@@ -19,7 +21,7 @@ const Select = ({ options, onChange }: SelectProps) => {
         type="button"
         onClick={() => setExpanded(!expanded)}
       >
-        {current.label}
+        {current?.label}
       </button>
       <div className={styles.options}>
         {options.map((option) => (
@@ -28,7 +30,7 @@ const Select = ({ options, onChange }: SelectProps) => {
             className={styles.option}
             type="button"
             value={option.value}
-            disabled={option.value === current.value}
+            disabled={option.value === current?.value}
             onClick={() => {
               onChange(option, current);
               setCurrent(option);

@@ -6,6 +6,7 @@ import Loader from '../loader';
 import { PokemonDescription } from '../pokemonCard/types';
 import { PokemonWrapperProps } from './types';
 import { NavLink, useSearchParams } from 'react-router-dom';
+import styles from './style.module.scss';
 
 const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
   const [searchParams] = useSearchParams();
@@ -50,7 +51,8 @@ const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
           to={`?frontpage=${searchParams.get('frontpage') || 1}&details=${
             pokemonDescr.name
           }`}
-          preventScrollReset
+          className={styles.link}
+          // preventScrollReset
         >
           <PokemonCard pokemon={pokemonDescr} />
         </NavLink>
