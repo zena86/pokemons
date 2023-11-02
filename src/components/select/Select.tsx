@@ -4,7 +4,10 @@ import styles from './style.module.scss';
 import { ITEMS_ON_PAGE } from '../../constants';
 
 const Select = ({ options, onChange }: SelectProps) => {
-  const initPage = options.find((item) => item.value === ITEMS_ON_PAGE);
+  const [itemsOnPage, setItemsOnPage] = useState(
+    Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
+  );
+  const initPage = options.find((item) => item.value === itemsOnPage);
   const [current, setCurrent] = useState(initPage);
   const [expanded, setExpanded] = useState(false);
 
@@ -35,6 +38,7 @@ const Select = ({ options, onChange }: SelectProps) => {
               onChange(option, current);
               setCurrent(option);
               setExpanded((e) => !e);
+              setItemsOnPage(option.value);
             }}
           >
             {option.label}

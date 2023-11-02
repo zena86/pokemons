@@ -38,6 +38,7 @@ const Sidebar = () => {
 
   const handleSettingsChange = ({ selectedOption }: Payload) => {
     setItemsOnPage(selectedOption.value);
+    localStorage.setItem('perPage', String(selectedOption.value));
     setCurrentPage(NUM_OF_START_PAGE);
     setSearchParams('frontpage=1');
   };
