@@ -4,11 +4,10 @@ import LoaderContent from '../../hok/LoaderContent/LoaderContent';
 import { PokemonDescription } from '../pokemonCard/types';
 
 const Detail = () => {
-  const respond = useGetPokemonByName();
-  const { content } = respond;
+  const { content, isLoading, errorMessage } = useGetPokemonByName();
 
   return (
-    <LoaderContent respond={respond}>
+    <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
       {content ? (
         <DetailDescription pokemon={content as PokemonDescription} />
       ) : (

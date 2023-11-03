@@ -9,12 +9,11 @@ import { PokemonDescription } from '../pokemonCard/types';
 const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
   const [searchParams] = useSearchParams();
 
-  const respond = useGetPokemonByUrl(url);
-  const { content } = respond;
+  const { content, isLoading, errorMessage } = useGetPokemonByUrl(url);
   const pokemonDescription = content as PokemonDescription;
 
   return (
-    <LoaderContent respond={respond}>
+    <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
       {content ? (
         <NavLink
           to={`?frontpage=${searchParams.get('frontpage') || 1}&details=${

@@ -5,6 +5,7 @@ export interface HookRespond {
 }
 
 export interface LoaderContentProps {
-  respond: HookRespond;
+  isLoading: boolean;
+  errorMessage: string;
   children: JSX.Element;
 }

@@ -20,17 +20,15 @@ const Sidebar = () => {
     Number(searchParams.get('frontpage')) || 1
   );
 
-  const respond = useGetPokemonsPerPage({
-    itemsOnPage,
-    currentPage,
-    search: term,
-  });
-
   const {
     content: { count, pokemons },
     isLoading,
     errorMessage,
-  } = respond;
+  } = useGetPokemonsPerPage({
+    itemsOnPage,
+    currentPage,
+    search: term,
+  });
 
   const handleFormSubmit = (inputTerm: string) => {
     if (term !== inputTerm) {
@@ -65,7 +63,7 @@ const Sidebar = () => {
         <div className="wrapper">
           <SettingsPanel onItemsChange={handleSettingsChange} />
           <SearchBar onFormSubmit={handleFormSubmit} term={term} />
-          <LoaderContent respond={respond}>
+          <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
             {pokemons ? <SearchList pokemons={pokemons as Pokemon[]} /> : <></>}
           </LoaderContent>
           {count > itemsOnPage && !isLoading && !errorMessage && (
