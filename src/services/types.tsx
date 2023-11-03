@@ -1,4 +1,3 @@
-import { PokemonDescription } from '../components/pokemonCard/types';
 import { Pokemon } from '../components/searchList/types';
 
 export interface PokemonResult {
@@ -6,7 +5,7 @@ export interface PokemonResult {
   pokemons: Pokemon[];
 }
 
-export interface PokResponse {
-  result?: PokemonDescription | PokemonResult;
+export interface FetchResponse<T> {
+  result?: T;
   errorMessage?: string;
 }
