@@ -1,26 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { PokemonDescription } from '../components/pokemonCard/types';
-import { getPokemonByName } from '../services/pokemon.service';
+import { getPokemon } from '../services/pokemon.service';
 import { HookRespond } from '../hok/LoaderContent/types';
 
-const useGetPokemonByName = (): HookRespond => {
-  const [searchParams] = useSearchParams();
+const useGetPokemonByUrl = (url: string): HookRespond => {
   const [pokemon, setPokemon] = useState<PokemonDescription>();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const name = searchParams.get('details');
-
-    if (!name) {
-      return;
-    }
-
     const fetchData = async () => {
       setIsLoading(true);
-      return await getPokemonByName(name);
+      return await getPokemon(url);
     };
+
     fetchData()
       .then(({ errorMessage, pokemon }) => {
         if (errorMessage) {
@@ -37,9 +30,9 @@ const useGetPokemonByName = (): HookRespond => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [searchParams]);
+  }, [url]);
 
   return { content: pokemon, isLoading, errorMessage };
 };
 
-export default useGetPokemonByName;
+export default useGetPokemonByUrl;

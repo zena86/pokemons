@@ -1,6 +1,6 @@
 import Loader from '../../components/loader/';
 import Message from '../../components/message/';
-import { LoaderContentProps } from '../../hooks/types';
+import { LoaderContentProps } from './types';
 
 const LoaderContent = ({ respond, children }: LoaderContentProps) => {
   const { isLoading, errorMessage } = respond;

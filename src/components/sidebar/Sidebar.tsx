@@ -9,8 +9,8 @@ import { Payload } from '../settingsPanel/types';
 import SettingsPanel from '../settingsPanel/';
 import styles from './style.module.scss';
 import useGetPokemonsPerPage from '../../hooks/useGetPokemonsPerPage';
-import LoaderContent from '../../HOK/LoaderContent/LoaderContent';
 import { Pokemon } from '../searchList/types';
+import LoaderContent from '../../hok/LoaderContent';
 
 const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
