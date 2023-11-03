@@ -8,10 +8,7 @@ const LoaderContent = ({ respond, children }: LoaderContentProps) => {
     <div>
       {isLoading && <Loader />}
       {errorMessage && <Message errorMessage={errorMessage} />}
-      {
-        !isLoading && !errorMessage && children
-        // pokemon && <DetailDescription pokemon={pokemon}/>
-      }
+      {!isLoading && !errorMessage && children}
     </div>
   );
 };

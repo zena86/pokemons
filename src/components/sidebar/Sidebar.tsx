@@ -1,8 +1,6 @@
 import SearchBar from '../searchBar/';
-import Loader from '../loader/';
 import SearchList from '../searchList/';
 import Pagination from '../pagination/';
-import Message from '../message/';
 import { useEffect, useState } from 'react';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useSearchParams } from 'react-router-dom';
@@ -11,6 +9,8 @@ import { Payload } from '../settingsPanel/types';
 import SettingsPanel from '../settingsPanel/';
 import styles from './style.module.scss';
 import useGetPokemonsPerPage from '../../hooks/useGetPokemonsPerPage';
+import LoaderContent from '../../HOK/LoaderContent/LoaderContent';
+import { Pokemon } from '../searchList/types';
 
 const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,11 +19,18 @@ const Sidebar = () => {
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('frontpage')) || 1
   );
-  const { count, pokemons, isLoading, errorMessage } = useGetPokemonsPerPage({
+
+  const respond = useGetPokemonsPerPage({
     itemsOnPage,
     currentPage,
     search: term,
   });
+
+  const {
+    content: { count, pokemons },
+    isLoading,
+    errorMessage,
+  } = respond;
 
   const handleFormSubmit = (inputTerm: string) => {
     if (term !== inputTerm) {
@@ -58,13 +65,9 @@ const Sidebar = () => {
         <div className="wrapper">
           <SettingsPanel onItemsChange={handleSettingsChange} />
           <SearchBar onFormSubmit={handleFormSubmit} term={term} />
-
-          {isLoading && <Loader />}
-          {errorMessage && <Message errorMessage={errorMessage} />}
-          {!isLoading && !errorMessage && pokemons && (
-            <SearchList pokemons={pokemons} />
-          )}
-
+          <LoaderContent respond={respond}>
+            {pokemons ? <SearchList pokemons={pokemons as Pokemon[]} /> : <></>}
+          </LoaderContent>
           {count > itemsOnPage && !isLoading && !errorMessage && (
             <Pagination
               nPages={getNumberOfPages(count, itemsOnPage)}

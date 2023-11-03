@@ -42,7 +42,7 @@ const useGetPokemonsPerPage = ({
       });
   }, [currentPage, itemsOnPage, search]);
 
-  return { count, pokemons, isLoading, errorMessage };
+  return { content: { count, pokemons }, isLoading, errorMessage };
 };
 
 export default useGetPokemonsPerPage;
