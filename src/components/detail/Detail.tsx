@@ -5,7 +5,6 @@ import { PokemonDescription } from '../pokemonCard/types';
 
 const Detail = () => {
   const { content, isLoading, errorMessage } = useGetPokemonByName();
-
   return (
     <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
       {content ? (

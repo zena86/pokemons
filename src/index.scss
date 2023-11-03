@@ -12,6 +12,11 @@ body {
   font-family: 'Comic Neue';
   font-size: 18px;
   min-height: 100vh;
+
+  @media (max-width: 900px) {
+    width: 900px;
+    overflow-x: scroll;
+  }
 }
 
 li {

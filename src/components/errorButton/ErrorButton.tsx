@@ -1,7 +1,7 @@
 import style from './style.module.scss';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
-const ErrorButton = () => {
+const ErrorButton = memo(() => {
   const [hasError, setHasError] = useState(false);
 
   const handleClick = () => {
@@ -13,7 +13,6 @@ const ErrorButton = () => {
       throw new Error('Unexpected error');
     }
   }, [hasError]);
-
   return (
     <button className={style.button} type="button" onClick={handleClick}>
       <div className={style['button-top']}>Error</div>
@@ -21,6 +20,6 @@ const ErrorButton = () => {
       <div className={style['button-base']}></div>
     </button>
   );
-};
+});
 
 export default ErrorButton;
