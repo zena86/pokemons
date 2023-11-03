@@ -21,14 +21,15 @@ const useGetPokemonByName = (): HookRespond => {
       setIsLoading(true);
       return await getPokemonByName(name);
     };
+
     fetchData()
-      .then(({ errorMessage, pokemon }) => {
+      .then(({ errorMessage, result }) => {
         if (errorMessage) {
           setErrorMessage(errorMessage);
           return;
         }
-        if (pokemon) {
-          setPokemon(pokemon);
+        if (result) {
+          setPokemon(result);
         }
       })
       .catch((error) => {

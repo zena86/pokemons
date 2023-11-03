@@ -6,12 +6,7 @@ export interface PokemonResult {
   pokemons: Pokemon[];
 }
 
-export interface PokemonsResponse {
-  result?: PokemonResult;
-  errorMessage?: string;
-}
-
-export interface PokemonResponse {
-  pokemon?: PokemonDescription;
+export interface PokResponse {
+  result?: PokemonDescription | PokemonResult;
   errorMessage?: string;
 }
