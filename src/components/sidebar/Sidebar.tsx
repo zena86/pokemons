@@ -58,11 +58,13 @@ const Sidebar = () => {
         <div className="wrapper">
           <SettingsPanel onItemsChange={handleSettingsChange} />
           <SearchBar onFormSubmit={handleFormSubmit} term={term} />
+
           {isLoading && <Loader />}
           {errorMessage && <Message errorMessage={errorMessage} />}
           {!isLoading && !errorMessage && pokemons && (
             <SearchList pokemons={pokemons} />
           )}
+
           {count > itemsOnPage && !isLoading && !errorMessage && (
             <Pagination
               nPages={getNumberOfPages(count, itemsOnPage)}

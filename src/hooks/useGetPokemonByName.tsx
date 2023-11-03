@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { PokemonDescription } from '../components/pokemonCard/types';
 import { getPokemonByName } from '../services/pokemon.service';
+import { HookRespond } from './types';
 
-const useGetPokemonByName = () => {
+const useGetPokemonByName = (): HookRespond => {
   const [searchParams] = useSearchParams();
   const [pokemon, setPokemon] = useState<PokemonDescription>();
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +39,7 @@ const useGetPokemonByName = () => {
       });
   }, [searchParams]);
 
-  return { pokemon, isLoading, errorMessage };
+  return { content: pokemon, isLoading, errorMessage };
 };
 
 export default useGetPokemonByName;
