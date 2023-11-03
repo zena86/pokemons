@@ -1,5 +1,13 @@
+import Message from '../../components/message';
+
 const NotFound = () => {
-  return <h1>Custom 404 Not found</h1>;
+  return (
+    <div className="container">
+      <div className="wrapper">
+        <Message errorMessage="404 Not found" />
+      </div>
+    </div>
+  );
 };
 
 export default NotFound;

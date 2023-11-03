@@ -1,4 +1,4 @@
-import { Outlet, ScrollRestoration, useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import Sidebar from '../../components/sidebar';
 import styles from './style.module.scss';
 
@@ -13,7 +13,6 @@ const Home = () => {
           <Outlet />
         </div>
       )}
-      <ScrollRestoration />
     </div>
   );
 };

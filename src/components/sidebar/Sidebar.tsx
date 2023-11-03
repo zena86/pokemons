@@ -18,22 +18,19 @@ const Sidebar = () => {
   const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
   const [term, setTerm] = useState(localStorage.getItem('term') ?? '');
-
   const [itemsOnPage, setItemsOnPage] = useState(ITEMS_ON_PAGE);
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('frontpage')) || 1
   );
-
   const [count, setCount] = useState(0);
 
   const handleFormSubmit = (inputTerm: string) => {
     if (term !== inputTerm) {
       setCurrentPage(NUM_OF_START_PAGE);
+      setSearchParams('?frontpage=1');
     }
     setTerm(inputTerm);
-    setSearchParams('?frontpage=1');
   };
 
   const handleSettingsChange = ({ selectedOption }: Payload) => {

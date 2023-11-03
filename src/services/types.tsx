@@ -8,7 +8,6 @@ export interface PokemonResult {
 
 export interface PokemonsResponse {
   result?: PokemonResult;
-  //pokemons?: Pokemon[];
   errorMessage?: string;
 }
 

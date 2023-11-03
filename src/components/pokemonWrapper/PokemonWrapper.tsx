@@ -52,7 +52,6 @@ const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
             pokemonDescr.name
           }`}
           className={styles.link}
-          // preventScrollReset
         >
           <PokemonCard pokemon={pokemonDescr} />
         </NavLink>
