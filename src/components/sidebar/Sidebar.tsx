@@ -16,7 +16,7 @@ const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [term, setTerm] = useState(localStorage.getItem('term') ?? '');
   const [itemsOnPage, setItemsOnPage] = useState(
-    Number(localStorage.getItem('perPage')) ?? ITEMS_ON_PAGE
+    Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
   );
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get('frontpage')) || 1
@@ -42,9 +42,6 @@ const Sidebar = () => {
 
   const handleSettingsChange = ({ selectedOption }: Payload) => {
     setItemsOnPage(selectedOption.value);
-    console.log('selectedOption.value', selectedOption.value);
-    console.log('itemsOnPage', itemsOnPage);
-    localStorage.setItem('perPage', String(selectedOption.value));
     setCurrentPage(NUM_OF_START_PAGE);
     setSearchParams('frontpage=1');
   };

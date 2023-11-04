@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SelectProps } from './types';
 import styles from './style.module.scss';
 import { ITEMS_ON_PAGE } from '../../constants';
 
 const Select = ({ options, onChange }: SelectProps) => {
-  const [itemsOnPage, setItemsOnPage] = useState(
-    Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
-  );
-  const initPage = options.find((item) => item.value === itemsOnPage);
-  const [current, setCurrent] = useState(initPage);
+  const initPerPage = Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE;
+  const initCurrent = options.find((item) => item.value === initPerPage);
+  const [current, setCurrent] = useState(initCurrent);
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('perPage', JSON.stringify(current?.value));
+  }, [current]);
 
   if (options.length === 0) {
     return null;
@@ -38,7 +40,6 @@ const Select = ({ options, onChange }: SelectProps) => {
               onChange(option, current);
               setCurrent(option);
               setExpanded((e) => !e);
-              setItemsOnPage(option.value);
             }}
           >
             {option.label}
