@@ -3,7 +3,7 @@ import SearchList from '../searchList';
 import Pagination from '../pagination';
 import { useContext, useEffect, useState } from 'react';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getNumberOfPages } from '../../utils/numberOfPages';
 import { Payload } from '../settingsPanel/types';
 import SettingsPanel from '../settingsPanel';
@@ -18,6 +18,7 @@ import { CHANGE_POKEMONS_PER_PAGE } from '../../context/constants';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const dispatch = useContext(SearchDispatchContext);
   const { term } = useContext(SearchContext);
@@ -52,6 +53,11 @@ const Search = () => {
       setSearchParams(`?frontpage=${searchParams.get('frontpage')}`);
   };
 
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    navigate(`?frontpage=${page}`);
+  };
+
   useEffect(() => {
     dispatch({
       type: CHANGE_POKEMONS_PER_PAGE,
@@ -76,8 +82,8 @@ const Search = () => {
           {count > itemsOnPage && !isLoading && !errorMessage && (
             <Pagination
               nPages={getNumberOfPages(count, itemsOnPage)}
-              currentPage={page}
-              setCurrentPage={setPage}
+              page={page}
+              onChangePage={handleChangePage}
             />
           )}
         </div>

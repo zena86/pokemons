@@ -22,6 +22,7 @@
   justify-content: center;
   text-decoration: none;
   transition: all 0.5s ease;
+  cursor: pointer;
 
   &:hover {
     color: $accentColor;
@@ -43,10 +44,11 @@
   align-items: center;
   justify-content: center;
 
-  & > a {
+  & > div {
     color: $textColor;
     transition: all 0.3s ease;
     transform: translateY(1px);
+    cursor: pointer;
 
     &:hover {
       color: $accentColor;
