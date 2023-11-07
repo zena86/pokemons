@@ -7,7 +7,7 @@ import {
   SearchContext,
   SearchDispatchContext,
 } from '../../context/searchContext';
-import { CHANGE_TERM } from '../../context/constants';
+import { CHANGE_TERM } from '../../constants';
 
 const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
   const state = useContext(SearchContext);

@@ -2,7 +2,6 @@ import SearchBar from '../searchBar';
 import SearchList from '../searchList';
 import Pagination from '../pagination';
 import { useContext, useEffect, useState } from 'react';
-import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getNumberOfPages } from '../../utils/numberOfPages';
 import { Payload } from '../settingsPanel/types';
@@ -14,7 +13,11 @@ import {
   SearchContext,
   SearchDispatchContext,
 } from '../../context/searchContext';
-import { CHANGE_POKEMONS_PER_PAGE } from '../../context/constants';
+import {
+  CHANGE_POKEMONS_PER_PAGE,
+  ITEMS_ON_PAGE,
+  NUM_OF_START_PAGE,
+} from '../../constants';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();

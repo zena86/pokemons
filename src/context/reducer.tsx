@@ -1,4 +1,4 @@
-import { CHANGE_POKEMONS_PER_PAGE, CHANGE_TERM } from './constants';
+import { CHANGE_POKEMONS_PER_PAGE, CHANGE_TERM } from '../constants';
 import { Action, SearchState } from './types';
 
 export const searchReducer = (

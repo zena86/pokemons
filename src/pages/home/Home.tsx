@@ -7,7 +7,7 @@ import {
 } from '../../context/searchContext';
 import { useReducer } from 'react';
 import { searchReducer } from '../../context/reducer';
-import { initialValue } from '../../context/constants';
+import { initialValue } from '../../context/init';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
