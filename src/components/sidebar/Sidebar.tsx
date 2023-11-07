@@ -1,7 +1,7 @@
 import SearchBar from '../searchBar/';
 import SearchList from '../searchList/';
 import Pagination from '../pagination/';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useSearchParams } from 'react-router-dom';
 import { getNumberOfPages } from '../../utils/numberOfPages';
@@ -11,10 +11,12 @@ import styles from './style.module.scss';
 import useGetPokemonsPerPage from '../../hooks/useGetPokemonsPerPage';
 import { Pokemon } from '../searchList/types';
 import LoaderContent from '../../hok/LoaderContent';
+import { SearchContext } from '../../context/searchContext';
 
 const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [term, setTerm] = useState(localStorage.getItem('term') ?? '');
+  const { term } = useContext(SearchContext);
+
   const [itemsOnPage, setItemsOnPage] = useState(
     Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
   );
@@ -32,12 +34,11 @@ const Sidebar = () => {
     search: term,
   });
 
-  const handleFormSubmit = (inputTerm: string) => {
-    if (term !== inputTerm) {
+  const handleFormSubmit = (isTermChanged: boolean) => {
+    if (isTermChanged) {
       setCurrentPage(NUM_OF_START_PAGE);
       setSearchParams('?frontpage=1');
     }
-    setTerm(inputTerm);
   };
 
   const handleSettingsChange = ({ selectedOption }: Payload) => {
@@ -63,7 +64,7 @@ const Sidebar = () => {
       <div className="container">
         <div className="wrapper">
           <SettingsPanel onItemsChange={handleSettingsChange} />
-          <SearchBar onFormSubmit={handleFormSubmit} term={term} />
+          <SearchBar onFormSubmit={handleFormSubmit} />
           <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
             {pokemons ? <SearchList pokemons={pokemons as Pokemon[]} /> : <></>}
           </LoaderContent>

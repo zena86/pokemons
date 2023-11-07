@@ -1,13 +1,17 @@
-import { ChangeEvent, useState } from 'react';
-import { InputProps } from './types';
+import { ChangeEvent, useContext, useState } from 'react';
 import style from './style.module.scss';
+import { SearchContext } from '../../context/searchContext';
+import { InputProps } from './types';
 
-const Input = ({ term, onInputChange }: InputProps) => {
+const Input = ({ onInputChange }: InputProps) => {
+  const { term } = useContext(SearchContext);
   const [search, setSearch] = useState(term);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setSearch(e.target.value);
-    onInputChange(e.target.value);
+  const handleInputChange = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>): void => {
+    setSearch(value);
+    onInputChange(value);
   };
 
   return (

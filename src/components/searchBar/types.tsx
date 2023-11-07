@@ -1,4 +1,3 @@
 export interface SearchBarProps {
-  onFormSubmit: (e: string) => void;
-  term: string;
+  onFormSubmit: (isTermChanged: boolean) => void;
 }
