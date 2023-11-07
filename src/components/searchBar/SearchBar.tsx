@@ -10,7 +10,8 @@ import {
 import { CHANGE_TERM } from '../../context/constants';
 
 const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
-  const { term } = useContext(SearchContext);
+  const state = useContext(SearchContext);
+  const { term } = state;
   const dispatch = useContext(SearchDispatchContext);
   const [search, setSearch] = useState(term);
 
@@ -25,7 +26,7 @@ const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
     onFormSubmit(term !== trimmedTerm);
     dispatch({
       type: CHANGE_TERM,
-      payload: trimmedTerm,
+      payload: { term: trimmedTerm },
     });
   };
 

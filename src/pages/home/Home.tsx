@@ -12,11 +12,11 @@ import { initialValue } from '../../context/constants';
 const Home = () => {
   const [searchParams] = useSearchParams();
 
-  const [term, dispatch] = useReducer(searchReducer, initialValue);
+  const [state, dispatch] = useReducer(searchReducer, initialValue);
 
   return (
     <div className={styles.body}>
-      <SearchContext.Provider value={term}>
+      <SearchContext.Provider value={state}>
         <SearchDispatchContext.Provider value={dispatch}>
           <Sidebar />
         </SearchDispatchContext.Provider>

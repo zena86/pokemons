@@ -15,7 +15,8 @@ import { SearchContext } from '../../context/searchContext';
 
 const Sidebar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { term } = useContext(SearchContext);
+  const state = useContext(SearchContext);
+  const { term } = state;
 
   const [itemsOnPage, setItemsOnPage] = useState(
     Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
