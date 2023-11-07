@@ -1,16 +1,20 @@
-import { Pokemon, SearchListProps } from './types';
+import { Pokemon } from './types';
 import Message from '../message';
 import style from './style.module.scss';
 import PokemonWrapper from '../pokemonWrapper';
+import { useContext } from 'react';
+import { SearchContext } from '../../context/searchContext';
 
-const SearchList = ({ pokemons }: SearchListProps) => {
+const SearchList = () => {
+  const state = useContext(SearchContext);
+  const { pokemonsPerPage } = state;
   return (
     <>
-      {pokemons.length === 0 ? (
+      {pokemonsPerPage.length === 0 ? (
         <Message errorMessage="No pokemons found" />
       ) : (
         <ul className={style.list}>
-          {pokemons.map((pokemon: Pokemon) => {
+          {pokemonsPerPage.map((pokemon: Pokemon) => {
             return <PokemonWrapper key={pokemon.name} url={pokemon.url} />;
           })}
         </ul>

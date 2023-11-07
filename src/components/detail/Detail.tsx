@@ -1,6 +1,6 @@
 import useGetPokemonByName from '../../hooks/useGetPokemonByName';
 import DetailDescription from '../detailDescription';
-import LoaderContent from '../../hok/LoaderContent/LoaderContent';
+import LoaderContent from '../../hoc/LoaderContent/LoaderContent';
 import { PokemonDescription } from '../pokemonCard/types';
 
 const Detail = () => {

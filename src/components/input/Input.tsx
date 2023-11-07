@@ -4,8 +4,7 @@ import { SearchContext } from '../../context/searchContext';
 import { InputProps } from './types';
 
 const Input = ({ onInputChange }: InputProps) => {
-  const state = useContext(SearchContext);
-  const { term } = state;
+  const { term } = useContext(SearchContext);
   const [search, setSearch] = useState(term);
 
   const handleInputChange = ({

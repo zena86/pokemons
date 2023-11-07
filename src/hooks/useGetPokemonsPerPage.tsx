@@ -5,8 +5,8 @@ import { Pokemon } from '../components/searchList/types';
 
 const useGetPokemonsPerPage = ({
   itemsOnPage,
-  currentPage,
-  search,
+  page,
+  term,
 }: GetPokemonsPerPageProps) => {
   const [pokemons, setPokemons] = useState<Pokemon[]>();
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +18,8 @@ const useGetPokemonsPerPage = ({
       setIsLoading(true);
       return await getPokemonsPerPage(
         itemsOnPage,
-        (currentPage - 1) * itemsOnPage,
-        search
+        (page - 1) * itemsOnPage,
+        term
       );
     };
 
@@ -40,7 +40,7 @@ const useGetPokemonsPerPage = ({
       .finally(() => {
         setIsLoading(false);
       });
-  }, [currentPage, itemsOnPage, search]);
+  }, [page, itemsOnPage, term]);
 
   return { content: { count, pokemons }, isLoading, errorMessage };
 };

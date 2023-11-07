@@ -1,5 +1,5 @@
 import { Outlet, ScrollRestoration, useSearchParams } from 'react-router-dom';
-import Sidebar from '../../components/sidebar';
+import Search from '../../components/search/Search';
 import styles from './style.module.scss';
 import {
   SearchContext,
@@ -11,14 +11,13 @@ import { initialValue } from '../../context/constants';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
-
   const [state, dispatch] = useReducer(searchReducer, initialValue);
 
   return (
     <div className={styles.body}>
       <SearchContext.Provider value={state}>
         <SearchDispatchContext.Provider value={dispatch}>
-          <Sidebar />
+          <Search />
         </SearchDispatchContext.Provider>
       </SearchContext.Provider>
       {searchParams.get('details') && (
