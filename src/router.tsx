@@ -4,7 +4,7 @@ import ErrorFallback from './components/errorFallback/ErrorFallback';
 import NotFound from './pages/notFound/';
 import Detail from './components/detail/Detail';
 
-const router = createBrowserRouter([
+export const routerConfig = [
   {
     path: '/',
     element: <Home />,
@@ -20,6 +20,6 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFound />,
   },
-]);
+];
 
-export default router;
+export const router = createBrowserRouter(routerConfig);
