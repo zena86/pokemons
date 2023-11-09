@@ -1,3 +1,5 @@
+import { Pokemon } from '../searchList/types';
+
 export interface Ability {
   ability: {
     name: string;
@@ -87,5 +89,5 @@ export interface PokemonDescription {
 }
 
 export interface PokemonCardProps {
-  pokemon: PokemonDescription;
+  pokemon: Pokemon;
 }
