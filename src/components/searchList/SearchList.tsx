@@ -6,8 +6,8 @@ import { useContext } from 'react';
 import { SearchContext } from '../../context/searchContext';
 
 const SearchList = () => {
-  const state = useContext(SearchContext);
-  const { pokemonsPerPage } = state;
+  const { pokemonsPerPage } = useContext(SearchContext);
+
   return (
     <>
       {pokemonsPerPage.length === 0 ? (
@@ -15,7 +15,7 @@ const SearchList = () => {
       ) : (
         <ul className={style.list}>
           {pokemonsPerPage.map((pokemon: Pokemon) => {
-            return <PokemonWrapper key={pokemon.name} url={pokemon.url} />;
+            return <PokemonWrapper key={pokemon.name} pokemon={pokemon} />;
           })}
         </ul>
       )}

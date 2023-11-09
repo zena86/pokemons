@@ -4,6 +4,7 @@ import { memo } from 'react';
 
 const PokemonCard = memo(({ pokemon }: PokemonCardProps) => {
   const { name, weight, height, abilities } = pokemon;
+  //const { content, isLoading, errorMessage } = useGetPokemonByUrl(url);
 
   return (
     <li className={style.card}>

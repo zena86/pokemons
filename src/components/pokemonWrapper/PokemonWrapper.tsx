@@ -6,7 +6,8 @@ import useGetPokemonByUrl from '../../hooks/useGetPokemonByUrl';
 import LoaderContent from '../../hoc/LoaderContent';
 import { PokemonDescription } from '../pokemonCard/types';
 
-const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
+const PokemonWrapper = ({ pokemon }: PokemonWrapperProps) => {
+  const { name, url } = pokemon;
   const [searchParams] = useSearchParams();
 
   const { content, isLoading, errorMessage } = useGetPokemonByUrl(url);
@@ -16,9 +17,9 @@ const PokemonWrapper = ({ url }: PokemonWrapperProps) => {
     <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
       {content ? (
         <NavLink
-          to={`?frontpage=${searchParams.get('frontpage') || 1}&details=${
-            pokemonDescription.name
-          }`}
+          to={`?frontpage=${
+            searchParams.get('frontpage') || 1
+          }&details=${name}`}
           className={styles.link}
         >
           <PokemonCard pokemon={pokemonDescription} />
