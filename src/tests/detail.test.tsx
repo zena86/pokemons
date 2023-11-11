@@ -104,6 +104,18 @@ describe('Detail Component', () => {
     expect(await screen.findByRole('button')).toBeInTheDocument();
   });
 
+  test('without query params', async () => {
+    // expect(true).toBe(true);
+    // return;
+    render(
+      <MemoryRouter initialEntries={['?frontpage=1']}>
+        <Detail />
+      </MemoryRouter>
+    );
+    expect(screen.queryByText(/moves/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
   test('Ensure that clicking the close button hides the component', async () => {
     // expect(true).toBe(true);
     // return;

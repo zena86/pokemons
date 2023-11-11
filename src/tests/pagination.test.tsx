@@ -11,6 +11,7 @@ import pockemonN2ResponseJson from './data/pokemonN2.json';
 import pockemonN3ResponseJson from './data/pokemonN3.json';
 import Search from '../components/search';
 import { SearchContext } from '../context/searchContext';
+import Pagination from '../components/pagination/';
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
@@ -71,5 +72,59 @@ describe('Pagination component', () => {
     await waitFor(() => {
       expect(navigate).toHaveBeenCalledWith('?frontpage=2');
     });
+
+    await userEvent.click(await screen.findByText('108'));
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith('?frontpage=108');
+    });
+
+    await userEvent.click(await screen.findByText('1'));
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith('?frontpage=1');
+    });
+
+    // const next = container.querySelector('a.false');
+    // if (next) await userEvent.click(next);
+    // await waitFor(() => {
+    //   expect(navigate).toHaveBeenCalledWith('?frontpage=2');
+    // });
   });
+
+  test('Items per page select', async () => {
+    render(
+      <MemoryRouter initialEntries={['?frontpage=1']}>
+        <SearchContext.Provider
+          value={{
+            term: '',
+            pokemonsPerPage: JSON.parse(allPokemons2).pokemons,
+          }}
+        >
+          <Search />
+        </SearchContext.Provider>
+      </MemoryRouter>
+    );
+    expect(await screen.findByText(/108/i)).toBeInTheDocument();
+    await userEvent.click(await screen.findByText(/6 per page/i));
+    expect(await screen.findByText(/216/i)).toBeInTheDocument();
+  });
+
+  test('nPages < 4', async () => {
+    render(<Pagination nPages={2} page={1} onChangePage={() => {}} />);
+    expect(await screen.findByText(/1/i)).toBeInTheDocument();
+    expect(await screen.findByText(/2/i)).toBeInTheDocument();
+    expect(screen.queryByText(/3/i)).not.toBeInTheDocument();
+  });
+
+  test('page >= nPages - 2 && nPages > 3', async () => {
+    render(<Pagination nPages={4} page={3} onChangePage={() => {}} />);
+    expect(screen.queryByText(/1/i)).toBeInTheDocument();
+  });
+
+  // test('zzz', async () => {
+  //   const { container } = render(
+  //     <Pagination nPages={4} page={4} onChangePage={() => {}} />
+  //   );
+  //   const disabledArrow = container.querySelector('.page-item.disabled');
+  //   expect(disabledArrow).toBeInTheDocument();
+  // });
 });

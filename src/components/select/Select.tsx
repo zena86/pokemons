@@ -13,10 +13,6 @@ const Select = ({ options, onChange }: SelectProps) => {
     localStorage.setItem('perPage', JSON.stringify(current?.value));
   }, [current]);
 
-  if (options.length === 0) {
-    return null;
-  }
-
   return (
     <div
       className={`${styles.select} ${expanded && styles['select--expanded']}`}
@@ -29,7 +25,7 @@ const Select = ({ options, onChange }: SelectProps) => {
         {current?.label}
       </button>
       <div className={styles.options}>
-        {options.map((option) => (
+        {options?.map((option) => (
           <button
             key={option.value}
             className={styles.option}
