@@ -59,13 +59,6 @@ fetchMocker.enableMocks();
 // });
 // });
 
-// import { expect, test } from 'vitest';
-// import { sum } from './sum';
-
-// test('adds 1 + 2 to equal 3', () => {
-//   expect(sum(1, 2)).toBe(3);
-// });
-
 describe('SearchList Component', () => {
   beforeEach(() => {
     // fetchMocker.mockIf(
@@ -102,8 +95,8 @@ describe('SearchList Component', () => {
   });
 
   test('Verify that the component renders the specified number of cards', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <SearchContext.Provider
@@ -116,15 +109,14 @@ describe('SearchList Component', () => {
         </SearchContext.Provider>
       </MemoryRouter>
     );
-
     const items = await screen.findAllByRole('listitem');
     expect(items).toHaveLength(3);
     expect(screen.queryByText('No pokemons found')).not.toBeInTheDocument();
   });
 
   test('Check that an appropriate message is displayed if no cards are present', () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <SearchContext.Provider value={initialValue}>

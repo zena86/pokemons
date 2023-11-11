@@ -33,7 +33,6 @@ export const getPokemonsPerPage = async (
   offset?: number,
   search?: string
 ): Promise<FetchResponse<PokemonResult>> => {
-  console.log('FETCH', offset);
   return await makeRequest<PokemonResult>(
     `${WORKER_BASE}?search=${search}&offset=${offset}&limit=${limit}`
   );

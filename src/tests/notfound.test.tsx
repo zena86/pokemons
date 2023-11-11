@@ -10,13 +10,12 @@ fetchMocker.enableMocks();
 
 describe('404 Page component', () => {
   test('Ensure that the 404 page is displayed when navigating to an invalid route', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     const router = createMemoryRouter(routerConfig, {
       initialEntries: ['/posts'],
     });
     render(<RouterProvider router={router} />);
-    screen.debug();
     expect(await screen.findByText(/404/i)).toBeInTheDocument();
   });
 });

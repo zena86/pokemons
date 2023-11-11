@@ -9,26 +9,11 @@ import { allPokemons2 } from './data/allPokemons2';
 import pockemonN1ResponseJson from './data/pokemonN1.json';
 import pockemonN2ResponseJson from './data/pokemonN2.json';
 import pockemonN3ResponseJson from './data/pokemonN3.json';
-
-//import Sidebar from '../components/sidebar';
 import Search from '../components/search';
+import { SearchContext } from '../context/searchContext';
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
-
-// const mockUseSearchParams = vi.fn();
-// vi.mock('react-router-dom', async () => {
-//   const actual = (await vi.importActual('react-router-dom')) as object;
-//   return {
-//     ...actual,
-//     useParams: mockUseSearchParams,
-//   };
-// });
-//const test = vi.fn();
-vi.mock('react-router-dom', async () => ({
-  ...((await vi.importActual('react-router-dom')) as object),
-  setSearchParams: vi.fn(),
-}));
 
 const navigate = vi.fn();
 
@@ -69,22 +54,22 @@ describe('Pagination component', () => {
   });
 
   test('Make sure the component updates URL query parameter when page changes', async () => {
-    expect(true).toBe(true);
-    return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <Search />
+        <SearchContext.Provider
+          value={{
+            term: '',
+            pokemonsPerPage: JSON.parse(allPokemons2).pokemons,
+          }}
+        >
+          <Search />
+        </SearchContext.Provider>
       </MemoryRouter>
     );
-    await userEvent.click(await screen.findByText('2'));
 
+    await userEvent.click(await screen.findByText('2'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=2', {
-        preventScrollReset: undefined,
-        relative: undefined,
-        replace: false,
-        state: undefined,
-      });
+      expect(navigate).toHaveBeenCalledWith('?frontpage=2');
     });
   });
 });

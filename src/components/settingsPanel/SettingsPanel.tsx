@@ -1,5 +1,5 @@
 import { settings } from '../../constants';
-import ErrorButton from '../errorButton/';
+//import ErrorButton from '../errorButton/';
 import Select from '../select/';
 import { Option } from '../select/types';
 import style from './style.module.scss';
@@ -12,7 +12,7 @@ const SettingsPanel = ({ onItemsChange }: SettingsPanelProps) => {
 
   return (
     <div className={style.panel}>
-      <ErrorButton />
+      {/* <ErrorButton /> */}
       <div>
         <Select options={settings} onChange={handleChange} />
       </div>

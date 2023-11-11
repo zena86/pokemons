@@ -2,25 +2,20 @@ import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-// import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-//import Item from '../components/item';
-// import pockemonN1ResponseJson from './data/pokemonN1.json';
-// import pockemonN2ResponseJson from './data/pokemonN2.json';
-// import pockemonN3ResponseJson from './data/pokemonN3.json';
-// import { allPokemons } from './data/allPokemons';
-//import App from '../App';
-//import Detail from '../components/detail';
 import PokemonCard from '../components/pokemonCard/PokemonCard';
-import pockemonJSON from './mockData/pokemon-03.json';
-import { MemoryRouter } from 'react-router-dom';
+import {
+  MemoryRouter,
+  RouterProvider,
+  createMemoryRouter,
+} from 'react-router-dom';
 import SearchList from '../components/searchList';
-//import Home from '../pages/home/';
 import { SearchContext } from '../context/searchContext';
 import { allPokemons2 } from './data/allPokemons2';
-//import Detail from '../components/detail/Detail';
-//import App from '../App';
-//import { pokemons } from './mockData/pokemons';
+import { routerConfig } from '../router';
+import pockemonN2ResponseJson from './data/pokemonN2.json';
+import pockemonN3ResponseJson from './data/pokemonN3.json';
+import pockemonN1ResponseJson from './data/pokemonN1.json';
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
@@ -41,7 +36,38 @@ fetchMocker.enableMocks();
 
 describe('PokemonCard Component', () => {
   beforeEach(() => {
-    fetchMocker.mockResponse(JSON.stringify(pockemonJSON));
+    fetchMocker.mockIf(
+      (p) => {
+        if (p.url.startsWith('https://pokemons-2.jk-mostovaya.workers.dev'))
+          return true;
+        if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/1'))
+          return true;
+        if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/2'))
+          return true;
+        if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/3'))
+          return true;
+        if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/venusaur'))
+          return true;
+        return false;
+      },
+      (req) => {
+        if (req.url.startsWith('https://pokemons-2.jk-mostovaya.workers.dev')) {
+          return allPokemons2;
+        } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/1')) {
+          return JSON.stringify(pockemonN1ResponseJson);
+        } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/2')) {
+          return JSON.stringify(pockemonN2ResponseJson);
+        } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/3')) {
+          return JSON.stringify(pockemonN3ResponseJson);
+        } else if (
+          req.url.startsWith('https://pokeapi.co/api/v2/pokemon/venusaur')
+        ) {
+          return JSON.stringify(pockemonN3ResponseJson);
+        }
+        return '';
+      }
+    );
+    //fetchMocker.mockResponse(JSON.stringify(pockemonJSON));
     // fetchMocker.mockIf(
     //   (p) => {
     //     if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon?limit'))
@@ -76,8 +102,8 @@ describe('PokemonCard Component', () => {
   });
 
   test('Ensure that the card component renders the relevant card data', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     render(
       <PokemonCard
         pokemon={{
@@ -98,8 +124,8 @@ describe('PokemonCard Component', () => {
   });
 
   test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <SearchContext.Provider
@@ -123,28 +149,18 @@ describe('PokemonCard Component', () => {
     });
   });
 
-  // test('Validate that clicking on a card opens a detailed card component', async () => {
-  //   render(
-  //     <MemoryRouter initialEntries={['?frontpage=1']}>
-  //       <SearchContext.Provider
-  //         value={{
-  //           term: '',
-  //           pokemonsPerPage: JSON.parse(allPokemons2).pokemons,
-  //         }}
-  //       >
-  //         <Home />
-  //       </SearchContext.Provider>
-  //     </MemoryRouter>
-  //   );
+  test('Validate that clicking on a card opens a detailed card component', async () => {
+    // expect(true).toBe(true);
+    // return;
+    const memoryRouter = createMemoryRouter(routerConfig, {
+      initialEntries: ['/?frontpage=1'],
+    });
+    render(<RouterProvider router={memoryRouter} />);
+    const item = (await screen.findByText('venusaur')).closest('a');
+    if (item) await userEvent.click(item);
 
-  //   const item = (await screen.findByText('venusaur')).closest('a');
-  //   if (item) await userEvent.click(item);
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/moves:/i)).toBeInTheDocument();
-  //     // expect(fetchMock).toHaveBeenCalledWith(
-  //     //   'https://pokeapi.co/api/v2/pokemon/3/'
-  //     // );
-  //   });
-  // });
+    await waitFor(() => {
+      expect(screen.getByText(/moves:/i)).toBeInTheDocument();
+    });
+  });
 });

@@ -4,16 +4,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-// import { SearchContext } from '../context/searchContext';
-//import Home from '../pages/home';
 import Search from '../components/search/Search';
 import { SearchContext } from '../context/searchContext';
-// import { allPokemons } from './data/allPokemons';
-// import pockemonN2ResponseJson from './data/pokemonN2.json';
-// import pockemonJSON from './mockData/pokemon-03.json';
-//import SearchBar from '../components/searchBar/SearchBar';
 import Input from '../components/input';
-//import { initialValue } from '../context/init';
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();
@@ -42,8 +35,8 @@ describe('Search Component', () => {
   });
 
   test('Verify that clicking the Search button saves the entered value to the local storage', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <Search />
@@ -61,8 +54,8 @@ describe('Search Component', () => {
   });
 
   test('Check that the component retrieves the value from the local storage upon mounting', async () => {
-    expect(true).toBe(true);
-    return;
+    // expect(true).toBe(true);
+    // return;
     localStorage.setItem('term', 'bul');
 
     render(
