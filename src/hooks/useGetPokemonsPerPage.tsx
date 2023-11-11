@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getPokemonsPerPage } from '../services/pokemon.service';
+import { getPokemonsPerPage } from '../services/pokemon';
 import { GetPokemonsPerPageProps } from './types';
 import { Pokemon } from '../components/searchList/types';
 

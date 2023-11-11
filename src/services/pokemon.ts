@@ -8,32 +8,30 @@ const makeRequest = async <T>(url: string): Promise<FetchResponse<T>> => {
   try {
     const response = await fetch(url);
     const result = await response.json();
-    return { result: result };
+    return { result };
   } catch (error) {
     return { errorMessage: `Oops! ${error}. URL ${url}` };
   }
 };
 
-export const getPokemon = async (
+export const getPokemon = (
   url: string
 ): Promise<FetchResponse<PokemonDescription>> => {
-  return await makeRequest<PokemonDescription>(url);
+  return makeRequest<PokemonDescription>(url);
 };
 
-export const getPokemonByName = async (
+export const getPokemonByName = (
   name: string
 ): Promise<FetchResponse<PokemonDescription>> => {
-  return await makeRequest<PokemonDescription>(
-    `${POKEMON_API_BASE}pokemon/${name}`
-  );
+  return makeRequest<PokemonDescription>(`${POKEMON_API_BASE}pokemon/${name}`);
 };
 
-export const getPokemonsPerPage = async (
+export const getPokemonsPerPage = (
   limit?: number,
   offset?: number,
   search?: string
 ): Promise<FetchResponse<PokemonResult>> => {
-  return await makeRequest<PokemonResult>(
+  return makeRequest<PokemonResult>(
     `${WORKER_BASE}?search=${search}&offset=${offset}&limit=${limit}`
   );
 };

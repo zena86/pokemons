@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { PokemonDescription } from '../components/pokemonCard/types';
-import { getPokemonByName } from '../services/pokemon.service';
+import { getPokemonByName } from '../services/pokemon';
 import { HookRespond } from '../hoc/LoaderContent/types';
 
 const useGetPokemonByName = (): HookRespond => {

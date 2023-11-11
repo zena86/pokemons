@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PokemonDescription } from '../components/pokemonCard/types';
-import { getPokemon } from '../services/pokemon.service';
+import { getPokemon } from '../services/pokemon';
 import { HookRespond } from '../hoc/LoaderContent/types';
 
 const useGetPokemonByUrl = (url: string): HookRespond => {

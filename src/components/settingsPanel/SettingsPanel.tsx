@@ -1,4 +1,4 @@
-import { settings } from '../../constants';
+import { selectOptions } from '../../constants';
 //import ErrorButton from '../errorButton/';
 import Select from '../select/';
 import { Option } from '../select/types';
@@ -14,7 +14,7 @@ const SettingsPanel = ({ onItemsChange }: SettingsPanelProps) => {
     <div className={style.panel}>
       {/* <ErrorButton /> */}
       <div>
-        <Select options={settings} onChange={handleChange} />
+        <Select options={selectOptions} onChange={handleChange} />
       </div>
     </div>
   );
