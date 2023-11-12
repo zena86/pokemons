@@ -30,6 +30,7 @@ const Pagination = memo(({ nPages, page, onChangePage }: PaginationProps) => {
       <ul className={styles.pagination}>
         <li className={styles['page-item']}>
           <div
+            role="prev"
             className={`${page <= 1 && styles.disabled}`}
             onClick={() => {
               if (page !== 1) onChangePage(page - 1);
@@ -89,6 +90,7 @@ const Pagination = memo(({ nPages, page, onChangePage }: PaginationProps) => {
 
         <li className={styles['page-item']}>
           <div
+            role="next"
             className={`${page >= nPages && styles.disabled}`}
             onClick={() => {
               if (page !== nPages) onChangePage(page + 1);

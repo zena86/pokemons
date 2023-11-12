@@ -83,11 +83,15 @@ describe('Pagination component', () => {
       expect(navigate).toHaveBeenCalledWith('?frontpage=1');
     });
 
-    // const next = container.querySelector('a.false');
-    // if (next) await userEvent.click(next);
-    // await waitFor(() => {
-    //   expect(navigate).toHaveBeenCalledWith('?frontpage=2');
-    // });
+    await userEvent.click(await screen.findByRole('next'));
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith('?frontpage=2');
+    });
+
+    await userEvent.click(await screen.findByRole('prev'));
+    await waitFor(() => {
+      expect(navigate).toHaveBeenCalledWith('?frontpage=1');
+    });
   });
 
   test('Items per page select', async () => {
@@ -119,12 +123,4 @@ describe('Pagination component', () => {
     render(<Pagination nPages={4} page={3} onChangePage={() => {}} />);
     expect(screen.queryByText(/1/i)).toBeInTheDocument();
   });
-
-  // test('zzz', async () => {
-  //   const { container } = render(
-  //     <Pagination nPages={4} page={4} onChangePage={() => {}} />
-  //   );
-  //   const disabledArrow = container.querySelector('.page-item.disabled');
-  //   expect(disabledArrow).toBeInTheDocument();
-  // });
 });
