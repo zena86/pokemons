@@ -12,7 +12,7 @@
     "format:fix": "npx prettier --write .",
     "prepare": "husky install",
     "deploy": "gh-pages -d dist",
-    "test": "vitest",
+    "test": "vitest -- --watchAll=false",
     "coverage": "vitest run --coverage"
   },
   "lint-staged": {
