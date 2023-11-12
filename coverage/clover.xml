@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1699706918685" clover="3.2.0">
-  <project timestamp="1699706918685" name="All files">
-    <metrics statements="998" coveredstatements="984" conditionals="137" coveredconditionals="130" methods="51" coveredmethods="47" elements="1186" coveredelements="1161" complexity="0" loc="998" ncloc="998" packages="25" files="49" classes="49"/>
+<coverage generated="1699775722192" clover="3.2.0">
+  <project timestamp="1699775722192" name="All files">
+    <metrics statements="996" coveredstatements="982" conditionals="137" coveredconditionals="130" methods="51" coveredmethods="47" elements="1184" coveredelements="1159" complexity="0" loc="996" ncloc="996" packages="25" files="49" classes="49"/>
     <package name="src">
       <metrics statements="36" coveredstatements="36" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="constants.tsx" path="D:\React-2023-Q4\pokemons\src\constants.tsx">
@@ -505,8 +505,8 @@
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="8" count="90" type="stmt"/>
-        <line num="9" count="90" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="87" type="stmt"/>
+        <line num="9" count="87" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="28" type="stmt"/>
         <line num="11" count="28" type="stmt"/>
         <line num="12" count="28" type="stmt"/>
@@ -532,10 +532,10 @@
         <line num="32" count="28" type="cond" truecount="0" falsecount="1"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
-        <line num="35" count="90" type="stmt"/>
-        <line num="36" count="90" type="stmt"/>
-        <line num="37" count="90" type="stmt"/>
-        <line num="38" count="90" type="stmt"/>
+        <line num="35" count="87" type="stmt"/>
+        <line num="36" count="87" type="stmt"/>
+        <line num="37" count="87" type="stmt"/>
+        <line num="38" count="87" type="stmt"/>
         <line num="39" count="1" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
       </file>
@@ -983,11 +983,11 @@
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="7" count="90" type="stmt"/>
-        <line num="8" count="90" type="stmt"/>
-        <line num="9" count="90" type="stmt"/>
-        <line num="10" count="90" type="stmt"/>
-        <line num="11" count="90" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="87" type="stmt"/>
+        <line num="8" count="87" type="stmt"/>
+        <line num="9" count="87" type="stmt"/>
+        <line num="10" count="87" type="stmt"/>
+        <line num="11" count="87" type="cond" truecount="1" falsecount="0"/>
         <line num="12" count="37" type="cond" truecount="1" falsecount="0"/>
         <line num="13" count="37" type="stmt"/>
         <line num="14" count="37" type="stmt"/>
@@ -1009,10 +1009,10 @@
         <line num="30" count="37" type="cond" truecount="1" falsecount="0"/>
         <line num="31" count="37" type="stmt"/>
         <line num="32" count="37" type="stmt"/>
-        <line num="33" count="90" type="stmt"/>
-        <line num="34" count="90" type="stmt"/>
-        <line num="35" count="90" type="stmt"/>
-        <line num="36" count="90" type="stmt"/>
+        <line num="33" count="87" type="stmt"/>
+        <line num="34" count="87" type="stmt"/>
+        <line num="35" count="87" type="stmt"/>
+        <line num="36" count="87" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
         <line num="38" count="1" type="stmt"/>
       </file>
@@ -1135,9 +1135,9 @@
       </file>
     </package>
     <package name="src.services">
-      <metrics statements="39" coveredstatements="39" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
-      <file name="pokemon.service.ts" path="D:\React-2023-Q4\pokemons\src\services\pokemon.service.ts">
-        <metrics statements="39" coveredstatements="39" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <metrics statements="37" coveredstatements="37" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <file name="pokemon.ts" path="D:\React-2023-Q4\pokemons\src\services\pokemon.ts">
+        <metrics statements="37" coveredstatements="37" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1165,18 +1165,16 @@
         <line num="25" count="4" type="stmt"/>
         <line num="26" count="4" type="stmt"/>
         <line num="27" count="4" type="stmt"/>
-        <line num="28" count="4" type="stmt"/>
-        <line num="29" count="4" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="10" type="stmt"/>
+        <line num="31" count="10" type="stmt"/>
         <line num="32" count="10" type="stmt"/>
         <line num="33" count="10" type="stmt"/>
         <line num="34" count="10" type="stmt"/>
         <line num="35" count="10" type="stmt"/>
         <line num="36" count="10" type="stmt"/>
         <line num="37" count="10" type="stmt"/>
-        <line num="38" count="10" type="stmt"/>
-        <line num="39" count="10" type="stmt"/>
       </file>
     </package>
     <package name="src.tests.data">
