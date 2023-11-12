@@ -25,7 +25,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
           if (onExpanded) onExpanded();
         }}
       >
-        EXPAND {current?.label}
+        {current?.label}
       </button>
       <div className={styles.options}>
         {options?.map((option) => (

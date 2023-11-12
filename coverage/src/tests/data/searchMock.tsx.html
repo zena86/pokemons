@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/pokemonProperties/PokemonProperties.tsx</title>
+    <title>Code coverage report for src/tests/data/searchMock.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/pokemonProperties</a> PokemonProperties.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/tests/data</a> searchMock.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>22/24</span>
             </div>
         
             
@@ -110,79 +110,79 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">68x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-yes">34x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">102x</span>
-<span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import LoaderContent from '../../hoc/LoaderContent';
-import useGetPokemonByUrl from '../../hooks/useGetPokemonByUrl';
-import { PokemonDescription } from '../pokemonCard/types';
-import { PokemonPropertiesProps } from './types';
-import style from './style.module.scss';
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">44x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import createFetchMock from 'vitest-fetch-mock';
+import { allPokemons } from './allPokemons';
+import pockemonN2ResponseJson from './pokemonN2.json';
+import pockemonN3ResponseJson from './pokemonN3.json';
+import pockemonN1ResponseJson from './pokemonN1.json';
+import { vi } from 'vitest';
 &nbsp;
-const PokemonProperties = ({ url }: PokemonPropertiesProps) =&gt; {
-  const { content, isLoading, errorMessage } = useGetPokemonByUrl(url);
-  if (!content) return;
-  const { weight, height, abilities } = content as PokemonDescription;
+export const searchMock = () =&gt; {
+  const fetchMocker = createFetchMock(vi);
+  fetchMocker.enableMocks();
 &nbsp;
-  return (
-    &lt;LoaderContent isLoading={isLoading} errorMessage={errorMessage}&gt;
-      {content ? (
-        &lt;div className={style.properties}&gt;
-          &lt;p&gt;
-            &lt;strong&gt;weight:&lt;/strong&gt; {weight}
-          &lt;/p&gt;
-          &lt;p&gt;
-            &lt;strong&gt;height:&lt;/strong&gt; {height}
-          &lt;/p&gt;
-          &lt;div&gt;
-            &lt;strong&gt;abilities:&lt;/strong&gt;
-            &lt;ul className={style.abilities}&gt;
-              {abilities.map((item, index) =&gt; (
-                &lt;li key={`${item.ability.name}${index}`}&gt;
-                  {item.ability.name}
-                &lt;/li&gt;
-              ))}
-            &lt;/ul&gt;
-          &lt;/div&gt;
-<span class="branch-0 cbranch-no" title="branch not covered" >        &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      ) : (</span>
-<span class="cstat-no" title="statement not covered" >        &lt;&gt;&lt;/&gt;</span>
-      )}
-    &lt;/LoaderContent&gt;
+  fetchMocker.mockIf(
+    (p) =&gt; {
+      if (p.url.startsWith('https://pokemons-2.jk-mostovaya.workers.dev'))
+        return true;
+      if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/1')) return true;
+      if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/2')) return true;
+      if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/3')) return true;
+      if (p.url.startsWith('https://pokeapi.co/api/v2/pokemon/venusaur'))
+        return <span class="branch-0 cbranch-no" title="branch not covered" >true;</span>
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    },
+    (req) =&gt; {
+      if (req.url.startsWith('https://pokemons-2.jk-mostovaya.workers.dev')) {
+        return allPokemons;
+      } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/1')) {
+        return JSON.stringify(pockemonN1ResponseJson);
+      } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/2')) {
+        return JSON.stringify(pockemonN2ResponseJson);
+      } else if (req.url.startsWith('https://pokeapi.co/api/v2/pokemon/3')) {
+        return JSON.stringify(pockemonN3ResponseJson);
+      } else if (
+        req.url.startsWith('https://pokeapi.co/api/v2/pokemon/venusaur')
+      ) {
+        return JSON.stringify(pockemonN3ResponseJson);
+<span class="branch-0 cbranch-no" title="branch not covered" >      }</span>
+<span class="cstat-no" title="statement not covered" >      return '';</span>
+    }
   );
 };
-&nbsp;
-export default PokemonProperties;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

@@ -7,8 +7,6 @@ const Child = () => {
 
 describe('Error Boundary', () => {
   test(`should render error boundary component when there is an error`, () => {
-    // expect(true).toBe(true);
-    // return;
     const renderProviders = (ui: React.ReactElement) => render(ui, {});
     const { getByText } = renderProviders(
       <ErrorBoundary fallback={'something went wrong'}>

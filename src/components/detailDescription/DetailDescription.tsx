@@ -16,7 +16,12 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
 
   return (
     <div className={styles.description}>
-      <button className={styles.close} onClick={handleClick} name="close">
+      <button
+        className={styles.close}
+        onClick={handleClick}
+        name="close"
+        role="close"
+      >
         <RiCloseLine color={'white'} size={'22px'} />
       </button>
       <h2 className={styles.title}>{name}</h2>

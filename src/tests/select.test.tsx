@@ -3,10 +3,9 @@ import '@testing-library/jest-dom';
 import Select from '../components/select/Select';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import React from 'react';
 
 describe('Pagination select component', () => {
-  test('Test pagination select component', async () => {
+  test('Click by options', async () => {
     const onChange = vi.fn();
     render(
       <Select
@@ -25,13 +24,13 @@ describe('Pagination select component', () => {
     expect(onChange).toHaveBeenCalled();
   });
 
-  test('Test empty pagination select component', async () => {
+  test('Empty pagination select', async () => {
     render(<Select options={[]} onChange={() => {}} />);
     const optionOne = screen.queryByText('one');
     expect(optionOne).toBeNull();
   });
 
-  test('Test expanded pagination select component', async () => {
+  test('Expand select by click', async () => {
     const onExpanded = vi.fn();
     render(
       <Select
@@ -45,16 +44,9 @@ describe('Pagination select component', () => {
     );
 
     expect(await screen.findByText(/one/i)).toBeInTheDocument();
-    const menuButton = await screen.queryAllByRole('button');
-    console.log('menuButton', menuButton[0].outerHTML);
-    userEvent.click(menuButton[0]);
-    //expect(onExpanded).toHaveBeenCalled();
+    userEvent.click(screen.queryAllByRole('button')[0]);
     await waitFor(() => {
       expect(onExpanded).toHaveBeenCalled();
-      //expect(state.expanded).toBe(true);
-      //expect(setState).toHaveBeenCalled();
-      // expect(setState).toHaveBeenCalledWith();
-      // expect(state).toBe(true);
     });
   });
 });
