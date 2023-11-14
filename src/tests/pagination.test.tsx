@@ -6,7 +6,7 @@ import * as router2 from 'react-router';
 import '@testing-library/jest-dom';
 import { allPokemons } from './data/allPokemons';
 import Search from '../components/search';
-import { SearchContext } from '../context/searchContext';
+// import { SearchContext } from '../context/searchContext';
 import Pagination from '../components/pagination/';
 import { searchMock } from './data/searchMock';
 

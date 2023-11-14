@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const searchSlice = createSlice({
   name: 'search',
   initialState: {
-    term: '',
+    term: localStorage.getItem('term') ?? '',
   },
   reducers: {
     termUpdated: (state, action) => {
@@ -13,7 +13,6 @@ export const searchSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { termUpdated } = searchSlice.actions;
 
 export default searchSlice.reducer;

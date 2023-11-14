@@ -2,7 +2,7 @@ import { Option } from '../select/types';
 
 export interface Payload {
   selectedOption: Option;
-  prevOption: Option;
+  prevOption?: Option;
 }
 
 export interface SettingsPanelProps {

@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import Search from '../components/search/Search';
-import { SearchContext } from '../context/searchContext';
+// import { SearchContext } from '../context/searchContext';
 import Input from '../components/input';
 
 describe('Search Component', () => {

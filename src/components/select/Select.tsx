@@ -36,7 +36,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
             value={option.value}
             disabled={option.value === current?.value}
             onClick={() => {
-              onChange(option, current);
+              onChange(option);
               setCurrent(option);
               setExpanded((e) => !e);
             }}

@@ -10,7 +10,7 @@ import style from './style.module.scss';
 // import { CHANGE_TERM } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { termUpdated } from '../../features/search/searchSlice';
-import { RootState } from '../../store';
+import { RootState } from '../../redux/store';
 
 const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
   // const state = useContext(SearchContext);

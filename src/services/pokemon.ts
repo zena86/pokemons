@@ -1,8 +1,8 @@
 import { PokemonDescription } from '../components/pokemonCard/types';
 import { FetchResponse, PokemonResult } from './types';
 
-const POKEMON_API_BASE = 'https://pokeapi.co/api/v2/';
-const WORKER_BASE = 'https://pokemons-2.jk-mostovaya.workers.dev/';
+export const POKEMON_API_BASE = 'https://pokeapi.co/api/v2/';
+export const WORKER_BASE = 'https://pokemons-2.jk-mostovaya.workers.dev/';
 
 const makeRequest = async <T>(url: string): Promise<FetchResponse<T>> => {
   try {
