@@ -9,22 +9,30 @@ import SettingsPanel from '../settingsPanel';
 import styles from './style.module.scss';
 import useGetPokemonsPerPage from '../../hooks/useGetPokemonsPerPage';
 import LoaderContent from '../../hoc/LoaderContent';
-import {
-  SearchContext,
-  SearchDispatchContext,
-} from '../../context/searchContext';
+// import {
+//   // SearchContext,
+//   SearchDispatchContext,
+// } from '../../context/searchContext';
 import {
   CHANGE_POKEMONS_PER_PAGE,
+  // CHANGE_POKEMONS_PER_PAGE,
   ITEMS_ON_PAGE,
   NUM_OF_START_PAGE,
 } from '../../constants';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { SearchDispatchContext } from '../../context/searchContext';
+//import { pokemonsUpdated } from '../../features/pokemons/pokemonsSlice';
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const dispatch = useContext(SearchDispatchContext);
-  const { term } = useContext(SearchContext);
+  //const dispatch = useDispatch();
+
+  //const { term } = useContext(SearchContext);
+  const term = useSelector((state: RootState) => state.search.term);
 
   const [itemsOnPage, setItemsOnPage] = useState(
     Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
@@ -62,6 +70,7 @@ const Search = () => {
   };
 
   useEffect(() => {
+    //dispatch(pokemonsUpdated({ pokemonsList: pokemons }));
     dispatch({
       type: CHANGE_POKEMONS_PER_PAGE,
       payload: { pokemonsPerPage: pokemons },

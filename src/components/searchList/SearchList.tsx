@@ -6,10 +6,15 @@ import { useContext } from 'react';
 import { SearchContext } from '../../context/searchContext';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import styles from './style.module.scss';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../store';
 
 const SearchList = () => {
   const [searchParams] = useSearchParams();
   const { pokemonsPerPage } = useContext(SearchContext);
+  // const pokemons = useSelector(
+  //   (state: RootState) => state.pokemons.pokemonsList
+  // );
 
   return (
     <>
