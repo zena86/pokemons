@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import searchReducer from '../features/search/searchSlice';
 import pokemonsReducer from '../features/pokemons/pokemonsSlice';
+import loadMainReducer from '../features/loadMain/loadMainSlice';
+import loadDetailReducer from '../features/loadDetail/loadDetailSlice';
 import { pokemonsApi } from './pokemonsApi';
 
 const store = configureStore({
@@ -8,6 +10,8 @@ const store = configureStore({
     search: searchReducer,
     pokemons: pokemonsReducer,
     [pokemonsApi.reducerPath]: pokemonsApi.reducer,
+    loadMain: loadMainReducer,
+    loadDetail: loadDetailReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(pokemonsApi.middleware),

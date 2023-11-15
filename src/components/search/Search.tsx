@@ -14,6 +14,7 @@ import { useGetPokemonsQuery } from '../../redux/pokemonsApi';
 import { pokemonsUpdated } from '../../features/pokemons/pokemonsSlice';
 import { selectOptions } from '../../constants';
 import { Option } from '../select/types';
+import { loadingMain } from '../../features/loadMain/loadMainSlice';
 // import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 // import { SerializedError } from '@reduxjs/toolkit';
 
@@ -63,7 +64,9 @@ const Search = () => {
         pokemons: data?.pokemons || [],
       })
     );
-  }, [term, page, dispatch, limit, data]);
+
+    dispatch(loadingMain({ isLoading }));
+  }, [term, page, dispatch, limit, data, isLoading]);
 
   return (
     <div

@@ -4,6 +4,7 @@ import { PokemonDescription } from '../pokemonCard/types';
 import { PokemonPropertiesProps } from './types';
 import style from './style.module.scss';
 import { useGetPokemonQuery } from '../../redux/pokemonsApi';
+// import { useEffect } from 'react';
 
 const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
   const { data, isLoading, error } = useGetPokemonQuery(id);
