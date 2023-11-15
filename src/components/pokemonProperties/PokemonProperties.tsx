@@ -1,17 +1,22 @@
 import LoaderContent from '../../hoc/LoaderContent';
-import useGetPokemonByUrl from '../../hooks/useGetPokemonByUrl';
+// import useGetPokemonByUrl from '../../hooks/useGetPokemonByUrl';
 import { PokemonDescription } from '../pokemonCard/types';
 import { PokemonPropertiesProps } from './types';
 import style from './style.module.scss';
+import { useGetPokemonQuery } from '../../redux/pokemonsApi';
 
-const PokemonProperties = ({ url }: PokemonPropertiesProps) => {
-  const { content, isLoading, errorMessage } = useGetPokemonByUrl(url);
-  if (!content) return;
-  const { weight, height, abilities } = content as PokemonDescription;
+const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
+  const { data, isLoading, isError, error } = useGetPokemonQuery(id);
+
+  if (!data) return;
+  const { weight, height, abilities } = data as PokemonDescription;
 
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
-      {content ? (
+    <LoaderContent
+      isLoading={isLoading}
+      errorMessage={!isError ? `` : `${error}`}
+    >
+      {data ? (
         <div className={style.properties}>
           <p>
             <strong>weight:</strong> {weight}

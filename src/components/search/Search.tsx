@@ -10,7 +10,7 @@ import LoaderContent from '../../hoc/LoaderContent';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '../../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { useGetPokemonsPerPageQuery } from '../../redux/pokemonsApi';
+import { useGetPokemonsQuery } from '../../redux/pokemonsApi';
 import { pokemonsUpdated } from '../../features/pokemons/pokemonsSlice';
 import { selectOptions } from '../../constants';
 import { Option } from '../select/types';
@@ -25,7 +25,7 @@ const Search = () => {
     Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
   );
 
-  const { data, isLoading, isError, error } = useGetPokemonsPerPageQuery({
+  const { data, isLoading, isError, error } = useGetPokemonsQuery({
     limit,
     page,
     search: term,

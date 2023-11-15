@@ -1,11 +1,11 @@
-import { Pokemon } from '../components/searchList/types';
+// import { Pokemon } from '../components/searchList/types';
 
-export interface PokemonResult {
-  count: number;
-  pokemons: Pokemon[];
-}
+// export interface PokemonResult {
+//   count: number;
+//   pokemons: Pokemon[];
+// }
 
-export interface FetchResponse<T> {
-  result?: T;
-  errorMessage?: string;
-}
+// export interface FetchResponse<T> {
+//   result?: T;
+//   errorMessage?: string;
+// }

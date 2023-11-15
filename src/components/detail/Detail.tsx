@@ -1,14 +1,18 @@
-import useGetPokemonByName from '../../hooks/useGetPokemonByName';
 import DetailDescription from '../detailDescription';
 import LoaderContent from '../../hoc/LoaderContent/LoaderContent';
 import { PokemonDescription } from '../pokemonCard/types';
+import { useGetPokemonQuery } from '../../redux/pokemonsApi';
+import { useSearchParams } from 'react-router-dom';
 
 const Detail = () => {
-  const { content, isLoading, errorMessage } = useGetPokemonByName();
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('details');
+  const { data, isLoading } = useGetPokemonQuery(name);
+
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
-      {content ? (
-        <DetailDescription pokemon={content as PokemonDescription} />
+    <LoaderContent isLoading={isLoading} errorMessage={``}>
+      {data ? (
+        <DetailDescription pokemon={data as PokemonDescription} />
       ) : (
         <></>
       )}
