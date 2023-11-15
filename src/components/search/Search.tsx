@@ -15,8 +15,7 @@ import { pokemonsUpdated } from '../../features/pokemons/pokemonsSlice';
 import { selectOptions } from '../../constants';
 import { Option } from '../select/types';
 import { loadingMain } from '../../features/loadMain/loadMainSlice';
-// import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-// import { SerializedError } from '@reduxjs/toolkit';
+import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -39,8 +38,8 @@ const Search = () => {
     setSearchParams('frontpage=1');
   };
 
-  const handleFormSubmit = (isTermChanged: boolean) => {
-    if (isTermChanged) goToFirstPage();
+  const handleFormSubmit = () => {
+    goToFirstPage();
   };
 
   const handleSettingsChange = (selectedOption: Option) => {
@@ -81,7 +80,7 @@ const Search = () => {
           <SearchBar onFormSubmit={handleFormSubmit} />
           <LoaderContent
             isLoading={isLoading}
-            errorMessage={error?.error || ''}
+            errorMessage={rtkQueryErrorToText(error)}
           >
             <SearchList />
           </LoaderContent>

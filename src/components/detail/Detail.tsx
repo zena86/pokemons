@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadingDetail } from '../../features/loadDetail/loadDetailSlice';
+import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
 
 const Detail = () => {
   const [searchParams] = useSearchParams();
@@ -19,7 +20,10 @@ const Detail = () => {
   }, [dispatch, isLoading]);
 
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={error?.error || ''}>
+    <LoaderContent
+      isLoading={isLoading}
+      errorMessage={rtkQueryErrorToText(error)}
+    >
       {data ? (
         <DetailDescription pokemon={data as PokemonDescription} />
       ) : (

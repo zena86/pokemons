@@ -1,10 +1,9 @@
 import LoaderContent from '../../hoc/LoaderContent';
-// import useGetPokemonByUrl from '../../hooks/useGetPokemonByUrl';
 import { PokemonDescription } from '../pokemonCard/types';
 import { PokemonPropertiesProps } from './types';
 import style from './style.module.scss';
 import { useGetPokemonQuery } from '../../redux/pokemonsApi';
-// import { useEffect } from 'react';
+import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
 
 const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
   const { data, isLoading, error } = useGetPokemonQuery(id);
@@ -13,7 +12,10 @@ const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
   const { weight, height, abilities } = data as PokemonDescription;
 
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={error?.error || ''}>
+    <LoaderContent
+      isLoading={isLoading}
+      errorMessage={rtkQueryErrorToText(error)}
+    >
       {data ? (
         <div className={style.properties}>
           <p>
