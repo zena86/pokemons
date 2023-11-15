@@ -14,6 +14,8 @@ import { useGetPokemonsQuery } from '../../redux/pokemonsApi';
 import { pokemonsUpdated } from '../../features/pokemons/pokemonsSlice';
 import { selectOptions } from '../../constants';
 import { Option } from '../select/types';
+// import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+// import { SerializedError } from '@reduxjs/toolkit';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -30,10 +32,6 @@ const Search = () => {
     page,
     search: term,
   });
-
-  const count = data?.count ?? 0;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const pokemons = data?.pokemons ?? [];
 
   const goToFirstPage = () => {
     setPage(NUM_OF_START_PAGE);
@@ -62,10 +60,10 @@ const Search = () => {
   useEffect(() => {
     dispatch(
       pokemonsUpdated({
-        pokemons: pokemons,
+        pokemons: data?.pokemons || [],
       })
     );
-  }, [term, page, dispatch, pokemons, limit]);
+  }, [term, page, dispatch, limit, data]);
 
   return (
     <div
@@ -80,13 +78,13 @@ const Search = () => {
           <SearchBar onFormSubmit={handleFormSubmit} />
           <LoaderContent
             isLoading={isLoading}
-            errorMessage={error ? `${error}` : ''}
+            errorMessage={error?.error || ''}
           >
             <SearchList />
           </LoaderContent>
-          {count > limit && !isLoading && !isError && (
+          {(data?.count || 0) > limit && !isLoading && !isError && (
             <Pagination
-              nPages={getNumberOfPages(count, limit)}
+              nPages={getNumberOfPages(data?.count || 0, limit)}
               page={page}
               onChangePage={handleChangePage}
             />

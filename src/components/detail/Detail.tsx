@@ -7,10 +7,10 @@ import { useSearchParams } from 'react-router-dom';
 const Detail = () => {
   const [searchParams] = useSearchParams();
   const name = searchParams.get('details');
-  const { data, isLoading } = useGetPokemonQuery(name);
+  const { data, isLoading, error } = useGetPokemonQuery(name);
 
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={``}>
+    <LoaderContent isLoading={isLoading} errorMessage={error?.error || ''}>
       {data ? (
         <DetailDescription pokemon={data as PokemonDescription} />
       ) : (

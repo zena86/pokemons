@@ -6,16 +6,13 @@ import style from './style.module.scss';
 import { useGetPokemonQuery } from '../../redux/pokemonsApi';
 
 const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
-  const { data, isLoading, isError, error } = useGetPokemonQuery(id);
+  const { data, isLoading, error } = useGetPokemonQuery(id);
 
   if (!data) return;
   const { weight, height, abilities } = data as PokemonDescription;
 
   return (
-    <LoaderContent
-      isLoading={isLoading}
-      errorMessage={!isError ? `` : `${error}`}
-    >
+    <LoaderContent isLoading={isLoading} errorMessage={error?.error || ''}>
       {data ? (
         <div className={style.properties}>
           <p>
