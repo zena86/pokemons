@@ -1,20 +1,23 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import Search from '../components/search/Search';
-// import { SearchContext } from '../context/searchContext';
-import Input from '../components/input';
+import { renderWithProviders } from './test-utils';
 
 describe('Search Component', () => {
   test('Verify that clicking the Search button saves the entered value to the local storage', async () => {
-    expect(true).toBe(true);
-    return;
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <Search />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          pokemons: { pokemons: [] },
+        },
+      }
     );
+
     const searchBtn = screen.getByRole('button', { name: /search/i });
     const textboxEl = screen.getByRole('textbox');
 
@@ -28,21 +31,18 @@ describe('Search Component', () => {
   });
 
   test('Check that the component retrieves the value from the local storage upon mounting', async () => {
-    expect(true).toBe(true);
-    return;
     localStorage.setItem('term', 'bul');
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchContext.Provider
-          value={{
-            term: localStorage.getItem('term') ?? '',
-            pokemonsPerPage: [],
-          }}
-        >
-          <Input onInputChange={() => {}} />
-        </SearchContext.Provider>
-      </MemoryRouter>
+        <Search />
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          pokemons: { pokemons: [] },
+          search: { term: localStorage.getItem('term') ?? '' },
+        },
+      }
     );
 
     expect(await screen.findByRole('textbox')).toHaveValue('bul');

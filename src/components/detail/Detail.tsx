@@ -13,6 +13,7 @@ const Detail = () => {
   const name = searchParams.get('details');
 
   const dispatch = useDispatch();
+  console.log(`!!!!!!!useGetPokemonQuery by NAME ${name}`);
   const { data, isLoading, error } = useGetPokemonQuery(name);
 
   useEffect(() => {
