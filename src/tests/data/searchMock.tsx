@@ -13,9 +13,9 @@ export const searchMock = () => {
   fetchMocker.mockIf(
     (p) => {
       if (p.url.startsWith(`${BASE_URL}pokemons`)) return true;
-      if (p.url.startsWith(`${BASE_URL}pokemon/?id=1`)) return true;
-      if (p.url.startsWith(`${BASE_URL}pokemon/?id=2`)) return true;
-      if (p.url.startsWith(`${BASE_URL}pokemon/?id=3`)) return true;
+      // if (p.url.startsWith(`${BASE_URL}pokemon/?id=1`)) return true;
+      // if (p.url.startsWith(`${BASE_URL}pokemon/?id=2`)) return true;
+      // if (p.url.startsWith(`${BASE_URL}pokemon/?id=3`)) return true;
       if (p.url.startsWith(`${BASE_URL}pokemon/?id=bulbasaur`)) return true;
       if (p.url.startsWith(`${BASE_URL}pokemon/?id=ivysaur`)) return true;
       if (p.url.startsWith(`${BASE_URL}pokemon/?id=venusaur`)) return true;
@@ -24,12 +24,12 @@ export const searchMock = () => {
     (req) => {
       if (req.url.startsWith(`${BASE_URL}pokemons`)) {
         return allPokemons;
-      } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=1`)) {
-        return JSON.stringify(pockemonN1ResponseJson);
-      } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=2`)) {
-        return JSON.stringify(pockemonN2ResponseJson);
-      } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=3`)) {
-        return JSON.stringify(pockemonN3ResponseJson);
+        // } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=1`)) {
+        //   return JSON.stringify(pockemonN1ResponseJson);
+        // } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=2`)) {
+        //   return JSON.stringify(pockemonN2ResponseJson);
+        // } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=3`)) {
+        //   return JSON.stringify(pockemonN3ResponseJson);
       } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=bulbasaur`)) {
         return JSON.stringify(pockemonN1ResponseJson);
       } else if (req.url.startsWith(`${BASE_URL}pokemon/?id=ivysaur`)) {
