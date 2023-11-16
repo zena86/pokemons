@@ -3,7 +3,7 @@ import SearchList from '../components/searchList';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 //import { SearchContext } from '../context/searchContext';
-import { allPokemons } from './data/allPokemons';
+// import { allPokemons } from './data/allPokemons';
 //import { initialValue } from '../context/init';
 
 describe('SearchList Component', () => {
@@ -12,14 +12,14 @@ describe('SearchList Component', () => {
     return;
     render(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchContext.Provider
+        {/* <SearchContext.Provider
           value={{
             term: '',
             pokemonsPerPage: JSON.parse(allPokemons).pokemons,
           }}
-        >
-          <SearchList />
-        </SearchContext.Provider>
+        > */}
+        <SearchList />
+        {/* </SearchContext.Provider> */}
       </MemoryRouter>
     );
     const items = await screen.findAllByRole('listitem');
