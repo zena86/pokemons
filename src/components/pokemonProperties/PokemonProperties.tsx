@@ -13,11 +13,12 @@ const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
   const { data, isLoading, error } = useGetPokemonQuery(id);
 
   useEffect(() => {
+    console.log(isLoading);
     dispatch(loadingDetail({ isLoading }));
   }, [dispatch, isLoading]);
 
   if (!data) return;
-  const { name, weight, height, abilities } = data as PokemonDescription;
+  const { weight, height, abilities } = data as PokemonDescription;
 
   return (
     <LoaderContent
@@ -25,27 +26,24 @@ const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
       errorMessage={rtkQueryErrorToText(error)}
     >
       {data ? (
-        <>
-          <h2 className={style['text-title']}>{name}</h2>
-          <div className={style.properties}>
-            <p>
-              <strong>weight:</strong> {weight}
-            </p>
-            <p>
-              <strong>height:</strong> {height}
-            </p>
-            <div>
-              <strong>abilities:</strong>
-              <ul className={style.abilities}>
-                {abilities.map((item, index) => (
-                  <li key={`${item.ability.name}${index}`}>
-                    {item.ability.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className={style.properties}>
+          <p>
+            <strong>weight:</strong> {weight}
+          </p>
+          <p>
+            <strong>height:</strong> {height}
+          </p>
+          <div>
+            <strong>abilities:</strong>
+            <ul className={style.abilities}>
+              {abilities.map((item, index) => (
+                <li key={`${item.ability.name}${index}`}>
+                  {item.ability.name}
+                </li>
+              ))}
+            </ul>
           </div>
-        </>
+        </div>
       ) : (
         <></>
       )}
