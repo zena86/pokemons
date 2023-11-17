@@ -4,7 +4,6 @@ import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import * as router2 from 'react-router';
 import '@testing-library/jest-dom';
-import { allPokemons } from './data/allPokemons';
 import Search from '../components/search';
 import Pagination from '../components/pagination/';
 import { searchMock } from './data/searchMock';
@@ -19,16 +18,12 @@ describe('Pagination component', () => {
   });
 
   test('Make sure the component updates URL query parameter when page changes', async () => {
-    const initPokemons = JSON.parse(allPokemons).pokemons;
-
     renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <Search />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: initPokemons },
-        },
+        preloadedState: {},
       }
     );
 
@@ -59,16 +54,12 @@ describe('Pagination component', () => {
   });
 
   test('Items per page select', async () => {
-    const initPokemons = JSON.parse(allPokemons).pokemons;
-
     renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
         <Search />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: initPokemons },
-        },
+        preloadedState: {},
       }
     );
 

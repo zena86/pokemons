@@ -6,7 +6,7 @@ export const pokemonsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}`,
   }),
-  keepUnusedDataFor: 0.00000001,
+  keepUnusedDataFor: 120,
   endpoints: (build) => ({
     getPokemons: build.query({
       query: (args) => {

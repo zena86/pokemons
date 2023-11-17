@@ -12,9 +12,7 @@ describe('Search Component', () => {
         <Search />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: [] },
-        },
+        preloadedState: {},
       }
     );
 
@@ -39,7 +37,6 @@ describe('Search Component', () => {
       </MemoryRouter>,
       {
         preloadedState: {
-          pokemons: { pokemons: [] },
           search: { term: localStorage.getItem('term') ?? '' },
         },
       }

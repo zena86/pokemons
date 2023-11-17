@@ -1,14 +1,11 @@
 import { ChangeEvent, useState } from 'react';
 import style from './style.module.scss';
-// import { SearchContext } from '../../context/searchContext';
 import { InputProps } from './types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 const Input = ({ onInputChange }: InputProps) => {
-  // const { term } = useContext(SearchContext);
   const term = useSelector((state: RootState) => state.search.term);
-
   const [search, setSearch] = useState(term);
 
   const handleInputChange = ({

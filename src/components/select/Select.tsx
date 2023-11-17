@@ -25,7 +25,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
 
     dispatch(
       itemsPerPageUpdated({
-        itemsPerPage: current,
+        itemsPerPage: current?.value,
       })
     );
   }, [current, dispatch]);

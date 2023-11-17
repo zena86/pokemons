@@ -9,9 +9,9 @@ import {
 import { routerConfig } from '../router';
 import { searchMock } from './data/searchMock';
 import PokemonCard from '../components/pokemonCard';
-import Home from '../pages/home/Home';
+import SearchList from '../components/searchList/SearchList';
 import { renderWithProviders } from './test-utils';
-import { allPokemons } from './data/allPokemons';
+import { pokemons } from './data/pokemons';
 
 describe('PokemonCard Component', () => {
   beforeEach(() => {
@@ -19,6 +19,8 @@ describe('PokemonCard Component', () => {
   });
 
   test('Ensure that the card component renders the relevant card data', async () => {
+    // expect(true).toBe(true);
+    // return;
     renderWithProviders(
       <PokemonCard
         pokemon={{
@@ -42,59 +44,24 @@ describe('PokemonCard Component', () => {
   });
 
   test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    expect(true).toBe(true);
-    return;
-    // render(
-    //   <MemoryRouter initialEntries={['?frontpage=1']}>
-    //     <SearchContext.Provider
-    //       value={{
-    //         term: '',
-    //         pokemonsPerPage: JSON.parse(allPokemons).pokemons,
-    //       }}
-    //     >
-    //       <SearchList />
-    //     </SearchContext.Provider>
-    //   </MemoryRouter>
-    // );
-    // expect(true).toBe(true);
-    // return;
-    const initPokemons = JSON.parse(allPokemons).pokemons;
     renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <Home />
+        <SearchList pokemons={pokemons} />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: initPokemons },
-        },
+        preloadedState: {},
       }
     );
 
-    const item = (await screen.findByText('bulbasaur')).closest('a');
+    const item = (await screen.findByText('venusaur')).closest('a');
     expect(item).not.toBeNull();
     if (item) await userEvent.click(item);
 
+    const requests = fetchMock.requests();
+
     await waitFor(() => {
-      // expect(fetchMock).toHaveBeenCalledWith(
-      //   expect.objectContaining({
-      //     'Symbol(Request internals)': expect.objectContaining({
-      //       method: 'GET',
-      //     }),
-      //   })
-      // );
-
-      // expect(fetchMock).toHaveBeenCalledWith(
-      //   'https://poke.jk-mostovaya.workers.dev/pokemon/?id=venusaur'
-      // );
-
-      //expect(fetchMock.requests().length).toBe(4);
-
-      console.log(
-        'LOG!!!',
-        fetchMock.requests().map((x) => x.url)
-      );
-      expect(fetchMock.requests()[fetchMock.requests().length - 1].url).toEqual(
-        'https://poke.jk-mostovaya.workers.dev/pokemon/?id=bulbasaur'
+      expect(requests[requests.length - 1].url).toEqual(
+        'https://poke.jk-mostovaya.workers.dev/pokemon/?id=venusaur'
       );
     });
   });
@@ -104,12 +71,8 @@ describe('PokemonCard Component', () => {
       initialEntries: ['/?frontpage=1'],
     });
 
-    const initPokemons = JSON.parse(allPokemons).pokemons;
-
     renderWithProviders(<RouterProvider router={memoryRouter} />, {
-      preloadedState: {
-        pokemons: { pokemons: initPokemons },
-      },
+      preloadedState: {},
     });
 
     const item = (await screen.findByText('venusaur')).closest('a');

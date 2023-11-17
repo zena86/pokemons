@@ -22,9 +22,7 @@ describe('Detail Component', () => {
         <Detail />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: [] },
-        },
+        preloadedState: {},
       }
     );
 
@@ -39,9 +37,7 @@ describe('Detail Component', () => {
         <Detail />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: [] },
-        },
+        preloadedState: {},
       }
     );
 
@@ -65,9 +61,7 @@ describe('Detail Component', () => {
         <Detail />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: [] },
-        },
+        preloadedState: {},
       }
     );
 
@@ -81,9 +75,7 @@ describe('Detail Component', () => {
     });
 
     renderWithProviders(<RouterProvider router={memoryRouter} />, {
-      preloadedState: {
-        pokemons: { pokemons: [] },
-      },
+      preloadedState: {},
     });
 
     expect(await screen.findByText(/moves:/i)).toBeInTheDocument();
