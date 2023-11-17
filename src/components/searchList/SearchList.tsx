@@ -1,15 +1,12 @@
-import { Pokemon } from './types';
+import { Pokemon, SearchListProps } from './types';
 import Message from '../message';
 import style from './style.module.scss';
 import PokemonCard from '../pokemonCard/PokemonCard';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import styles from './style.module.scss';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 
-const SearchList = () => {
+const SearchList = ({ pokemons }: SearchListProps) => {
   const [searchParams] = useSearchParams();
-  const pokemons = useSelector((state: RootState) => state.pokemons.pokemons);
 
   return (
     <>

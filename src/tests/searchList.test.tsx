@@ -3,20 +3,16 @@ import SearchList from '../components/searchList';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { renderWithProviders } from './test-utils';
-import { allPokemons } from './data/allPokemons';
+import { pokemons } from './data/pokemons';
 
 describe('SearchList Component', () => {
   test('Verify that the component renders the specified number of cards', async () => {
-    const initPokemons = JSON.parse(allPokemons).pokemons;
-
     renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchList />
+        <SearchList pokemons={pokemons} />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: initPokemons },
-        },
+        preloadedState: {},
       }
     );
 
@@ -28,12 +24,10 @@ describe('SearchList Component', () => {
   test('Check that an appropriate message is displayed if no cards are present', () => {
     renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchList />
+        <SearchList pokemons={[]} />
       </MemoryRouter>,
       {
-        preloadedState: {
-          pokemons: { pokemons: [] },
-        },
+        preloadedState: {},
       }
     );
     expect(screen.queryByRole('list')).toBeNull();

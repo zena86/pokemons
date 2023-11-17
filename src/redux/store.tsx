@@ -4,14 +4,14 @@ import {
   configureStore,
 } from '@reduxjs/toolkit';
 import searchReducer from '../features/search/searchSlice';
-import pokemonsReducer from '../features/pokemons/pokemonsSlice';
+import itemsPerPageReducer from '../features/itemsPerPage/itemsPerPageSlice';
 import loadMainReducer from '../features/loadMain/loadMainSlice';
 import loadDetailReducer from '../features/loadDetail/loadDetailSlice';
 import { pokemonsApi } from './pokemonsApi';
 
 const rootReducer = combineReducers({
   search: searchReducer,
-  pokemons: pokemonsReducer,
+  itemsPerPage: itemsPerPageReducer,
   [pokemonsApi.reducerPath]: pokemonsApi.reducer,
   loadMain: loadMainReducer,
   loadDetail: loadDetailReducer,
