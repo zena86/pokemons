@@ -16,7 +16,6 @@ import { selectOptions } from '../../constants';
 import { Option } from '../select/types';
 import { loadingMain } from '../../features/loadMain/loadMainSlice';
 import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
-import { isOpenUpdated } from '../../features/viewMode/viewModeSlice';
 
 const Search = () => {
   const dispatch = useDispatch();
@@ -51,9 +50,6 @@ const Search = () => {
   const closeDetail = () => {
     searchParams.get('details') &&
       setSearchParams(`?frontpage=${searchParams.get('frontpage')}`);
-    if (searchParams.get('details')) {
-      dispatch(isOpenUpdated({ isOpen: false }));
-    }
   };
 
   const handleChangePage = (page: number) => {
@@ -70,11 +66,6 @@ const Search = () => {
 
     dispatch(loadingMain({ isLoading }));
   }, [term, page, dispatch, limit, data, isLoading]);
-
-  useEffect(() => {
-    const isOpen = searchParams.get('details') ? true : false;
-    dispatch(isOpenUpdated({ isOpen: isOpen }));
-  }, [searchParams, dispatch]);
 
   return (
     <div

@@ -3,16 +3,12 @@ import { DetailDescriptionProps } from './types';
 import { useSearchParams } from 'react-router-dom';
 import styles from './style.module.scss';
 import { PokemonDescription } from '../pokemonCard/types';
-import { isOpenUpdated } from '../../features/viewMode/viewModeSlice';
-import { useDispatch } from 'react-redux';
 
 const DetailDescription = (pokemon: DetailDescriptionProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const dispatch = useDispatch();
 
   const handleClick = () => {
     setSearchParams(`?frontpage=${searchParams.get('frontpage')}`);
-    dispatch(isOpenUpdated({ isOpen: false }));
   };
 
   const { name, weight, height, abilities, moves, sprites } =

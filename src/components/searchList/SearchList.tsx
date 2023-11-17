@@ -4,18 +4,12 @@ import style from './style.module.scss';
 import PokemonCard from '../pokemonCard/PokemonCard';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import styles from './style.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { isOpenUpdated } from '../../features/viewMode/viewModeSlice';
 
 const SearchList = () => {
   const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
   const pokemons = useSelector((state: RootState) => state.pokemons.pokemons);
-
-  const handleCardClick = () => {
-    dispatch(isOpenUpdated({ isOpen: true }));
-  };
 
   return (
     <>
@@ -31,7 +25,6 @@ const SearchList = () => {
                 }`}
                 className={styles.link}
                 key={pokemon.name}
-                onClick={handleCardClick}
               >
                 <PokemonCard pokemon={pokemon} />
               </NavLink>
