@@ -4,18 +4,9 @@ import { PokemonPropertiesProps } from './types';
 import style from './style.module.scss';
 import { useGetPokemonQuery } from '../../redux/pokemonsApi';
 import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { loadingDetail } from '../../features/loadDetail/loadDetailSlice';
 
 const PokemonProperties = ({ id }: PokemonPropertiesProps) => {
-  const dispatch = useDispatch();
   const { data, isLoading, error } = useGetPokemonQuery(id);
-
-  useEffect(() => {
-    console.log(isLoading);
-    dispatch(loadingDetail({ isLoading }));
-  }, [dispatch, isLoading]);
 
   if (!data) return;
   const { weight, height, abilities } = data as PokemonDescription;
