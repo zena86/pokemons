@@ -1,14 +1,31 @@
-import useGetPokemonByName from '../../hooks/useGetPokemonByName';
 import DetailDescription from '../detailDescription';
 import LoaderContent from '../../hoc/LoaderContent/LoaderContent';
 import { PokemonDescription } from '../pokemonCard/types';
+import { useGetPokemonQuery } from '../../redux/pokemonsApi';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadingDetail } from '../../features/loadDetail/loadDetailSlice';
+import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
 
 const Detail = () => {
-  const { content, isLoading, errorMessage } = useGetPokemonByName();
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get('details');
+
+  const dispatch = useDispatch();
+  const { data, isLoading, error } = useGetPokemonQuery(name);
+
+  useEffect(() => {
+    dispatch(loadingDetail({ isLoading }));
+  }, [dispatch, isLoading, searchParams]);
+
   return (
-    <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
-      {content ? (
-        <DetailDescription pokemon={content as PokemonDescription} />
+    <LoaderContent
+      isLoading={isLoading}
+      errorMessage={rtkQueryErrorToText(error)}
+    >
+      {data ? (
+        <DetailDescription pokemon={data as PokemonDescription} />
       ) : (
         <></>
       )}

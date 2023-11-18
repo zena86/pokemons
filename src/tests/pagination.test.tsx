@@ -4,11 +4,10 @@ import { userEvent } from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import * as router2 from 'react-router';
 import '@testing-library/jest-dom';
-import { allPokemons } from './data/allPokemons';
 import Search from '../components/search';
-import { SearchContext } from '../context/searchContext';
 import Pagination from '../components/pagination/';
 import { searchMock } from './data/searchMock';
+import { renderWithProviders } from './test-utils';
 
 const navigate = vi.fn();
 
@@ -19,17 +18,13 @@ describe('Pagination component', () => {
   });
 
   test('Make sure the component updates URL query parameter when page changes', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchContext.Provider
-          value={{
-            term: '',
-            pokemonsPerPage: JSON.parse(allPokemons).pokemons,
-          }}
-        >
-          <Search />
-        </SearchContext.Provider>
-      </MemoryRouter>
+        <Search />
+      </MemoryRouter>,
+      {
+        preloadedState: {},
+      }
     );
 
     await userEvent.click(await screen.findByText('2'));
@@ -59,18 +54,15 @@ describe('Pagination component', () => {
   });
 
   test('Items per page select', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchContext.Provider
-          value={{
-            term: '',
-            pokemonsPerPage: JSON.parse(allPokemons).pokemons,
-          }}
-        >
-          <Search />
-        </SearchContext.Provider>
-      </MemoryRouter>
+        <Search />
+      </MemoryRouter>,
+      {
+        preloadedState: {},
+      }
     );
+
     expect(await screen.findByText(/108/i)).toBeInTheDocument();
     await userEvent.click(await screen.findByText(/6 per page/i));
     expect(await screen.findByText(/216/i)).toBeInTheDocument();

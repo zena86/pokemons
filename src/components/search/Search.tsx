@@ -1,53 +1,50 @@
 import SearchBar from '../searchBar';
 import SearchList from '../searchList';
 import Pagination from '../pagination';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getNumberOfPages } from '../../utils/numberOfPages';
-import { Payload } from '../settingsPanel/types';
-import SettingsPanel from '../settingsPanel';
+import Select from '../select/Select';
 import styles from './style.module.scss';
-import useGetPokemonsPerPage from '../../hooks/useGetPokemonsPerPage';
 import LoaderContent from '../../hoc/LoaderContent';
-import {
-  SearchContext,
-  SearchDispatchContext,
-} from '../../context/searchContext';
-import {
-  CHANGE_POKEMONS_PER_PAGE,
-  ITEMS_ON_PAGE,
-  NUM_OF_START_PAGE,
-} from '../../constants';
+import { NUM_OF_START_PAGE } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useGetPokemonsQuery } from '../../redux/pokemonsApi';
+import { selectOptions } from '../../constants';
+import { Option } from '../select/types';
+import { loadingMain } from '../../features/loadMain/loadMainSlice';
+import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
+import { itemsPerPageUpdated } from '../../features/itemsPerPage/itemsPerPageSlice';
 
 const Search = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const dispatch = useContext(SearchDispatchContext);
-  const { term } = useContext(SearchContext);
-
-  const [itemsOnPage, setItemsOnPage] = useState(
-    Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(Number(searchParams.get('frontpage')) || 1);
+  const term = useSelector((state: RootState) => state.search.term);
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.itemsPerPage.itemsPerPage
+  );
+  const [limit, setLimit] = useState(itemsPerPage);
 
-  const {
-    content: { count, pokemons },
-    isLoading,
-    errorMessage,
-  } = useGetPokemonsPerPage({ itemsOnPage, page, term });
+  const { data, isLoading, isError, error } = useGetPokemonsQuery({
+    limit,
+    page,
+    search: term,
+  });
 
   const goToFirstPage = () => {
     setPage(NUM_OF_START_PAGE);
     setSearchParams('frontpage=1');
   };
 
-  const handleFormSubmit = (isTermChanged: boolean) => {
-    if (isTermChanged) goToFirstPage();
+  const handleFormSubmit = () => {
+    goToFirstPage();
   };
 
-  const handleSettingsChange = ({ selectedOption }: Payload) => {
-    setItemsOnPage(selectedOption.value);
+  const handleSettingsChange = (selectedOption: Option) => {
+    setLimit(selectedOption.value);
     goToFirstPage();
   };
 
@@ -62,11 +59,14 @@ const Search = () => {
   };
 
   useEffect(() => {
-    dispatch({
-      type: CHANGE_POKEMONS_PER_PAGE,
-      payload: { pokemonsPerPage: pokemons },
-    });
-  }, [term, page, itemsOnPage, pokemons, dispatch]);
+    dispatch(
+      itemsPerPageUpdated({
+        itemsPerPage: limit,
+      })
+    );
+
+    dispatch(loadingMain({ isLoading }));
+  }, [dispatch, isLoading, limit]);
 
   return (
     <div
@@ -77,14 +77,17 @@ const Search = () => {
     >
       <div className="container">
         <div className="wrapper">
-          <SettingsPanel onItemsChange={handleSettingsChange} />
+          <Select options={selectOptions} onChange={handleSettingsChange} />
           <SearchBar onFormSubmit={handleFormSubmit} />
-          <LoaderContent isLoading={isLoading} errorMessage={errorMessage}>
-            <SearchList />
+          <LoaderContent
+            isLoading={isLoading}
+            errorMessage={rtkQueryErrorToText(error)}
+          >
+            <SearchList pokemons={data?.pokemons || []} />
           </LoaderContent>
-          {count > itemsOnPage && !isLoading && !errorMessage && (
+          {(data?.count || 0) > limit && !isLoading && !isError && (
             <Pagination
-              nPages={getNumberOfPages(count, itemsOnPage)}
+              nPages={getNumberOfPages(data?.count || 0, limit)}
               page={page}
               onChangePage={handleChangePage}
             />

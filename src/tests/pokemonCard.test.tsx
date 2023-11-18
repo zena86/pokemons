@@ -1,17 +1,17 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import PokemonCard from '../components/pokemonCard/PokemonCard';
 import {
-  MemoryRouter,
   RouterProvider,
   createMemoryRouter,
+  MemoryRouter,
 } from 'react-router-dom';
-import SearchList from '../components/searchList';
-import { SearchContext } from '../context/searchContext';
-import { allPokemons } from './data/allPokemons';
 import { routerConfig } from '../router';
 import { searchMock } from './data/searchMock';
+import PokemonCard from '../components/pokemonCard';
+import SearchList from '../components/searchList/SearchList';
+import { renderWithProviders } from './test-utils';
+import { pokemons } from './data/pokemons';
 
 describe('PokemonCard Component', () => {
   beforeEach(() => {
@@ -19,13 +19,18 @@ describe('PokemonCard Component', () => {
   });
 
   test('Ensure that the card component renders the relevant card data', async () => {
-    render(
+    // expect(true).toBe(true);
+    // return;
+    renderWithProviders(
       <PokemonCard
         pokemon={{
           name: 'venusaur',
-          url: 'https://pokeapi.co/api/v2/pokemon/3/',
+          id: '3',
         }}
-      />
+      />,
+      {
+        preloadedState: {},
+      }
     );
 
     expect(await screen.findByText(/venusaur/i)).toBeInTheDocument();
@@ -39,25 +44,24 @@ describe('PokemonCard Component', () => {
   });
 
   test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchContext.Provider
-          value={{
-            term: '',
-            pokemonsPerPage: JSON.parse(allPokemons).pokemons,
-          }}
-        >
-          <SearchList />
-        </SearchContext.Provider>
-      </MemoryRouter>
+        <SearchList pokemons={pokemons} />
+      </MemoryRouter>,
+      {
+        preloadedState: {},
+      }
     );
 
     const item = (await screen.findByText('venusaur')).closest('a');
+    expect(item).not.toBeNull();
     if (item) await userEvent.click(item);
 
+    const requests = fetchMock.requests();
+
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledWith(
-        'https://pokeapi.co/api/v2/pokemon/3/'
+      expect(requests[requests.length - 1].url).toEqual(
+        'https://poke.jk-mostovaya.workers.dev/pokemon/?id=venusaur'
       );
     });
   });
@@ -66,7 +70,11 @@ describe('PokemonCard Component', () => {
     const memoryRouter = createMemoryRouter(routerConfig, {
       initialEntries: ['/?frontpage=1'],
     });
-    render(<RouterProvider router={memoryRouter} />);
+
+    renderWithProviders(<RouterProvider router={memoryRouter} />, {
+      preloadedState: {},
+    });
+
     const item = (await screen.findByText('venusaur')).closest('a');
     if (item) await userEvent.click(item);
 

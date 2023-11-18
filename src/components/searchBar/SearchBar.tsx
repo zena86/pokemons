@@ -1,19 +1,17 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { SearchBarProps } from './types';
 import Input from '../input';
 import Button from '../button';
 import style from './style.module.scss';
-import {
-  SearchContext,
-  SearchDispatchContext,
-} from '../../context/searchContext';
-import { CHANGE_TERM } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { termUpdated } from '../../features/search/searchSlice';
+import { RootState } from '../../redux/store';
 
 const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
-  const state = useContext(SearchContext);
-  const { term } = state;
-  const dispatch = useContext(SearchDispatchContext);
-  const [search, setSearch] = useState(term);
+  const term = useSelector((state: RootState) => state.search.term);
+  const dispatch = useDispatch();
+
+  const [search, setSearch] = useState('');
 
   const handleInputChange = (inputTerm: string): void => {
     setSearch(inputTerm);
@@ -22,12 +20,11 @@ const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const trimmedTerm = search.trim();
-    localStorage.setItem('term', trimmedTerm);
-    onFormSubmit(term !== trimmedTerm);
-    dispatch({
-      type: CHANGE_TERM,
-      payload: { term: trimmedTerm },
-    });
+    if (term !== trimmedTerm) {
+      localStorage.setItem('term', trimmedTerm);
+      dispatch(termUpdated({ term: trimmedTerm }));
+      onFormSubmit();
+    }
   };
 
   return (

@@ -1,17 +1,34 @@
 import { useEffect, useState } from 'react';
-import { SelectProps } from './types';
+import { Option, SelectProps } from './types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import styles from './style.module.scss';
-import { ITEMS_ON_PAGE } from '../../constants';
+import { itemsPerPageUpdated } from '../../features/itemsPerPage/itemsPerPageSlice';
 
 const Select = ({ options, onChange, onExpanded }: SelectProps) => {
-  const initPerPage = Number(localStorage.getItem('perPage')) || ITEMS_ON_PAGE;
-  const initCurrent = options.find((item) => item.value === initPerPage);
+  const dispatch = useDispatch();
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.itemsPerPage.itemsPerPage
+  );
+  const initCurrent = options.find((item) => item.value === itemsPerPage);
   const [current, setCurrent] = useState(initCurrent);
   const [expanded, setExpanded] = useState(false);
 
+  const handleOptionOnClick = (option: Option) => {
+    onChange(option);
+    setCurrent(option);
+    setExpanded((e) => !e);
+  };
+
   useEffect(() => {
     localStorage.setItem('perPage', JSON.stringify(current?.value));
-  }, [current]);
+
+    dispatch(
+      itemsPerPageUpdated({
+        itemsPerPage: current?.value,
+      })
+    );
+  }, [current, dispatch]);
 
   return (
     <div
@@ -35,11 +52,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
             type="button"
             value={option.value}
             disabled={option.value === current?.value}
-            onClick={() => {
-              onChange(option, current);
-              setCurrent(option);
-              setExpanded((e) => !e);
-            }}
+            onClick={() => handleOptionOnClick(option)}
           >
             {option.label}
           </button>

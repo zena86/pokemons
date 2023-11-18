@@ -1,20 +1,24 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Select from '../components/select/Select';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+import { renderWithProviders } from './test-utils';
 
-describe('Pagination select component', () => {
+describe('Select component', () => {
   test('Click by options', async () => {
     const onChange = vi.fn();
-    render(
+    renderWithProviders(
       <Select
         options={[
           { value: 1, label: 'one' },
           { value: 2, label: 'two' },
         ]}
         onChange={onChange}
-      />
+      />,
+      {
+        preloadedState: { itemsPerPage: { itemsPerPage: 12 } },
+      }
     );
     const element = await screen.findByText(/one/i);
     userEvent.click(element);
@@ -25,14 +29,18 @@ describe('Pagination select component', () => {
   });
 
   test('Empty pagination select', async () => {
-    render(<Select options={[]} onChange={() => {}} />);
+    renderWithProviders(<Select options={[]} onChange={() => {}} />, {
+      preloadedState: { itemsPerPage: { itemsPerPage: 12 } },
+    });
+
     const optionOne = screen.queryByText('one');
     expect(optionOne).toBeNull();
   });
 
   test('Expand select by click', async () => {
     const onExpanded = vi.fn();
-    render(
+
+    renderWithProviders(
       <Select
         options={[
           { value: 1, label: 'one' },
@@ -40,7 +48,10 @@ describe('Pagination select component', () => {
         ]}
         onChange={() => {}}
         onExpanded={onExpanded}
-      />
+      />,
+      {
+        preloadedState: { itemsPerPage: { itemsPerPage: 12 } },
+      }
     );
 
     expect(await screen.findByText(/one/i)).toBeInTheDocument();

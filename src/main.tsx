@@ -3,9 +3,13 @@ import App from './App.tsx';
 import './index.scss';
 import ErrorFallback from './components/errorFallback/ErrorFallback.tsx';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
+import { setupStore } from './redux/store.tsx';
+import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundary fallback={<ErrorFallback text="Something went wrong" />}>
-    <App />
+    <Provider store={setupStore()}>
+      <App />
+    </Provider>
   </ErrorBoundary>
 );
