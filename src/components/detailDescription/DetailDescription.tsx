@@ -1,8 +1,6 @@
-//import Image from 'next/image';
 import { RiCloseLine } from '@react-icons/all-files/ri/RiCloseLine';
 import { DetailDescriptionProps } from './types';
 import { useSearchParams } from 'next/navigation';
-// import { useSearchParams } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import styles from './style.module.scss';
 import { PokemonDescription } from '../pokemonCard/types';
@@ -12,15 +10,6 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.query.frontpage = searchParams.get('frontpage') as string;
-    // router.push(
-    //   `?frontpage=${searchParams.get('frontpage')}&search=${
-    //     searchParams.get('search') || ''
-    //   }&limit=${
-    //     Number(searchParams.get('limit')) || 12
-    //   }&details=${searchParams.get('details')}`
-    // );
-
     router.push(
       `?frontpage=${searchParams.get('frontpage')}&search=${searchParams.get(
         'search'

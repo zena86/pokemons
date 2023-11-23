@@ -1,10 +1,6 @@
 import styles from './style.module.scss';
 import { Ability } from '../pokemonCard/types';
-// import pockemonN1ResponseJson from '../pokemonN1.json';
 import { PokemonPropertiesProps } from './types';
-// import { useGetPokemonQuery } from '@/redux/pokemonsApi';
-// import LoaderContent from '@/hoc/LoaderContent/LoaderContent';
-// import { rtkQueryErrorToText } from '@/utils/rtkQueryErrorToText';
 
 const PokemonProperties = ({ pokemon }: PokemonPropertiesProps) => {
   // const { data, isLoading, error } = useGetPokemonQuery(id);

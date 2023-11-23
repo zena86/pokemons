@@ -3,46 +3,28 @@ import { useState } from 'react';
 import styles from './style.module.scss';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
+import { NUM_OF_START_PAGE } from '@/constants';
 
 const Select = ({ options, onExpanded }: SelectProps) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // console.log(options, onChange, onExpanded);
-  // const dispatch = useDispatch();
-  // const itemsPerPage = useSelector(
-  //   (state: RootState) => state.itemsPerPage.itemsPerPage
-  // );
-
   const initCurrent = options.find(
     (item) => item.value === Number(searchParams.get('limit'))
   );
-  // const initCurrent = { label: '12 per page', value: 12 };
-  // const [current, setCurrent] = useState(initCurrent);
+
   const [expanded, setExpanded] = useState(false);
 
   const handleOptionOnClick = (option: Option) => {
-    // onChange(option);
-    // setCurrent(option);
     setExpanded((e) => !e);
 
     localStorage.setItem('perPage', JSON.stringify(option?.value));
     router.push(
-      `/?frontpage=1&search=${searchParams.get('search') || ''}&limit=${
-        option.value
-      }`
+      `/?frontpage=${NUM_OF_START_PAGE}&search=${
+        searchParams.get('search') || ''
+      }&limit=${option.value}`
     );
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem('perPage', JSON.stringify(current?.value));
-
-  //   dispatch(
-  //     itemsPerPageUpdated({
-  //       itemsPerPage: current?.value,
-  //     })
-  //   );
-  // }, [current, dispatch]);
 
   return (
     <div
@@ -56,7 +38,6 @@ const Select = ({ options, onExpanded }: SelectProps) => {
           if (onExpanded) onExpanded();
         }}
       >
-        {/* {current?.label} */}
         {initCurrent?.label || '12 per page'}
       </button>
       <div className={styles.options}>

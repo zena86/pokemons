@@ -1,5 +1,4 @@
 import { PokemonDescription } from '../pokemonCard/types';
-// import { Pokemon } from '../searchList/types';
 import { Option } from '../select/types';
 
 export interface Payload {

@@ -1,14 +1,8 @@
-// import {
-//   FetchBaseQueryError,
-//   createApi,
-//   fetchBaseQuery,
-// } from '@reduxjs/toolkit/query';
 import {
   FetchBaseQueryError,
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
-// import { HYDRATE } from 'next-redux-wrapper';
 import { BASE_URL } from '../constants';
 import { Pokemon } from '@/components/searchList/types';
 import { PokemonDescription } from '@/components/pokemonCard/types';

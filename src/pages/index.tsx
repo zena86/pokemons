@@ -10,6 +10,7 @@ import {
 } from '@/redux/pokemonsApi';
 
 import type { GetServerSideProps } from 'next';
+import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps =
@@ -22,9 +23,9 @@ export const getServerSideProps: GetServerSideProps =
       let search = '';
       let limit;
       if (resolvedUrl === '/') {
-        page = 1;
+        page = NUM_OF_START_PAGE;
         search = '';
-        limit = 12;
+        limit = ITEMS_ON_PAGE;
       } else {
         page = Number(query.frontpage);
         search = query.search as string;
@@ -72,7 +73,6 @@ function Home(props) {
       </Head>
       <main>
         <div className={styles.body}>
-          {/* <h1>{props.resolvedUrl}</h1> */}
           <Search pokemonsRequest={props[0].data} />
           {searchParams.get('details') && (
             <div className={styles.details}>

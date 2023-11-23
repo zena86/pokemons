@@ -11,17 +11,8 @@ import { PokemonsRequestProps } from './types';
 
 const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const { count, pokemons } = pokemonsRequest;
-  // console.log('pokemonsRequest!!!!!!!!!!!!', pokemons);
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  // const dispatch = useDispatch();
-  // const [page, setPage] = useState(Number(searchParams.get('frontpage')) || 1);
-  // const term = useSelector((state: RootState) => state.search.term);
-  // const itemsPerPage = useSelector(
-  //   (state: RootState) => state.itemsPerPage.itemsPerPage
-  // );
-  // const [limit, setLimit] = useState(Number(searchParams.get('limit')));
 
   // const { data, isLoading, isError, error } = useGetPokemonsQuery({
   //   limit,
@@ -32,8 +23,6 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const closeDetail = () => {
     if (searchParams.get('details')) {
       const page = searchParams.get('frontpage') as string;
-      // setPage(Number(page));
-      // router.push(`?frontpage=${page}`);
       router.push(
         `?frontpage=${page}&search=${searchParams.get(
           'search'
@@ -43,22 +32,12 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   };
 
   const handleChangePage = (page: number) => {
-    // setPage(page);
     router.push(
       `?frontpage=${page || Number(searchParams.get('frontpage'))}&search=${
         searchParams.get('search') || ''
       }&limit=${Number(searchParams.get('limit')) || 12}`
     );
   };
-
-  // useEffect(() => {
-  //   dispatch(
-  //     itemsPerPageUpdated({
-  //       itemsPerPage: limit,
-  //     })
-  //   );
-  //   // dispatch(loadingMain({ isLoading }));
-  // }, [dispatch, limit]);
 
   return (
     <div

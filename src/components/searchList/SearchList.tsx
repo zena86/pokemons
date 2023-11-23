@@ -5,6 +5,7 @@ import Message from '../message/Message';
 import PokemonCard from '../pokemonCard/PokemonCard';
 import Link from 'next/link';
 import { PokemonDescription } from '../pokemonCard/types';
+import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 
 const SearchList = ({ pokemons }: SearchListProps) => {
   const searchParams = useSearchParams();
@@ -21,9 +22,9 @@ const SearchList = ({ pokemons }: SearchListProps) => {
                 <Link
                   className={styles.link}
                   href={`?frontpage=${
-                    searchParams.get('frontpage') || 1
+                    searchParams.get('frontpage') || NUM_OF_START_PAGE
                   }&search=${searchParams.get('search') || ''}&limit=${
-                    searchParams.get('limit') || 12
+                    searchParams.get('limit') || ITEMS_ON_PAGE
                   }&details=${pokemon.name}`}
                 >
                   <PokemonCard pokemon={pokemon} />
