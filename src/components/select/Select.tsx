@@ -1,18 +1,18 @@
 import { Option, SelectProps } from './types';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import { useEffect, useState } from 'react';
 import styles from './style.module.scss';
-// import { itemsPerPageUpdated } from '../../features/itemsPerPage/itemsPerPageSlice';
+import { itemsPerPageUpdated } from '@/redux/features/itemsPerPage/itemsPerPageSlice';
 
 const Select = ({ options, onChange, onExpanded }: SelectProps) => {
   console.log(options, onChange, onExpanded);
-  // const dispatch = useDispatch();
-  // const itemsPerPage = useSelector(
-  //   (state: RootState) => state.itemsPerPage.itemsPerPage
-  // );
-  // const initCurrent = options.find((item) => item.value === itemsPerPage);
-  const initCurrent = { label: '12 per page', value: 12 };
+  const dispatch = useDispatch();
+  const itemsPerPage = useSelector(
+    (state: RootState) => state.itemsPerPage.itemsPerPage
+  );
+  const initCurrent = options.find((item) => item.value === itemsPerPage);
+  // const initCurrent = { label: '12 per page', value: 12 };
   const [current, setCurrent] = useState(initCurrent);
   const [expanded, setExpanded] = useState(false);
 
@@ -25,12 +25,12 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
   useEffect(() => {
     localStorage.setItem('perPage', JSON.stringify(current?.value));
 
-    // dispatch(
-    //   itemsPerPageUpdated({
-    //     itemsPerPage: current?.value,
-    //   })
-    // );
-  }, [current]);
+    dispatch(
+      itemsPerPageUpdated({
+        itemsPerPage: current?.value,
+      })
+    );
+  }, [current, dispatch]);
 
   return (
     <div

@@ -8,12 +8,10 @@ import styles from './style.module.scss';
 import { PokemonDescription } from '../pokemonCard/types';
 
 const DetailDescription = (pokemon: DetailDescriptionProps) => {
-  // const [searchParams, setSearchParams] = useSearchParams();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const handleClick = () => {
-    //setSearchParams(`?frontpage=${searchParams.get('frontpage')}`);
     router.query.frontpage = searchParams.get('frontpage') as string;
     router.push(`?frontpage=${searchParams.get('frontpage')}`);
   };
@@ -21,7 +19,7 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
   const { name, weight, height, abilities, moves, sprites } =
     pokemon.pokemon as PokemonDescription;
 
-  console.log(name, weight, height, abilities, moves, sprites);
+  console.log('sprites', Object.values(sprites));
 
   return (
     <div className={styles.description}>
@@ -66,12 +64,10 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
             <strong className={styles.label}>sprites:</strong>
           </div>
         )}
-        {/* {Object.values(sprites).map((item, index) => {
-          return (
-            <p key={index}>Picture {item}</p>
-            //<Image key={index} src={item} width={40} height={40} alt="" />
-          );
-        })} */}
+        {Object.values(sprites).map((item, index) => {
+          // eslint-disable-next-line @next/next/no-img-element
+          return <img key={index} src={item} alt="" />;
+        })}
       </div>
     </div>
   );

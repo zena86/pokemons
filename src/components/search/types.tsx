@@ -1,3 +1,4 @@
+import { Pokemon } from '../searchList/types';
 import { Option } from '../select/types';
 
 export interface Payload {
@@ -7,4 +8,11 @@ export interface Payload {
 
 export interface SettingsPanelProps {
   onItemsChange: (payload: Payload) => void;
+}
+
+export interface PokemonsRequestProps {
+  pokemonsRequest: {
+    count: number;
+    pokemons: Pokemon[];
+  };
 }

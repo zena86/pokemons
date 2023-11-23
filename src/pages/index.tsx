@@ -1,14 +1,68 @@
 import Head from 'next/head';
-// import Image from 'next/image';
-// import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import Search from '@/components/search/Search';
 import { useSearchParams } from 'next/navigation';
 import Detail from '@/components/detail/Detail';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { wrapper } from '@/redux/store';
+import {
+  getPokemon,
+  getPokemons,
+  getRunningQueriesThunk,
+} from '@/redux/pokemonsApi';
+import { termUpdated } from '@/redux/features/search/searchSlice';
 
-// const inter = Inter({ subsets: ['latin'] });
+// eslint-disable-next-line react-refresh/only-export-components
+export const getServerSideProps = wrapper.getServerSideProps(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (store) => async (context) => {
+    console.log(context);
+    const { query, resolvedUrl } = context;
+    console.log('query!!!!!!!!!!!!', query);
 
-export default function Home() {
+    const state = store.getState();
+    const term = state.search.term;
+    const itemsPerPage = state.itemsPerPage.itemsPerPage;
+
+    let page;
+    //let id;
+    if (resolvedUrl === '/') {
+      page = 1;
+      //id = '';
+    } else {
+      page = Number(query.frontpage);
+      //id = query.id;
+    }
+
+    console.log(term, itemsPerPage, page);
+
+    // const pokemons = getPokemons.initiate({
+    //   limit: itemsPerPage,
+    //   page: page,
+    //   search: term,
+    // });
+
+    store.dispatch(
+      //pokemons
+      getPokemons.initiate({
+        limit: itemsPerPage,
+        page: page,
+        search: term,
+      })
+    );
+
+    //store.dispatch(getPokemon.initiate({ id }));
+    const pokemons = await Promise.all(
+      store.dispatch(getRunningQueriesThunk())
+    );
+    return { props: pokemons };
+  }
+);
+
+function Home(props) {
+  console.log('pokemons', props[0].data);
+  //console.log('resolvedUrl!!!!!!!!', props.resolvedUrl);
   const searchParams = useSearchParams();
 
   return (
@@ -21,7 +75,8 @@ export default function Home() {
       </Head>
       <main>
         <div className={styles.body}>
-          <Search />
+          {/* <h1>{props.resolvedUrl}</h1> */}
+          <Search pokemonsRequest={props[0].data} />
           {searchParams.get('details') && (
             <div className={styles.details}>
               <Detail />
@@ -29,101 +84,8 @@ export default function Home() {
           )}
         </div>
       </main>
-      {/* <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main> */}
     </>
   );
 }
+
+export default Home;
