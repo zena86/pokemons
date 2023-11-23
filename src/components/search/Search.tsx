@@ -32,8 +32,13 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const closeDetail = () => {
     if (searchParams.get('details')) {
       const page = searchParams.get('frontpage') as string;
-      setPage(Number(page));
-      router.push(`?frontpage=${page}`);
+      // setPage(Number(page));
+      // router.push(`?frontpage=${page}`);
+      router.push(
+        `?frontpage=${page}&search=${searchParams.get(
+          'search'
+        )}&limit=${searchParams.get('limit')}`
+      );
     }
   };
 

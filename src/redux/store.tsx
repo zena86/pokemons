@@ -1,8 +1,6 @@
 import {
   Action,
-  AnyAction,
   PreloadedState,
-  Reducer,
   ThunkAction,
   combineReducers,
   configureStore,
@@ -12,7 +10,7 @@ import itemsPerPageReducer from './features/itemsPerPage/itemsPerPageSlice';
 import loadMainReducer from './features/loadMain/loadMainSlice';
 import loadDetailReducer from './features/loadDetail/loadDetailSlice';
 import { pokemonsApi } from './pokemonsApi';
-import { HYDRATE, createWrapper } from 'next-redux-wrapper';
+import { createWrapper } from 'next-redux-wrapper';
 
 const rootReducer = combineReducers({
   search: searchReducer,

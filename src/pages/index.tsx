@@ -9,57 +9,57 @@ import {
   getRunningQueriesThunk,
 } from '@/redux/pokemonsApi';
 
+import type { GetServerSideProps } from 'next';
+
 // eslint-disable-next-line react-refresh/only-export-components
-export const getServerSideProps = wrapper.getServerSideProps(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (store) => async (context) => {
-    const { query, resolvedUrl } = context;
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (store) => async (context) => {
+      const { query, resolvedUrl } = context;
 
-    let page = null;
-    let search = '';
-    let limit;
-    if (resolvedUrl === '/') {
-      page = 1;
-      search = '';
-      limit = 12;
-    } else {
-      page = Number(query.frontpage);
-      search = query.search as string;
-      limit = Number(query.limit);
+      let page = null;
+      let search = '';
+      let limit;
+      if (resolvedUrl === '/') {
+        page = 1;
+        search = '';
+        limit = 12;
+      } else {
+        page = Number(query.frontpage);
+        search = query.search as string;
+        limit = Number(query.limit);
+      }
+
+      // store.dispatch(
+      //   getPokemons.initiate({
+      //     limit: limit,
+      //     page: page,
+      //     search: search,
+      //   })
+      // );
+
+      // const pokemons = await Promise.all(
+      //   store.dispatch(getRunningQueriesThunk())
+      // );
+
+      store.dispatch(
+        getDetailedPokemons.initiate({
+          limit: limit,
+          page: page,
+          search: search,
+        })
+      );
+
+      const pokemons = await Promise.all(
+        store.dispatch(getRunningQueriesThunk())
+      );
+
+      return { props: pokemons };
     }
-
-    // store.dispatch(
-    //   getPokemons.initiate({
-    //     limit: limit,
-    //     page: page,
-    //     search: search,
-    //   })
-    // );
-
-    // const pokemons = await Promise.all(
-    //   store.dispatch(getRunningQueriesThunk())
-    // );
-
-    store.dispatch(
-      getDetailedPokemons.initiate({
-        limit: limit,
-        page: page,
-        search: search,
-      })
-    );
-
-    const pokemons = await Promise.all(
-      store.dispatch(getRunningQueriesThunk())
-    );
-
-    console.log('pokemons', pokemons);
-    return { props: pokemons };
-  }
-);
+  );
 
 function Home(props) {
-  console.log('pokemons test', props);
-  console.log('resolvedUrl!!!!!!!!', props.resolvedUrl);
   const searchParams = useSearchParams();
 
   return (
@@ -76,7 +76,7 @@ function Home(props) {
           <Search pokemonsRequest={props[0].data} />
           {searchParams.get('details') && (
             <div className={styles.details}>
-              <Detail />
+              <Detail pokemonsRequest={props[0].data} />
             </div>
           )}
         </div>

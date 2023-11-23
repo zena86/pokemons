@@ -10,7 +10,8 @@ const PokemonCard = memo(({ pokemon }: PokemonCardProps) => {
     <li className={style.card}>
       <div className={style['card-details']}>
         <h2 className={style['text-title']}>{name}</h2>
-        <PokemonProperties id={name} />
+        {/* <PokemonProperties id={name} /> */}
+        <PokemonProperties pokemon={pokemon} />
       </div>
       <button className={style['card-button']}>More info</button>
     </li>

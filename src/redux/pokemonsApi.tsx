@@ -88,11 +88,7 @@ export const pokemonsApi = createApi({
   endpoints: (build) => ({
     getDetailedPokemons: build.query({
       async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
-        console.log('CALLLLLLLLLLLLLLLLLLLLL');
         const { limit, page, search } = _arg;
-        // const limit = 10;
-        // const page = 10;
-        // const search = 'wer';
         const pokemons = await fetchWithBQ(
           `pokemons/?search=${search}&offset=${
             (page - 1) * limit
@@ -120,12 +116,10 @@ export const pokemonsApi = createApi({
         //   detailedPokemons.push(pokemonDetails.data);
         // }
 
-        console.log('detailedPokemons--', detailedPokemons);
         return {
           data: {
             count: pokemonsData.count,
             pokemons: detailedPokemons,
-            //pokemons: detailedPokemons,
           },
         };
       },

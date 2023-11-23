@@ -13,19 +13,23 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
 
   const handleClick = () => {
     router.query.frontpage = searchParams.get('frontpage') as string;
+    // router.push(
+    //   `?frontpage=${searchParams.get('frontpage')}&search=${
+    //     searchParams.get('search') || ''
+    //   }&limit=${
+    //     Number(searchParams.get('limit')) || 12
+    //   }&details=${searchParams.get('details')}`
+    // );
+
     router.push(
-      `?frontpage=${searchParams.get('frontpage')}&search=${
-        searchParams.get('search') || ''
-      }&limit=${
-        Number(searchParams.get('limit')) || 12
-      }&details=${searchParams.get('details')}`
+      `?frontpage=${searchParams.get('frontpage')}&search=${searchParams.get(
+        'search'
+      )}&limit=${searchParams.get('limit')}`
     );
   };
 
   const { name, weight, height, abilities, moves, sprites } =
     pokemon.pokemon as PokemonDescription;
-
-  console.log('sprites', Object.values(sprites));
 
   return (
     <div className={styles.description}>

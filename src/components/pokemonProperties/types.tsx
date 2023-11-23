@@ -1,3 +1,6 @@
+import { PokemonDescription } from '../pokemonCard/types';
+
 export interface PokemonPropertiesProps {
-  id: string;
+  pokemon: PokemonDescription;
+  //id: string;
 }

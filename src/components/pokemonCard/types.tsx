@@ -89,5 +89,5 @@ export interface PokemonDescription {
 }
 
 export interface PokemonCardProps {
-  pokemon: Pokemon;
+  pokemon: PokemonDescription;
 }

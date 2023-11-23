@@ -1,4 +1,5 @@
-import { Pokemon } from '../searchList/types';
+import { PokemonDescription } from '../pokemonCard/types';
+// import { Pokemon } from '../searchList/types';
 import { Option } from '../select/types';
 
 export interface Payload {
@@ -13,6 +14,6 @@ export interface SettingsPanelProps {
 export interface PokemonsRequestProps {
   pokemonsRequest: {
     count: number;
-    pokemons: Pokemon[];
+    pokemons: PokemonDescription[];
   };
 }
