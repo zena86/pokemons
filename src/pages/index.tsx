@@ -5,11 +5,9 @@ import { useSearchParams } from 'next/navigation';
 import Detail from '@/components/detail/Detail';
 import { wrapper } from '@/redux/store';
 import {
-  getPokemon,
-  getPokemons,
+  getDetailedPokemons,
   getRunningQueriesThunk,
 } from '@/redux/pokemonsApi';
-import { termUpdated } from '@/redux/features/search/searchSlice';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -19,17 +17,31 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     let page = null;
     let search = '';
-    let limit = null;
+    let limit;
     if (resolvedUrl === '/') {
       page = 1;
+      search = '';
+      limit = 12;
     } else {
       page = Number(query.frontpage);
       search = query.search as string;
       limit = Number(query.limit);
     }
 
+    // store.dispatch(
+    //   getPokemons.initiate({
+    //     limit: limit,
+    //     page: page,
+    //     search: search,
+    //   })
+    // );
+
+    // const pokemons = await Promise.all(
+    //   store.dispatch(getRunningQueriesThunk())
+    // );
+
     store.dispatch(
-      getPokemons.initiate({
+      getDetailedPokemons.initiate({
         limit: limit,
         page: page,
         search: search,
@@ -39,12 +51,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const pokemons = await Promise.all(
       store.dispatch(getRunningQueriesThunk())
     );
+
+    console.log('pokemons', pokemons);
     return { props: pokemons };
   }
 );
 
 function Home(props) {
-  console.log('pokemons', props[0].data);
+  console.log('pokemons test', props);
   console.log('resolvedUrl!!!!!!!!', props.resolvedUrl);
   const searchParams = useSearchParams();
 

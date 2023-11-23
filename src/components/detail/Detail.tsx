@@ -16,6 +16,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const { data, isLoading, error } = useGetPokemonQuery(name);
   //const data = pockemonN1ResponseJson;
+
   useEffect(() => {
     dispatch(loadingDetail({ isLoading }));
   }, []);
