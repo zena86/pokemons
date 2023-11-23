@@ -3,8 +3,6 @@ import styles from '@/styles/Home.module.css';
 import Search from '@/components/search/Search';
 import { useSearchParams } from 'next/navigation';
 import Detail from '@/components/detail/Detail';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 import { wrapper } from '@/redux/store';
 import {
   getPokemon,
@@ -17,42 +15,27 @@ import { termUpdated } from '@/redux/features/search/searchSlice';
 export const getServerSideProps = wrapper.getServerSideProps(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (store) => async (context) => {
-    console.log(context);
     const { query, resolvedUrl } = context;
-    console.log('query!!!!!!!!!!!!', query);
 
-    const state = store.getState();
-    const term = state.search.term;
-    const itemsPerPage = state.itemsPerPage.itemsPerPage;
-
-    let page;
-    //let id;
+    let page = null;
+    let search = '';
+    let limit = null;
     if (resolvedUrl === '/') {
       page = 1;
-      //id = '';
     } else {
       page = Number(query.frontpage);
-      //id = query.id;
+      search = query.search as string;
+      limit = Number(query.limit);
     }
 
-    console.log(term, itemsPerPage, page);
-
-    // const pokemons = getPokemons.initiate({
-    //   limit: itemsPerPage,
-    //   page: page,
-    //   search: term,
-    // });
-
     store.dispatch(
-      //pokemons
       getPokemons.initiate({
-        limit: itemsPerPage,
+        limit: limit,
         page: page,
-        search: term,
+        search: search,
       })
     );
 
-    //store.dispatch(getPokemon.initiate({ id }));
     const pokemons = await Promise.all(
       store.dispatch(getRunningQueriesThunk())
     );
@@ -62,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
 function Home(props) {
   console.log('pokemons', props[0].data);
-  //console.log('resolvedUrl!!!!!!!!', props.resolvedUrl);
+  console.log('resolvedUrl!!!!!!!!', props.resolvedUrl);
   const searchParams = useSearchParams();
 
   return (

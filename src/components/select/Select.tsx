@@ -1,36 +1,48 @@
 import { Option, SelectProps } from './types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './style.module.scss';
-import { itemsPerPageUpdated } from '@/redux/features/itemsPerPage/itemsPerPageSlice';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
-const Select = ({ options, onChange, onExpanded }: SelectProps) => {
-  console.log(options, onChange, onExpanded);
-  const dispatch = useDispatch();
-  const itemsPerPage = useSelector(
-    (state: RootState) => state.itemsPerPage.itemsPerPage
+const Select = ({ options, onExpanded }: SelectProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // console.log(options, onChange, onExpanded);
+  // const dispatch = useDispatch();
+  // const itemsPerPage = useSelector(
+  //   (state: RootState) => state.itemsPerPage.itemsPerPage
+  // );
+
+  const initCurrent = options.find(
+    (item) => item.value === Number(searchParams.get('limit'))
   );
-  const initCurrent = options.find((item) => item.value === itemsPerPage);
   // const initCurrent = { label: '12 per page', value: 12 };
-  const [current, setCurrent] = useState(initCurrent);
+  // const [current, setCurrent] = useState(initCurrent);
   const [expanded, setExpanded] = useState(false);
 
   const handleOptionOnClick = (option: Option) => {
-    onChange(option);
-    setCurrent(option);
+    // onChange(option);
+    // setCurrent(option);
     setExpanded((e) => !e);
+
+    localStorage.setItem('perPage', JSON.stringify(option?.value));
+    router.push(
+      `/?frontpage=1&search=${searchParams.get('search') || ''}&limit=${
+        option.value
+      }`
+    );
   };
 
-  useEffect(() => {
-    localStorage.setItem('perPage', JSON.stringify(current?.value));
+  // useEffect(() => {
+  //   localStorage.setItem('perPage', JSON.stringify(current?.value));
 
-    dispatch(
-      itemsPerPageUpdated({
-        itemsPerPage: current?.value,
-      })
-    );
-  }, [current, dispatch]);
+  //   dispatch(
+  //     itemsPerPageUpdated({
+  //       itemsPerPage: current?.value,
+  //     })
+  //   );
+  // }, [current, dispatch]);
 
   return (
     <div
@@ -44,7 +56,8 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
           if (onExpanded) onExpanded();
         }}
       >
-        {current?.label}
+        {/* {current?.label} */}
+        {initCurrent?.label || '12 per page'}
       </button>
       <div className={styles.options}>
         {options?.map((option) => (
@@ -53,7 +66,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
             className={styles.option}
             type="button"
             value={option.value}
-            disabled={option.value === current?.value}
+            disabled={option.value === initCurrent?.value}
             onClick={() => handleOptionOnClick(option)}
           >
             {option.label}

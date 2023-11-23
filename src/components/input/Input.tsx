@@ -1,12 +1,11 @@
 import { ChangeEvent, useState } from 'react';
 import styles from './style.module.scss';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { InputProps } from './types';
+import { useSearchParams } from 'next/navigation';
 
 const Input = ({ onInputChange }: InputProps) => {
-  const term = useSelector((state: RootState) => state.search.term);
-  const [search, setSearch] = useState(term || '');
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get('search') || '');
 
   const handleInputChange = ({
     target: { value },

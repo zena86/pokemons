@@ -1,17 +1,13 @@
 import styles from './style.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { FormEvent, useState } from 'react';
-import { SearchBarProps } from './types';
 import Input from '../input/Input';
 import Button from '../button/Button';
-import { termUpdated } from '@/redux/features/search/searchSlice';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 
-const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
-  const term = useSelector((state: RootState) => state.search.term);
-  const dispatch = useDispatch();
+const SearchBar = () => {
+  // const term = useSelector((state: RootState) => state.search.term);
+  // const dispatch = useDispatch();
 
   const [search, setSearch] = useState('');
 
@@ -25,12 +21,18 @@ const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const trimmedTerm = search.trim();
-    if (term !== trimmedTerm) {
-      localStorage.setItem('term', trimmedTerm);
-      dispatch(termUpdated({ term: trimmedTerm }));
-      router.replace(router.asPath);
-      onFormSubmit();
-    }
+    // if (term !== trimmedTerm) {
+    //   localStorage.setItem('term', trimmedTerm);
+    //   // dispatch(termUpdated({ term: trimmedTerm }));
+    //   // router.replace(router.asPath);
+    //   //onFormSubmit();
+    // }
+    localStorage.setItem('term', trimmedTerm);
+    router.push(
+      `/?frontpage=1&search=${trimmedTerm || ''}&limit=${
+        searchParams.get('limit') || 12
+      }`
+    );
   };
 
   return (
