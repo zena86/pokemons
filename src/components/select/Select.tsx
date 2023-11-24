@@ -18,7 +18,7 @@ const Select = ({ options, onExpanded }: SelectProps) => {
   const handleOptionOnClick = (option: Option) => {
     setExpanded((e) => !e);
 
-    localStorage.setItem('perPage', JSON.stringify(option?.value));
+    // localStorage.setItem('perPage', JSON.stringify(option?.value));
     router.push(
       `/?frontpage=${NUM_OF_START_PAGE}&search=${
         searchParams.get('search') || ''

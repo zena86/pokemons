@@ -10,8 +10,16 @@ export interface PokemonsRequestProps {
   pokemonsRequest: PokemonsResponse;
 }
 
+export interface ErrorResponse {
+  data: string;
+  error: string;
+  originalStatus: number;
+  status: string;
+}
+
 export interface Resp {
   status: QueryStatus.uninitialized;
   data?: PokemonsResponse;
-  error?: undefined;
+  error?: ErrorResponse | undefined;
+  isError: boolean;
 }

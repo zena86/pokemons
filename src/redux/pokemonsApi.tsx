@@ -101,7 +101,7 @@ export const pokemonsApi = createApi({
 
         const detailedPokemons = (
           await Promise.all(detailedPokemonsPromises)
-        ).map((r) => r.data);
+        ).map((response) => response.data);
 
         // const detailedPokemons = [];
         // for (let i = 0; i < pokemonsData.pokemons.length; i++) {
@@ -116,6 +116,18 @@ export const pokemonsApi = createApi({
             pokemons: detailedPokemons,
           },
         };
+
+        //           data: {
+        //     count: pokemonsData.count,
+        //     pokemons: detailedPokemons,
+        //   },
+
+        // return data
+        // ? { data: {
+        //   count: pokemonsData.count,
+        //   pokemons: detailedPokemons,
+        // }}
+        // : { error: error as FetchBaseQueryError }
       },
     }),
   }),

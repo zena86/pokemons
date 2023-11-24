@@ -13,6 +13,7 @@ import type { GetServerSideProps } from 'next';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 import { Resp } from '@/redux/types';
 import { PokemonsResponse } from '@/redux/types';
+import Message from '@/components/message/Message';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps =
@@ -34,6 +35,7 @@ export const getServerSideProps: GetServerSideProps =
 
 function Home(props: Resp[]) {
   const searchParams = useSearchParams();
+  console.log('errrrrrrrrrrrrrrrrrror', props[0].error?.error);
 
   if (!props[0].data) return;
   const pokemonsResponse = props[0].data as PokemonsResponse;
@@ -48,6 +50,9 @@ function Home(props: Resp[]) {
       </Head>
       <main>
         <div className={styles.body}>
+          {props[0].isError && props[0].error?.error && (
+            <Message errorMessage={props[0].error?.error} />
+          )}
           <Search pokemonsRequest={pokemonsResponse} />
           {searchParams.get('details') && (
             <div className={styles.details}>

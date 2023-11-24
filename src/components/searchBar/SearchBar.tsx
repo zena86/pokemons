@@ -19,7 +19,7 @@ const SearchBar = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const trimmedTerm = search.trim();
-    localStorage.setItem('term', trimmedTerm);
+    // localStorage.setItem('term', trimmedTerm);
     router.push(
       `/?frontpage=${NUM_OF_START_PAGE}&search=${trimmedTerm || ''}&limit=${
         searchParams.get('limit') || ITEMS_ON_PAGE
