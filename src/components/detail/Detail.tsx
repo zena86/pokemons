@@ -1,8 +1,9 @@
 import { useSearchParams } from 'next/navigation';
 import DetailDescription from '../detailDescription/DetailDescription';
-import { PokemonsRequestProps } from '../search/types';
+import { PokemonsRequestProps } from '@/redux/types';
 
 const Detail = ({ pokemonsRequest }: PokemonsRequestProps) => {
+  console.log('pokemonsRequest', pokemonsRequest);
   const searchParams = useSearchParams();
   const name = searchParams.get('details');
 

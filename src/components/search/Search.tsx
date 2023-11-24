@@ -7,7 +7,7 @@ import SearchBar from '../searchBar/SearchBar';
 import SearchList from '../searchList/SearchList';
 import { getNumberOfPages } from '@/utils/numberOfPages';
 import Pagination from '../pagination/Pagination';
-import { PokemonsRequestProps } from './types';
+import { PokemonsRequestProps } from '@/redux/types';
 
 const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const { count, pokemons } = pokemonsRequest;

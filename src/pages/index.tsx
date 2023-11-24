@@ -11,57 +11,32 @@ import {
 
 import type { GetServerSideProps } from 'next';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
+import { Resp } from '@/redux/types';
+import { PokemonsResponse } from '@/redux/types';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (store) => async (context) => {
-      const { query, resolvedUrl } = context;
+  wrapper.getServerSideProps((store) => async ({ query }) => {
+    store.dispatch(
+      getDetailedPokemons.initiate({
+        limit: Number(query.limit) || ITEMS_ON_PAGE,
+        page: Number(query.frontpage) || NUM_OF_START_PAGE,
+        search: (query.search as string) || '',
+      })
+    );
 
-      let page = null;
-      let search = '';
-      let limit;
-      if (resolvedUrl === '/') {
-        page = NUM_OF_START_PAGE;
-        search = '';
-        limit = ITEMS_ON_PAGE;
-      } else {
-        page = Number(query.frontpage);
-        search = query.search as string;
-        limit = Number(query.limit);
-      }
+    const pokemons = await Promise.all(
+      store.dispatch(getRunningQueriesThunk())
+    );
 
-      // store.dispatch(
-      //   getPokemons.initiate({
-      //     limit: limit,
-      //     page: page,
-      //     search: search,
-      //   })
-      // );
+    return { props: pokemons };
+  });
 
-      // const pokemons = await Promise.all(
-      //   store.dispatch(getRunningQueriesThunk())
-      // );
-
-      store.dispatch(
-        getDetailedPokemons.initiate({
-          limit: limit,
-          page: page,
-          search: search,
-        })
-      );
-
-      const pokemons = await Promise.all(
-        store.dispatch(getRunningQueriesThunk())
-      );
-
-      return { props: pokemons };
-    }
-  );
-
-function Home(props) {
+function Home(props: Resp[]) {
   const searchParams = useSearchParams();
+
+  if (!props[0].data) return;
+  const pokemonsResponse = props[0].data as PokemonsResponse;
 
   return (
     <>
@@ -73,10 +48,10 @@ function Home(props) {
       </Head>
       <main>
         <div className={styles.body}>
-          <Search pokemonsRequest={props[0].data} />
+          <Search pokemonsRequest={pokemonsResponse} />
           {searchParams.get('details') && (
             <div className={styles.details}>
-              <Detail pokemonsRequest={props[0].data} />
+              <Detail pokemonsRequest={pokemonsResponse} />
             </div>
           )}
         </div>
