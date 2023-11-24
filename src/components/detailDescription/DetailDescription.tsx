@@ -64,8 +64,12 @@ const DetailDescription = (pokemon: DetailDescriptionProps) => {
           </div>
         )}
         {Object.values(sprites).map((item, index) => {
-          // eslint-disable-next-line @next/next/no-img-element
-          return <img key={index} src={item} alt="" />;
+          if (typeof item === 'string') {
+            return (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={index} src={item} alt="" />
+            );
+          }
         })}
       </div>
     </div>
