@@ -1,36 +1,14 @@
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import DetailDescription from '../detailDescription/DetailDescription';
 import { PokemonsRequestProps } from '@/redux/types';
 
 const Detail = ({ pokemonsRequest }: PokemonsRequestProps) => {
-  console.log('pokemonsRequest', pokemonsRequest);
-  const searchParams = useSearchParams();
-  const name = searchParams.get('details');
+  const router = useRouter();
+  const {details} = router.query;
 
   const pokemon = pokemonsRequest.pokemons.find(
-    (pokemon) => pokemon.name === name
+    (pokemon) => pokemon.name === details
   );
-
-  // const dispatch = useDispatch();
-  // const { data, isLoading, error } = useGetPokemonQuery(name);
-  //const data = pockemonN1ResponseJson;
-
-  // useEffect(() => {
-  //   dispatch(loadingDetail({ isLoading }));
-  // }, []);
-
-  // return (
-  //   <LoaderContent
-  //     isLoading={isLoading}
-  //     errorMessage={rtkQueryErrorToText(error)}
-  //   >
-  //     {data ? (
-  //       <DetailDescription pokemon={data as PokemonDescription} />
-  //     ) : (
-  //       <></>
-  //     )}
-  //   </LoaderContent>
-  // );
 
   return pokemon && <DetailDescription pokemon={pokemon} />;
 };

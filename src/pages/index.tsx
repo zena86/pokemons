@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import Search from '@/components/search/Search';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Detail from '@/components/detail/Detail';
 import { wrapper } from '@/redux/store';
 import {
@@ -30,12 +30,18 @@ export const getServerSideProps: GetServerSideProps =
       store.dispatch(getRunningQueriesThunk())
     );
 
+    // if (!pokemons) {
+    //   return {
+    //     notFound: true,
+    //   }
+    // }
+
     return { props: pokemons };
   });
 
-function Home(props: Resp[]) {
-  const searchParams = useSearchParams();
-  console.log('errrrrrrrrrrrrrrrrrror', props[0].error?.error);
+function Home(props: Resp) {
+  const router = useRouter();
+  const {details} = router.query;
 
   if (!props[0].data) return;
   const pokemonsResponse = props[0].data as PokemonsResponse;
@@ -54,7 +60,7 @@ function Home(props: Resp[]) {
             <Message errorMessage={props[0].error?.error} />
           )}
           <Search pokemonsRequest={pokemonsResponse} />
-          {searchParams.get('details') && (
+          {details && (
             <div className={styles.details}>
               <Detail pokemonsRequest={pokemonsResponse} />
             </div>

@@ -1,5 +1,5 @@
 import styles from './style.module.scss';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { SearchListProps } from './types';
 import Message from '../message/Message';
 import PokemonCard from '../pokemonCard/PokemonCard';
@@ -8,7 +8,8 @@ import { PokemonDescription } from '../pokemonCard/types';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 
 const SearchList = ({ pokemons }: SearchListProps) => {
-  const searchParams = useSearchParams();
+  const router = useRouter();
+  const {frontpage, search, limit, details} = router.query;
 
   return (
     <>
@@ -18,13 +19,13 @@ const SearchList = ({ pokemons }: SearchListProps) => {
         <ul className={styles.list}>
           {pokemons.map((pokemon: PokemonDescription) => {
             return (
-              <div key={pokemon.name}>
+              <div key={pokemon.name} role="card">
                 <Link
                   className={styles.link}
                   href={`?frontpage=${
-                    searchParams.get('frontpage') || NUM_OF_START_PAGE
-                  }&search=${searchParams.get('search') || ''}&limit=${
-                    searchParams.get('limit') || ITEMS_ON_PAGE
+                    frontpage || NUM_OF_START_PAGE
+                  }&search=${search || ''}&limit=${
+                    limit || ITEMS_ON_PAGE
                   }&details=${pokemon.name}`}
                 >
                   <PokemonCard pokemon={pokemon} />

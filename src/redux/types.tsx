@@ -18,8 +18,10 @@ export interface ErrorResponse {
 }
 
 export interface Resp {
-  status: QueryStatus.uninitialized;
-  data?: PokemonsResponse;
-  error?: ErrorResponse | undefined;
-  isError: boolean;
+  '0': {
+    status: QueryStatus.uninitialized;
+    data?: PokemonsResponse;
+    error?: ErrorResponse | undefined;
+    isError: boolean;
+  }
 }

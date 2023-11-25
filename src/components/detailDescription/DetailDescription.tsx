@@ -1,19 +1,16 @@
 import { RiCloseLine } from '@react-icons/all-files/ri/RiCloseLine';
 import { DetailDescriptionProps } from './types';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import styles from './style.module.scss';
 import { PokemonDescription } from '../pokemonCard/types';
 
 const DetailDescription = (pokemon: DetailDescriptionProps) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const {frontpage, search, limit} = router.query;
 
   const handleClick = () => {
     router.push(
-      `?frontpage=${searchParams.get('frontpage')}&search=${searchParams.get(
-        'search'
-      )}&limit=${searchParams.get('limit')}`
+      `?frontpage=${frontpage}&search=${search}&limit=${limit}`
     );
   };
 

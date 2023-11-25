@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://pokeX.jk-mostovaya.workers.dev/';
+export const BASE_URL = 'https://poke.jk-mostovaya.workers.dev/';
 
 export const ITEMS_ON_PAGE = 12;
 export const NUM_OF_START_PAGE = 1;

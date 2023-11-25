@@ -2,26 +2,23 @@ import { Option, SelectProps } from './types';
 import { useState } from 'react';
 import styles from './style.module.scss';
 import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation';
 import { NUM_OF_START_PAGE } from '@/constants';
 
 const Select = ({ options, onExpanded }: SelectProps) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const {search, limit} = router.query;
 
   const initCurrent = options.find(
-    (item) => item.value === Number(searchParams.get('limit'))
+    (item) => item.value === Number(limit)
   );
 
   const [expanded, setExpanded] = useState(false);
 
   const handleOptionOnClick = (option: Option) => {
     setExpanded((e) => !e);
-
-    // localStorage.setItem('perPage', JSON.stringify(option?.value));
     router.push(
       `/?frontpage=${NUM_OF_START_PAGE}&search=${
-        searchParams.get('search') || ''
+        search || ''
       }&limit=${option.value}`
     );
   };
