@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 const Input = ({ onInputChange }: InputProps) => {
   const router = useRouter();
-  const {search} = router.query;
+  const { search } = router.query;
 
   const [term, setTerm] = useState(search || '');
 

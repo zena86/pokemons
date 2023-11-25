@@ -6,20 +6,18 @@ import { NUM_OF_START_PAGE } from '@/constants';
 
 const Select = ({ options, onExpanded }: SelectProps) => {
   const router = useRouter();
-  const {search, limit} = router.query;
+  const { search, limit } = router.query;
 
-  const initCurrent = options.find(
-    (item) => item.value === Number(limit)
-  );
+  const initCurrent = options.find((item) => item.value === Number(limit));
 
   const [expanded, setExpanded] = useState(false);
 
   const handleOptionOnClick = (option: Option) => {
     setExpanded((e) => !e);
     router.push(
-      `/?frontpage=${NUM_OF_START_PAGE}&search=${
-        search || ''
-      }&limit=${option.value}`
+      `/?frontpage=${NUM_OF_START_PAGE}&search=${search || ''}&limit=${
+        option.value
+      }`
     );
   };
 

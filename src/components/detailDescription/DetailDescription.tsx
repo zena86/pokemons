@@ -6,12 +6,10 @@ import { PokemonDescription } from '../pokemonCard/types';
 
 const DetailDescription = (pokemon: DetailDescriptionProps) => {
   const router = useRouter();
-  const {frontpage, search, limit} = router.query;
+  const { frontpage, search, limit } = router.query;
 
   const handleClick = () => {
-    router.push(
-      `?frontpage=${frontpage}&search=${search}&limit=${limit}`
-    );
+    router.push(`?frontpage=${frontpage}&search=${search}&limit=${limit}`);
   };
 
   const { name, weight, height, abilities, moves, sprites } =

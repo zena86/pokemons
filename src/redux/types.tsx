@@ -23,5 +23,5 @@ export interface Resp {
     data?: PokemonsResponse;
     error?: ErrorResponse | undefined;
     isError: boolean;
-  }
+  };
 }

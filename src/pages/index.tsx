@@ -9,7 +9,7 @@ import {
   getRunningQueriesThunk,
 } from '@/redux/pokemonsApi';
 
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 import { Resp } from '@/redux/types';
 import { PokemonsResponse } from '@/redux/types';
@@ -30,21 +30,21 @@ export const getServerSideProps: GetServerSideProps =
       store.dispatch(getRunningQueriesThunk())
     );
 
-    // if (!pokemons) {
-    //   return {
-    //     notFound: true,
-    //   }
-    // }
+    if (!pokemons) {
+      return {
+        notFound: true,
+      };
+    }
 
-    return { props: pokemons };
+    return { props: { pokemons } };
   });
 
-function Home(props: Resp) {
+function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  console.log('props!!!', props);
   const router = useRouter();
-  const {details} = router.query;
+  const { details } = router.query;
 
-  if (!props[0].data) return;
-  const pokemonsResponse = props[0].data as PokemonsResponse;
+  const pokemonsResponse = props?.pokemons[0].data as PokemonsResponse;
 
   return (
     <>
@@ -56,14 +56,22 @@ function Home(props: Resp) {
       </Head>
       <main>
         <div className={styles.body}>
-          {props[0].isError && props[0].error?.error && (
-            <Message errorMessage={props[0].error?.error} />
-          )}
-          <Search pokemonsRequest={pokemonsResponse} />
-          {details && (
-            <div className={styles.details}>
-              <Detail pokemonsRequest={pokemonsResponse} />
+          {props?.pokemons[0].isError && props?.pokemons[0].error?.error && (
+            <div className="container">
+              <div className="wrapper">
+                <Message errorMessage={props?.pokemons[0].error?.error} />
+              </div>
             </div>
+          )}
+          {props?.pokemons[0]?.data && (
+            <>
+              <Search pokemonsRequest={pokemonsResponse} />
+              {details && (
+                <div className={styles.details}>
+                  <Detail pokemonsRequest={pokemonsResponse} />
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>

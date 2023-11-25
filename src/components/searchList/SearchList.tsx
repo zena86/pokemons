@@ -9,7 +9,7 @@ import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 
 const SearchList = ({ pokemons }: SearchListProps) => {
   const router = useRouter();
-  const {frontpage, search, limit, details} = router.query;
+  const { frontpage, search, limit, details } = router.query;
 
   return (
     <>
@@ -22,11 +22,9 @@ const SearchList = ({ pokemons }: SearchListProps) => {
               <div key={pokemon.name} role="card">
                 <Link
                   className={styles.link}
-                  href={`?frontpage=${
-                    frontpage || NUM_OF_START_PAGE
-                  }&search=${search || ''}&limit=${
-                    limit || ITEMS_ON_PAGE
-                  }&details=${pokemon.name}`}
+                  href={`?frontpage=${frontpage || NUM_OF_START_PAGE}&search=${
+                    search || ''
+                  }&limit=${limit || ITEMS_ON_PAGE}&details=${pokemon.name}`}
                 >
                   <PokemonCard pokemon={pokemon} />
                 </Link>

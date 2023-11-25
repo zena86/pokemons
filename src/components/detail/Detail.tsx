@@ -4,7 +4,7 @@ import { PokemonsRequestProps } from '@/redux/types';
 
 const Detail = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const router = useRouter();
-  const {details} = router.query;
+  const { details } = router.query;
 
   const pokemon = pokemonsRequest.pokemons.find(
     (pokemon) => pokemon.name === details

@@ -1,55 +1,20 @@
-import { screen, render, waitFor } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { screen, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-// import {
-//   RouterProvider,
-//   createMemoryRouter,
-//   MemoryRouter,
-// } from 'react-router-dom';
-// import { routerConfig } from '../router';
-import { searchMock } from './data/searchMock';
-import SearchList from '../components/searchList/SearchList';
-// import { renderWithProviders } from './test-utils';
-// import { pokemons } from './data/pokemons';
 import PokemonCard from '@/components/pokemonCard/PokemonCard';
 import { pokemonDescription } from './data/pokemonDescription';
-import Home from '@/pages';
-import { apiResponse } from './data/apiResponse';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect } from 'vitest';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from './data/createMockRouter';
+import SearchList from '@/components/searchList/SearchList';
+import { searchList } from './data/searchList';
 
 describe('PokemonCard Component', () => {
-  vi.mock("next/navigation", () => {
-    const actual = vi.importActual("next/navigation");
-    return {
-      ...actual,
-      useRouter: vi.fn(() => ({
-        push: vi.fn(),
-      })),
-      useSearchParams: vi.fn(() => ({
-        get: vi.fn(),
-      })),
-      usePathname: vi.fn(),
-    };
-  });
-  // beforeEach(() => {
-  //   searchMock();
-  // });
-
   test('Ensure that the card component renders the relevant card data', async () => {
-    // renderWithProviders(
-    //   <PokemonCard
-    //     pokemon={{
-    //       name: 'venusaur',
-    //       id: '3',
-    //     }}
-    //   />,
-    //   {
-    //     preloadedState: {},
-    //   }
-    // );
-
-    render(<PokemonCard pokemon={pokemonDescription} />);
-
+    render(
+      <RouterContext.Provider value={createMockRouter({})}>
+        <PokemonCard pokemon={pokemonDescription} />
+      </RouterContext.Provider>
+    );
     expect(await screen.findByText(/venusaur/i)).toBeInTheDocument();
     expect(await screen.findByText(/weight:/i)).toBeInTheDocument();
     expect(await screen.findByText(/1000/i)).toBeInTheDocument();
@@ -60,22 +25,25 @@ describe('PokemonCard Component', () => {
     expect(await screen.findByText(/chlorophyll/i)).toBeInTheDocument();
   });
 
-  // test('Validate that clicking on a card opens a detailed card component', async () => {
-  //   // const memoryRouter = createMemoryRouter(routerConfig, {
-  //   //   initialEntries: ['/?frontpage=1'],
-  //   // });
+  test('Validate that clicking on a card opens a detailed card component', async () => {
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+      },
+    });
 
-  //   // renderWithProviders(<RouterProvider router={memoryRouter} />, {
-  //   //   preloadedState: {},
-  //   // });
+    render(
+      <RouterContext.Provider value={router}>
+        <SearchList pokemons={searchList} />
+      </RouterContext.Provider>
+    );
 
-  //   render(<Home props={apiResponse} />);
-
-  //   const item = (await screen.findByText('venusaur')).closest('a');
-  //   if (item) await userEvent.click(item);
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/moves:/i)).toBeInTheDocument();
-  //   });
-  // });
+    const item = (await screen.findByText('venusaur')).closest('a');
+    expect(item).toHaveAttribute(
+      'href',
+      '/?frontpage=1&search=&limit=12&details=venusaur'
+    );
+  });
 });

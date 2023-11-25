@@ -3,10 +3,12 @@ import { vi } from 'vitest';
 
 export function createMockRouter(router: Partial<NextRouter>): NextRouter {
   return {
+    pathname: '',
     query: {},
     isFallback: false,
     back: vi.fn(),
     beforePopState: vi.fn(),
+    push: vi.fn(),
     ...router,
   };
 }

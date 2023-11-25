@@ -76,10 +76,12 @@ const Pagination = memo(({ nPages, page, onChangePage }: PaginationProps) => {
               <BsThreeDots />
             </div>
             <div
+              role="btn"
               className={
-                nPages === page
-                  ? `${styles.btn} ${styles.active}`
-                  : `${styles.btn}`
+                `${styles.btn}`
+                // nPages === page
+                //   ? `${styles.btn} ${styles.active}`
+                //   : `${styles.btn}`
               }
               onClick={() => onChangePage(nPages)}
             >

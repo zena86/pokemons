@@ -8,7 +8,7 @@ import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 const SearchBar = () => {
   const [search, setSearch] = useState('');
   const router = useRouter();
-  const {limit} = router.query;
+  const { limit } = router.query;
 
   const handleInputChange = (inputTerm: string): void => {
     setSearch(inputTerm);
