@@ -51,6 +51,43 @@ describe('Pagination component', () => {
     });
   });
 
+  test('Case with empty params', async () => {
+    const router = createMockRouter({
+      query: {},
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
+
+    await userEvent.click(await screen.findByText('108'));
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith(
+        '?frontpage=108&search=&limit=12'
+      );
+    });
+  });
+
+  test('Case with frontpage > 1', async () => {
+    const router = createMockRouter({
+      query: {
+        frontpage: '2',
+      },
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
+    await userEvent.click(await screen.findByRole('prev'));
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
+    });
+  });
+
   test('Items per page select', async () => {
     const router = createMockRouter({});
     render(

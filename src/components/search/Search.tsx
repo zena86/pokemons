@@ -12,6 +12,7 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
   const { count, pokemons } = pokemonsRequest;
   const router = useRouter();
   const { frontpage, search, limit, details } = router.query;
+  const itemsOnPage = Number(limit || ITEMS_ON_PAGE);
 
   const closeDetail = () => {
     if (details) {
@@ -21,9 +22,7 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
 
   const handleChangePage = (page: number) => {
     router.push(
-      `?frontpage=${page || frontpage}&search=${search || ''}&limit=${
-        limit || ITEMS_ON_PAGE
-      }`
+      `?frontpage=${page}&search=${search || ''}&limit=${itemsOnPage}`
     );
   };
 
@@ -38,9 +37,9 @@ const Search = ({ pokemonsRequest }: PokemonsRequestProps) => {
           <Select options={selectOptions} />
           <SearchBar />
           <SearchList pokemons={pokemons || []} />
-          {(count || 0) > Number(limit || ITEMS_ON_PAGE) && (
+          {(count || 0) > itemsOnPage && (
             <Pagination
-              nPages={getNumberOfPages(count, Number(limit || ITEMS_ON_PAGE))}
+              nPages={getNumberOfPages(count, itemsOnPage)}
               page={Number(frontpage) || NUM_OF_START_PAGE}
               onChangePage={handleChangePage}
             />

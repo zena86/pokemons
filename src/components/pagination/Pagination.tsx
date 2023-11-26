@@ -33,7 +33,11 @@ const Pagination = memo(({ nPages, page, onChangePage }: PaginationProps) => {
             role="prev"
             className={`${page <= 1 && styles.disabled}`}
             onClick={() => {
-              if (page !== 1) onChangePage(page - 1);
+              if (page > 1) {
+                onChangePage(page - 1);
+              } else {
+                onChangePage(1);
+              }
             }}
           >
             <FaArrowLeft />
