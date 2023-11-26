@@ -1,4 +1,3 @@
-import { QueryStatus } from '@reduxjs/toolkit/query';
 import { PokemonDescription } from '@/components/pokemonCard/types';
 
 export interface PokemonsResponse {

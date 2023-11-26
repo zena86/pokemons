@@ -9,7 +9,7 @@ import styles from './style.module.scss';
 
 const SearchList = ({ pokemons }: SearchListProps) => {
   const router = useRouter();
-  const { frontpage, search, limit, details } = router.query;
+  const { frontpage, search, limit } = router.query;
 
   return (
     <>

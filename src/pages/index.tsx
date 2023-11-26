@@ -3,7 +3,10 @@ import Search from '@/components/search/Search';
 import { useRouter } from 'next/router';
 import Detail from '@/components/detail/Detail';
 import { wrapper } from '@/redux/store';
-import { getDetailedPokemons, getRunningQueriesThunk } from '@/redux/pokemonsApi';
+import {
+  getDetailedPokemons,
+  getRunningQueriesThunk,
+} from '@/redux/pokemonsApi';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
 import { PokemonsResponse } from '@/redux/types';
