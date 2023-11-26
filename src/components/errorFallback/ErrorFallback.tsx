@@ -1,5 +1,5 @@
+import Message from '../message/Message';
 import style from './style.module.scss';
-import Message from '../message';
 import { ErrorFallbackProps } from './types';
 
 const ErrorFallback = ({ text }: ErrorFallbackProps) => {

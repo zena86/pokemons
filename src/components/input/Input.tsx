@@ -1,25 +1,26 @@
 import { ChangeEvent, useState } from 'react';
-import style from './style.module.scss';
+import styles from './style.module.scss';
 import { InputProps } from './types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useRouter } from 'next/router';
 
 const Input = ({ onInputChange }: InputProps) => {
-  const term = useSelector((state: RootState) => state.search.term);
-  const [search, setSearch] = useState(term);
+  const router = useRouter();
+  const { search } = router.query;
+
+  const [term, setTerm] = useState(search || '');
 
   const handleInputChange = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>): void => {
-    setSearch(value);
+    setTerm(value);
     onInputChange(value);
   };
 
   return (
     <input
-      className={style.input}
+      className={styles.input}
       type="text"
-      value={search}
+      value={term}
       onChange={handleInputChange}
       placeholder="Pokemon's name"
     />

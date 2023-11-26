@@ -1,44 +1,26 @@
-import { screen, waitFor } from '@testing-library/react';
-import {
-  MemoryRouter,
-  RouterProvider,
-  createMemoryRouter,
-} from 'react-router-dom';
+import { screen, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { userEvent } from '@testing-library/user-event';
-import Detail from '../components/detail';
-import { routerConfig } from '../router';
-import { searchMock } from './data/searchMock';
-import { renderWithProviders } from './test-utils';
+import Detail from '@/components/detail/Detail';
+import { pokemonsRequest } from './data/pokemonsRequest';
+import { createMockRouter } from './data/createMockRouter';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import Search from '@/components/search/Search';
 
 describe('Detail Component', () => {
-  beforeEach(() => {
-    searchMock();
-  });
-
-  test('Check that a loading indicator is displayed while fetching data', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1&details=venusaur']}>
-        <Detail />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
-    );
-
-    await waitFor(() => {
-      expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
-    });
-  });
-
   test('Make sure the detailed card component correctly displays the detailed card data', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1&details=venusaur']}>
-        <Detail />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+        details: 'venusaur',
+      },
+    });
+    render(
+      <RouterContext.Provider value={router}>
+        <Detail pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
     );
 
     expect(await screen.findByText(/venusaur/i)).toBeInTheDocument();
@@ -56,13 +38,10 @@ describe('Detail Component', () => {
   });
 
   test('without query params', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1&details=venusaur']}>
-        <Detail />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
+    render(
+      <RouterContext.Provider value={createMockRouter({})}>
+        <Detail pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
     );
 
     expect(screen.queryByText(/moves/i)).not.toBeInTheDocument();
@@ -70,17 +49,44 @@ describe('Detail Component', () => {
   });
 
   test('Ensure that clicking the close button hides the component', async () => {
-    const memoryRouter = createMemoryRouter(routerConfig, {
-      initialEntries: ['/?frontpage=1&details=venusaur'],
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+        details: 'venusaur',
+      },
     });
-
-    renderWithProviders(<RouterProvider router={memoryRouter} />, {
-      preloadedState: {},
-    });
+    render(
+      <RouterContext.Provider value={router}>
+        <Detail pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
 
     expect(await screen.findByText(/moves:/i)).toBeInTheDocument();
     const closeBtn = await screen.findByRole('close');
     if (closeBtn) await userEvent.click(closeBtn);
-    expect(screen.queryByText(/moves/i)).not.toBeInTheDocument();
+    expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
+  });
+
+  test('Close on panel click', async () => {
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+        details: 'vwnusaur',
+      },
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
+    const closePanel = await screen.findByRole('closepanel');
+    expect(closePanel).toBeInTheDocument();
+    if (closePanel) await userEvent.click(closePanel);
+    expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
   });
 });

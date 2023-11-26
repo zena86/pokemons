@@ -1,71 +1,104 @@
-import { vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import * as router2 from 'react-router';
 import '@testing-library/jest-dom';
-import Search from '../components/search';
-import Pagination from '../components/pagination/';
-import { searchMock } from './data/searchMock';
-import { renderWithProviders } from './test-utils';
-
-const navigate = vi.fn();
+import Pagination from '@/components/pagination/Pagination';
+import Search from '@/components/search/Search';
+import { pokemonsRequest } from './data/pokemonsRequest';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from './data/createMockRouter';
 
 describe('Pagination component', () => {
-  beforeEach(() => {
-    vi.spyOn(router2, 'useNavigate').mockImplementation(() => navigate);
-    searchMock();
-  });
-
   test('Make sure the component updates URL query parameter when page changes', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1']}>
-        <Search />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+      },
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
     );
 
     await userEvent.click(await screen.findByText('2'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=2');
+      expect(router.push).toHaveBeenCalledWith('?frontpage=2&search=&limit=12');
     });
 
     await userEvent.click(await screen.findByText('108'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=108');
+      expect(router.push).toHaveBeenCalledWith(
+        '?frontpage=108&search=&limit=12'
+      );
     });
 
     await userEvent.click(await screen.findByText('1'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=1');
+      expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
     });
 
     await userEvent.click(await screen.findByRole('next'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=2');
+      expect(router.push).toHaveBeenCalledWith('?frontpage=2&search=&limit=12');
     });
 
     await userEvent.click(await screen.findByRole('prev'));
     await waitFor(() => {
-      expect(navigate).toHaveBeenCalledWith('?frontpage=1');
+      expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
+    });
+  });
+
+  test('Case with empty params', async () => {
+    const router = createMockRouter({
+      query: {},
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
+
+    await userEvent.click(await screen.findByText('108'));
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith(
+        '?frontpage=108&search=&limit=12'
+      );
+    });
+  });
+
+  test('Case with frontpage > 1', async () => {
+    const router = createMockRouter({
+      query: {
+        frontpage: '2',
+      },
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
+    );
+    await userEvent.click(await screen.findByRole('prev'));
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith('?frontpage=1&search=&limit=12');
     });
   });
 
   test('Items per page select', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1']}>
-        <Search />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
+    const router = createMockRouter({});
+    render(
+      <RouterContext.Provider value={router}>
+        <Search pokemonsRequest={pokemonsRequest} />
+      </RouterContext.Provider>
     );
 
     expect(await screen.findByText(/108/i)).toBeInTheDocument();
     await userEvent.click(await screen.findByText(/6 per page/i));
-    expect(await screen.findByText(/216/i)).toBeInTheDocument();
+    expect(router.push).toHaveBeenCalledWith('/?frontpage=1&search=&limit=6');
   });
 
   test('nPages < 4', async () => {
@@ -75,7 +108,7 @@ describe('Pagination component', () => {
     expect(screen.queryByText(/3/i)).not.toBeInTheDocument();
   });
 
-  test('page >= nPages - 2 && nPages > 3', async () => {
+  test('page >= nPages - 2 && nPages > 3', () => {
     render(<Pagination nPages={4} page={3} onChangePage={() => {}} />);
     expect(screen.queryByText(/1/i)).toBeInTheDocument();
   });

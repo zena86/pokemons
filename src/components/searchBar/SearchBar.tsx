@@ -1,17 +1,14 @@
+import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
-import { SearchBarProps } from './types';
-import Input from '../input';
-import Button from '../button';
-import style from './style.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { termUpdated } from '../../features/search/searchSlice';
-import { RootState } from '../../redux/store';
+import Input from '../input/Input';
+import Button from '../button/Button';
+import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
+import styles from './style.module.scss';
 
-const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
-  const term = useSelector((state: RootState) => state.search.term);
-  const dispatch = useDispatch();
-
+const SearchBar = () => {
   const [search, setSearch] = useState('');
+  const router = useRouter();
+  const { limit } = router.query;
 
   const handleInputChange = (inputTerm: string): void => {
     setSearch(inputTerm);
@@ -20,15 +17,15 @@ const SearchBar = ({ onFormSubmit }: SearchBarProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const trimmedTerm = search.trim();
-    if (term !== trimmedTerm) {
-      localStorage.setItem('term', trimmedTerm);
-      dispatch(termUpdated({ term: trimmedTerm }));
-      onFormSubmit();
-    }
+    router.push(
+      `/?frontpage=${NUM_OF_START_PAGE}&search=${trimmedTerm || ''}&limit=${
+        limit || ITEMS_ON_PAGE
+      }`
+    );
   };
 
   return (
-    <form onSubmit={handleSubmit} className={style.search}>
+    <form onSubmit={handleSubmit} className={styles.search}>
       <Input onInputChange={handleInputChange} />
       <Button type="submit" title="Search" />
     </form>

@@ -1,20 +1,15 @@
 import {
+  Action,
   PreloadedState,
+  ThunkAction,
   combineReducers,
   configureStore,
 } from '@reduxjs/toolkit';
-import searchReducer from '../features/search/searchSlice';
-import itemsPerPageReducer from '../features/itemsPerPage/itemsPerPageSlice';
-import loadMainReducer from '../features/loadMain/loadMainSlice';
-import loadDetailReducer from '../features/loadDetail/loadDetailSlice';
 import { pokemonsApi } from './pokemonsApi';
+import { createWrapper } from 'next-redux-wrapper';
 
 const rootReducer = combineReducers({
-  search: searchReducer,
-  itemsPerPage: itemsPerPageReducer,
   [pokemonsApi.reducerPath]: pokemonsApi.reducer,
-  loadMain: loadMainReducer,
-  loadDetail: loadDetailReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
@@ -29,5 +24,15 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action
+>;
+
+export const wrapper = createWrapper<AppStore>(() => setupStore(), {
+  debug: true,
+});
 
 export default setupStore;

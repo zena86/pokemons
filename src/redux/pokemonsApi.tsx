@@ -1,28 +1,53 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  FetchBaseQueryError,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
+import { PokemonsResponse } from './types';
 
 export const pokemonsApi = createApi({
-  reducerPath: 'pokemonsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}`,
   }),
-  keepUnusedDataFor: 120,
   endpoints: (build) => ({
-    getPokemons: build.query({
-      query: (args) => {
-        const { limit, page, search } = args;
-        return {
-          url: `pokemons/?search=${search}&offset=${
+    getDetailedPokemons: build.query({
+      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+        const { limit, page, search } = _arg;
+        const pokemons = await fetchWithBQ(
+          `pokemons/?search=${search}&offset=${
             (page - 1) * limit
-          }&limit=${limit}`,
+          }&limit=${limit}`
+        );
+        if (pokemons.error)
+          return { error: pokemons.error as FetchBaseQueryError };
+
+        const pokemonsData = pokemons.data as PokemonsResponse;
+
+        const detailedPokemonsPromises = pokemonsData.pokemons.map(
+          (pokemon) => {
+            return fetchWithBQ(`pokemon/?id=${pokemon.id}`);
+          }
+        );
+
+        const detailedPokemons = (
+          await Promise.all(detailedPokemonsPromises)
+        ).map((response) => response.data);
+
+        return {
+          data: {
+            count: pokemonsData.count,
+            pokemons: detailedPokemons,
+          },
         };
       },
-    }),
-
-    getPokemon: build.query({
-      query: (id) => `pokemon/?id=${id}`,
     }),
   }),
 });
 
-export const { useGetPokemonsQuery, useGetPokemonQuery } = pokemonsApi;
+export const {
+  useGetDetailedPokemonsQuery,
+  util: { getRunningQueriesThunk },
+} = pokemonsApi;
+
+export const { getDetailedPokemons } = pokemonsApi.endpoints;

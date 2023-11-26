@@ -1,6 +1,6 @@
 import { ButtonProps } from './types';
-import style from './style.module.scss';
 import { memo } from 'react';
+import style from './style.module.scss';
 
 const Button = memo(({ type, title }: ButtonProps) => {
   return (

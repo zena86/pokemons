@@ -2,7 +2,7 @@ import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ErrorFallback from '../components/errorFallback';
+import ErrorFallback from '../components/errorFallback/ErrorFallback';
 
 const fetchMocker = createFetchMock(vi);
 fetchMocker.enableMocks();

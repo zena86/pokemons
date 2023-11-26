@@ -1,34 +1,25 @@
-import { useEffect, useState } from 'react';
 import { Option, SelectProps } from './types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useState } from 'react';
 import styles from './style.module.scss';
-import { itemsPerPageUpdated } from '../../features/itemsPerPage/itemsPerPageSlice';
+import { useRouter } from 'next/router';
+import { NUM_OF_START_PAGE } from '@/constants';
 
-const Select = ({ options, onChange, onExpanded }: SelectProps) => {
-  const dispatch = useDispatch();
-  const itemsPerPage = useSelector(
-    (state: RootState) => state.itemsPerPage.itemsPerPage
-  );
-  const initCurrent = options.find((item) => item.value === itemsPerPage);
-  const [current, setCurrent] = useState(initCurrent);
+const Select = ({ options, onExpanded }: SelectProps) => {
+  const router = useRouter();
+  const { search, limit } = router.query;
+
+  const initCurrent = options.find((item) => item.value === Number(limit));
+
   const [expanded, setExpanded] = useState(false);
 
   const handleOptionOnClick = (option: Option) => {
-    onChange(option);
-    setCurrent(option);
     setExpanded((e) => !e);
-  };
-
-  useEffect(() => {
-    localStorage.setItem('perPage', JSON.stringify(current?.value));
-
-    dispatch(
-      itemsPerPageUpdated({
-        itemsPerPage: current?.value,
-      })
+    router.push(
+      `/?frontpage=${NUM_OF_START_PAGE}&search=${search || ''}&limit=${
+        option.value
+      }`
     );
-  }, [current, dispatch]);
+  };
 
   return (
     <div
@@ -42,7 +33,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
           if (onExpanded) onExpanded();
         }}
       >
-        {current?.label}
+        {initCurrent?.label || '12 per page'}
       </button>
       <div className={styles.options}>
         {options?.map((option) => (
@@ -51,7 +42,7 @@ const Select = ({ options, onChange, onExpanded }: SelectProps) => {
             className={styles.option}
             type="button"
             value={option.value}
-            disabled={option.value === current?.value}
+            disabled={option.value === initCurrent?.value}
             onClick={() => handleOptionOnClick(option)}
           >
             {option.label}

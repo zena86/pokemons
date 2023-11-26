@@ -1,38 +1,20 @@
-import { screen, waitFor } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { screen, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {
-  RouterProvider,
-  createMemoryRouter,
-  MemoryRouter,
-} from 'react-router-dom';
-import { routerConfig } from '../router';
-import { searchMock } from './data/searchMock';
-import PokemonCard from '../components/pokemonCard';
-import SearchList from '../components/searchList/SearchList';
-import { renderWithProviders } from './test-utils';
-import { pokemons } from './data/pokemons';
+import PokemonCard from '@/components/pokemonCard/PokemonCard';
+import { pokemonDescription } from './data/pokemonDescription';
+import { describe, expect } from 'vitest';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from './data/createMockRouter';
+import SearchList from '@/components/searchList/SearchList';
+import { searchList } from './data/searchList';
 
 describe('PokemonCard Component', () => {
-  beforeEach(() => {
-    searchMock();
-  });
-
   test('Ensure that the card component renders the relevant card data', async () => {
-    // expect(true).toBe(true);
-    // return;
-    renderWithProviders(
-      <PokemonCard
-        pokemon={{
-          name: 'venusaur',
-          id: '3',
-        }}
-      />,
-      {
-        preloadedState: {},
-      }
+    render(
+      <RouterContext.Provider value={createMockRouter({})}>
+        <PokemonCard pokemon={pokemonDescription} />
+      </RouterContext.Provider>
     );
-
     expect(await screen.findByText(/venusaur/i)).toBeInTheDocument();
     expect(await screen.findByText(/weight:/i)).toBeInTheDocument();
     expect(await screen.findByText(/1000/i)).toBeInTheDocument();
@@ -43,43 +25,25 @@ describe('PokemonCard Component', () => {
     expect(await screen.findByText(/chlorophyll/i)).toBeInTheDocument();
   });
 
-  test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['?frontpage=1']}>
-        <SearchList pokemons={pokemons} />
-      </MemoryRouter>,
-      {
-        preloadedState: {},
-      }
+  test('Validate that clicking on a card opens a detailed card component', async () => {
+    const router = createMockRouter({
+      query: {
+        frontpage: '1',
+        search: '',
+        limit: '12',
+      },
+    });
+
+    render(
+      <RouterContext.Provider value={router}>
+        <SearchList pokemons={searchList} />
+      </RouterContext.Provider>
     );
 
     const item = (await screen.findByText('venusaur')).closest('a');
-    expect(item).not.toBeNull();
-    if (item) await userEvent.click(item);
-
-    const requests = fetchMock.requests();
-
-    await waitFor(() => {
-      expect(requests[requests.length - 1].url).toEqual(
-        'https://poke.jk-mostovaya.workers.dev/pokemon/?id=venusaur'
-      );
-    });
-  });
-
-  test('Validate that clicking on a card opens a detailed card component', async () => {
-    const memoryRouter = createMemoryRouter(routerConfig, {
-      initialEntries: ['/?frontpage=1'],
-    });
-
-    renderWithProviders(<RouterProvider router={memoryRouter} />, {
-      preloadedState: {},
-    });
-
-    const item = (await screen.findByText('venusaur')).closest('a');
-    if (item) await userEvent.click(item);
-
-    await waitFor(() => {
-      expect(screen.getByText(/moves:/i)).toBeInTheDocument();
-    });
+    expect(item).toHaveAttribute(
+      'href',
+      '/?frontpage=1&search=&limit=12&details=venusaur'
+    );
   });
 });

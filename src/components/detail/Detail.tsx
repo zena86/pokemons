@@ -1,36 +1,16 @@
-import DetailDescription from '../detailDescription';
-import LoaderContent from '../../hoc/LoaderContent/LoaderContent';
-import { PokemonDescription } from '../pokemonCard/types';
-import { useGetPokemonQuery } from '../../redux/pokemonsApi';
-import { useSearchParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { loadingDetail } from '../../features/loadDetail/loadDetailSlice';
-import { rtkQueryErrorToText } from '../../utils/rtkQueryErrorToText';
+import { useRouter } from 'next/router';
+import DetailDescription from '../detailDescription/DetailDescription';
+import { PokemonsRequestProps } from '@/redux/types';
 
-const Detail = () => {
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get('details');
+const Detail = ({ pokemonsRequest }: PokemonsRequestProps) => {
+  const router = useRouter();
+  const { details } = router.query;
 
-  const dispatch = useDispatch();
-  const { data, isLoading, error } = useGetPokemonQuery(name);
-
-  useEffect(() => {
-    dispatch(loadingDetail({ isLoading }));
-  }, [dispatch, isLoading, searchParams]);
-
-  return (
-    <LoaderContent
-      isLoading={isLoading}
-      errorMessage={rtkQueryErrorToText(error)}
-    >
-      {data ? (
-        <DetailDescription pokemon={data as PokemonDescription} />
-      ) : (
-        <></>
-      )}
-    </LoaderContent>
+  const pokemon = pokemonsRequest.pokemons.find(
+    (pokemon) => pokemon.name === details
   );
+
+  return pokemon && <DetailDescription pokemon={pokemon} />;
 };
 
 export default Detail;

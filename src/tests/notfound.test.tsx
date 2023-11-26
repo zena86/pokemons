@@ -1,14 +1,19 @@
-import { render, screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
-import { routerConfig } from '../router';
+import { describe, expect } from 'vitest';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import { createMockRouter } from './data/createMockRouter';
+import NotFound from '@/pages/404';
 
-describe('404 Page component', () => {
-  test('Ensure that the 404 page is displayed when navigating to an invalid route', async () => {
-    const router = createMemoryRouter(routerConfig, {
-      initialEntries: ['/posts'],
-    });
-    render(<RouterProvider router={router} />);
-    expect(await screen.findByText(/404/i)).toBeInTheDocument();
+describe('NotFound Page', () => {
+  test('NotFound Page', async () => {
+    render(
+      <RouterContext.Provider value={createMockRouter({})}>
+        <NotFound />
+      </RouterContext.Provider>
+    );
+
+    const item = screen.queryByText(/404/i);
+    expect(item).toBeInTheDocument();
   });
 });
