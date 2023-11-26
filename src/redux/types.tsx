@@ -16,12 +16,3 @@ export interface ErrorResponse {
   originalStatus: number;
   status: string;
 }
-
-export interface Resp {
-  '0': {
-    status: QueryStatus.uninitialized;
-    data?: PokemonsResponse;
-    error?: ErrorResponse | undefined;
-    isError: boolean;
-  };
-}

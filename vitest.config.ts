@@ -6,7 +6,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    //setupFiles: ["vitestSetup.ts"],
   },
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],

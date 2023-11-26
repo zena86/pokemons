@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import styles from './style.module.scss';
 import { FormEvent, useState } from 'react';
 import Input from '../input/Input';
 import Button from '../button/Button';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
+import styles from './style.module.scss';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');

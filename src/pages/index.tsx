@@ -1,19 +1,14 @@
 import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
 import Search from '@/components/search/Search';
 import { useRouter } from 'next/router';
 import Detail from '@/components/detail/Detail';
 import { wrapper } from '@/redux/store';
-import {
-  getDetailedPokemons,
-  getRunningQueriesThunk,
-} from '@/redux/pokemonsApi';
-
+import { getDetailedPokemons, getRunningQueriesThunk } from '@/redux/pokemonsApi';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
-import { Resp } from '@/redux/types';
 import { PokemonsResponse } from '@/redux/types';
 import Message from '@/components/message/Message';
+import styles from '@/styles/Home.module.css';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps =
@@ -40,7 +35,6 @@ export const getServerSideProps: GetServerSideProps =
   });
 
 function Home(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  console.log('props!!!', props);
   const router = useRouter();
   const { details } = router.query;
 

@@ -75,38 +75,4 @@ describe('Pagination component', () => {
     render(<Pagination nPages={4} page={3} onChangePage={() => {}} />);
     expect(screen.queryByText(/1/i)).toBeInTheDocument();
   });
-
-  // test('page === nPages', async () => {
-  //   const router = createMockRouter({
-  //     query: {
-  //       frontpage: '4',
-  //       search: '',
-  //       limit: '12',
-  //     },
-  //   });
-
-  //   render(
-  //     <RouterContext.Provider value={router}>
-  //       <Search pokemonsRequest={pokemonsRequest} />
-  //     </RouterContext.Provider>
-  //   );
-
-  //   // render(<Pagination nPages={4} page={4} onChangePage={() => {}} />);
-  //   const four = screen.getByText('4');
-  //   expect(four?.classList.length).toEqual(2);
-  //   expect(four?.classList[0].includes('btn')).toBeTruthy;
-  //   expect(four?.classList[1].includes('active')).toBeTruthy;
-
-  //   // const three = screen.getByText('3');
-  //   // expect(three?.classList.length).toEqual(1);
-
-  //   const five = screen.getByRole('btn');
-  //   expect(five?.classList.length).toEqual(1);
-  //   await userEvent.click(five);
-  //   await waitFor(() => {
-  //     expect(router.push).toHaveBeenCalledWith(
-  //       '?frontpage=108&search=&limit=12'
-  //     );
-  //   });
-  // });
 });

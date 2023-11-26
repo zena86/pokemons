@@ -4,76 +4,7 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../constants';
-import { Pokemon } from '@/components/searchList/types';
-import { PokemonDescription } from '@/components/pokemonCard/types';
-
-export interface PokemonsResponse {
-  count: number;
-  pokemons: Pokemon[];
-}
-
-export interface DetailedPokemonsResponse {
-  count: number;
-  pokemons: PokemonDescription[];
-  //error?: FetchBaseQueryError;
-}
-
-// export const pokemonsApi = createApi({
-//   reducerPath: 'pokemonsApi',
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: `${BASE_URL}`,
-//   }),
-//   extractRehydrationInfo(action, { reducerPath }) {
-//     if (action.type === HYDRATE) {
-//       return action.payload[reducerPath];
-//     }
-//   },
-//   keepUnusedDataFor: 120,
-//   endpoints: (build) => ({
-//     getPokemons: build.query({
-//       query: (args) => {
-//         const { limit, page, search } = args;
-//         return {
-//           url: `pokemons/?search=${search}&offset=${
-//             (page - 1) * limit
-//           }&limit=${limit}`,
-//         };
-//       },
-//     }),
-
-//     getPokemon: build.query({
-//       query: (id) => `pokemon/?id=${id}`,
-//     }),
-
-//     getDetailedPokemons: build.query<DetailedPokemonsResponse, void>({
-//       queryFn: async (_arg, _api, _extraOptions, _baseQuery, fetchWithBQ): MaybePromise<any> => {
-//         //const { limit, page, search } = args;
-//         const limit = 10;
-//         const page = 10;
-//         const search = 'wer';
-//         const pokemons = await fetchWithBQ(
-//           `pokemons/?search=${search}&offset=${
-//             (page - 1) * limit
-//           }&limit=${limit}`
-//         );
-//         if (pokemons.error)
-//           return { error: pokemons.error as FetchBaseQueryError };
-
-//         const pokemonsData = pokemons.data as PokemonsResponse;
-
-//         const detailedPokemons = await pokemonsData.pokemons.map(
-//           async (pokemon) => await fetchWithBQ(`pokemon/?id=${pokemon.id}`)
-//         );
-
-//         //return { error: undefined };
-//         return {
-//           count: pokemonsData.count,
-//           pokemons: [], //detailedPokemons,
-//         };
-//       },
-//     }),
-//   }),
-// });
+import { PokemonsResponse } from './types';
 
 export const pokemonsApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -103,31 +34,12 @@ export const pokemonsApi = createApi({
           await Promise.all(detailedPokemonsPromises)
         ).map((response) => response.data);
 
-        // const detailedPokemons = [];
-        // for (let i = 0; i < pokemonsData.pokemons.length; i++) {
-        //   const pokemon = pokemonsData.pokemons[i];
-        //   const pokemonDetails = await fetchWithBQ(`pokemon/?id=${pokemon.id}`);
-        //   detailedPokemons.push(pokemonDetails.data);
-        // }
-
         return {
           data: {
             count: pokemonsData.count,
             pokemons: detailedPokemons,
           },
         };
-
-        //           data: {
-        //     count: pokemonsData.count,
-        //     pokemons: detailedPokemons,
-        //   },
-
-        // return data
-        // ? { data: {
-        //   count: pokemonsData.count,
-        //   pokemons: detailedPokemons,
-        // }}
-        // : { error: error as FetchBaseQueryError }
       },
     }),
   }),
@@ -139,12 +51,3 @@ export const {
 } = pokemonsApi;
 
 export const { getDetailedPokemons } = pokemonsApi.endpoints;
-
-// export const {
-//   useGetPokemonsQuery,
-//   useGetPokemonQuery,
-//   util: { getRunningQueriesThunk },
-// } = pokemonsApi;
-
-// export const { getPokemons, getPokemon, getDetailedPokemons } =
-//   pokemonsApi.endpoints;

@@ -1,4 +1,3 @@
-import styles from './style.module.scss';
 import { useRouter } from 'next/router';
 import { SearchListProps } from './types';
 import Message from '../message/Message';
@@ -6,6 +5,7 @@ import PokemonCard from '../pokemonCard/PokemonCard';
 import Link from 'next/link';
 import { PokemonDescription } from '../pokemonCard/types';
 import { ITEMS_ON_PAGE, NUM_OF_START_PAGE } from '@/constants';
+import styles from './style.module.scss';
 
 const SearchList = ({ pokemons }: SearchListProps) => {
   const router = useRouter();

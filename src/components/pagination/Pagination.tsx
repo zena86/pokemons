@@ -77,12 +77,7 @@ const Pagination = memo(({ nPages, page, onChangePage }: PaginationProps) => {
             </div>
             <div
               role="btn"
-              className={
-                `${styles.btn}`
-                // nPages === page
-                //   ? `${styles.btn} ${styles.active}`
-                //   : `${styles.btn}`
-              }
+              className={`${styles.btn}`}
               onClick={() => onChangePage(nPages)}
             >
               {nPages}
